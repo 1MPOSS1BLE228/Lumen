@@ -1,11 +1,12 @@
 # Сборка и выпуск Lumen.
-# Метка vX.Y.Z (git tag v2.8.0 && git push --tags) -> установщик собирается на Windows,
-# считается SHA-256, создаётся выпуск на GitHub. Lumen у пользователей сам находит выпуск и обновляется.
+# Новая версия в package.json попала в main (или отправлена метка vX.Y.Z) -> установщик собирается
+# на Windows, считается SHA-256, создаётся выпуск с меткой vX.Y.Z. Если такой выпуск уже есть — ничего не делаем. Lumen у пользователей сам находит выпуск и обновляется.
 # Если в репозитории заданы секрет SIGNPATH_API_TOKEN и переменная SIGNPATH_ORGANIZATION_ID,
 # Lumen.exe и установщик подписываются бесплатным сертификатом SignPath Foundation.
 name: Выпуск Lumen
 on:
   push:
+    branches: [main]
     tags: ['v*']
   workflow_dispatch:
 
@@ -14,7 +15,24 @@ permissions:
   actions: read
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.v.outputs.tag }}
+      fresh: ${{ steps.v.outputs.fresh }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          tag="v$(node -p "require('./package.json').version")"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then echo "fresh=false" >> "$GITHUB_OUTPUT"; echo "Выпуск $tag уже есть"; else echo "fresh=true" >> "$GITHUB_OUTPUT"; echo "Новый выпуск $tag"; fi
+
   windows:
+    needs: version
+    # на обычный push в main собираем только если версии ещё нет среди выпусков
+    if: needs.version.outputs.fresh == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: windows-latest
     env:
       SIGNING: ${{ secrets.SIGNPATH_API_TOKEN != '' && vars.SIGNPATH_ORGANIZATION_ID != '' }}
@@ -98,10 +116,12 @@ jobs:
             dist/Lumen-Setup-*.exe.sha256
 
       - name: Опубликовать выпуск
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: needs.version.outputs.fresh == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          name: Lumen ${{ github.ref_name }}
+          tag_name: ${{ needs.version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Lumen ${{ needs.version.outputs.tag }}
           body_path: dist/release-notes.md
           files: |
             dist/Lumen-Setup-*.exe
