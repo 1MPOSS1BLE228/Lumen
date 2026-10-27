@@ -1,7 +1,7 @@
 {
   "name": "lumen-rgb",
   "productName": "Lumen",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "description": "Lumen — управление RGB-подсветкой компьютера: темы, эффекты, музыка",
   "main": "src/main/main.js",
   "author": "1MPOSS1BLE228",
@@ -10,8 +10,7 @@
     "start": "electron .",
     "icon": "node scripts/make-icon.js",
     "test": "node test/run-tests.js",
-    "dist": "electron-builder --win --x64",
-    "dist:safe": "electron-builder --win --x64 -c.win.signAndEditExecutable=false"
+    "dist": "electron-builder --win --x64"
   },
   "build": {
     "appId": "app.lumen.rgb",
@@ -74,7 +73,15 @@
           "**/*"
         ]
       }
-    ]
+    ],
+    "electronLanguages": [
+      "ru",
+      "en-US",
+      "uk",
+      "de",
+      "es"
+    ],
+    "compression": "maximum"
   },
   "lumen": {
     "updateRepo": "1MPOSS1BLE228/Lumen"
