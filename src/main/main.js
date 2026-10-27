@@ -307,6 +307,7 @@ function registerIpc() {
   ipcMain.handle('engine:admin', (_e, on) => core.setEngineAdmin(!!on));
   ipcMain.handle('engine:restart', () => core.restartEngine());
   ipcMain.handle('fx:flash', (_e, color) => core.flash(String(color || '')));
+  ipcMain.handle('media:ctl', (_e, what) => core.mediaControl(String(what || '')));
   ipcMain.handle('remote:newlink', () => core.newRemoteLink());
   ipcMain.handle('update:status', () => (updater ? { ...updater.status, current: app.getVersion(), available: updater.available } : null));
   ipcMain.handle('update:check', async () => { if (!updater) return null; const st = await updater.check({ download: true }); return st; });
@@ -409,6 +410,7 @@ app.whenReady().then(() => {
   core.on('sensors', (d) => send('sensors', d));
   core.on('health', (h) => send('health', h));
   core.on('remote', (r) => send('remote', r));
+  core.on('nowplaying', (n) => send('nowplaying', n));
   core.on('devices', (d) => send('devices', d));
   core.on('conn', (c) => send('conn', c));
   core.on('native', (n) => send('native', n));

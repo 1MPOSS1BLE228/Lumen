@@ -695,6 +695,53 @@ async function test(name, fn) {
     assert.deepStrictEqual([metCode('clearsky_night'), metCode('heavyrainandthunder'), metCode('lightsnowshowers_day'), wwoCode('113'), wwoCode(389), wwoCode('338')], [0, 95, 71, 0, 95, 75]);
   });
 
+  await test('сейчас играет: строчка текста по времени трека, кнопки плеера из окна и с телефона', async () => {
+    const { Lyrics, parseLrc, cleanTitle } = require('../src/main/lyrics');
+    assert.deepStrictEqual(parseLrc('[00:01.50] Первая\n[00:04.2]Вторая\n[01:00.000][01:10.00] Припев\nбез времени'), [{ t: 1500, text: 'Первая' }, { t: 4200, text: 'Вторая' }, { t: 60000, text: 'Припев' }, { t: 70000, text: 'Припев' }]);
+    assert.deepStrictEqual(['Song (Remastered 2011)', 'Track - Live at Wembley', 'Hit feat. Someone', 'Обычная'].map(cleanTitle), ['Song', 'Track', 'Hit', 'Обычная']);
+    const urls = [];
+    const ly = new Lyrics({ fetchImpl: async (u, o) => {
+      urls.push(u);
+      assert.ok(/Lumen/.test(o.headers['User-Agent']));
+      if (u.includes('/api/get')) return { ok: false, status: 404, json: async () => ({}) };
+      return { ok: true, status: 200, json: async () => [{ duration: 500, syncedLyrics: '[00:01.00] не та длина' }, { duration: 200, syncedLyrics: '[00:00.50] Строка один\n[00:03.00] Строка два' }] };
+    } });
+    const lines = await ly.get({ artist: 'Тест', title: 'Песня (Remastered)', dur: 201000 });
+    assert.deepStrictEqual(lines.map((l) => l.text), ['Строка один', 'Строка два'], 'взяли вариант с подходящей длительностью');
+    assert.ok(urls[0].includes('track_name=%D0%9F%D0%B5%D1%81%D0%BD%D1%8F&') && urls[0].includes('duration=201'));
+    await ly.get({ artist: 'Тест', title: 'Песня (Remastered)', dur: 201000 });
+    assert.strictEqual(urls.length, 2, 'второй раз — из кэша');
+    const offline = new Lyrics({ fetchImpl: async () => { throw new Error('fetch failed'); } });
+    assert.strictEqual(await offline.get({ artist: 'a', title: 'b' }), null, 'нет сети — null, не кэшируем');
+
+    // ядро: трек -> данные виджета, текст, кнопки
+    const ctl = [];
+    const media = Object.assign(new (require('events').EventEmitter)(), { start() {}, stop() {}, control: async (w) => { ctl.push(w); return true; }, status: { state: 'off' } });
+    const core = new Core({ dataDir: tmp(), media });
+    core.lyrics = ly;
+    core.setSettings({ widgets: { enabled: true, media: true, lyrics: true }, remote: { enabled: false } });
+    const np = [];
+    core.on('nowplaying', (n) => np.push(n));
+    media.emit('track', { playing: true, title: 'Песня (Remastered)', artist: 'Тест', app: 'Spotify.exe', cover: '', pos: 1000, dur: 201000, at: Date.now(), colors: null });
+    await wait(50);
+    const d = core.widgetFeed.data;
+    assert.strictEqual(d.media.title, 'Песня (Remastered)');
+    assert.deepStrictEqual(d.lyrics && d.lyrics.lines.map((l) => l.t), [500, 3000]);
+    assert.strictEqual(d.lyrics.key, 'Тест|Песня (Remastered)');
+    assert.strictEqual(np.length, 1);
+    media.emit('track', { playing: true, title: 'Песня (Remastered)', artist: 'Тест', app: 'Spotify.exe', cover: '', pos: 4000, dur: 201000, at: Date.now() });
+    assert.strictEqual(np.length, 1, 'позиция в треке не дёргает окно');
+    media.emit('track', { playing: false, title: 'Песня (Remastered)', artist: 'Тест', app: 'Spotify.exe', cover: '', pos: 4000, dur: 201000, at: Date.now() });
+    assert.strictEqual(np.length, 2, 'пауза — в окне меняется кнопка');
+    assert.strictEqual(core.widgetFeed.data.media, null, 'на паузе виджет прячется');
+    assert.strictEqual(core._remoteState().media.playing, false);
+    assert.ok(core._remoteAct({ media: 'next' }));
+    assert.ok(!core._remoteAct({ media: 'rm -rf' }));
+    await core.mediaControl('play');
+    assert.deepStrictEqual(ctl, ['next', 'play']);
+    core.shutdown();
+  });
+
   await test('Lian Li UNI FAN TL: мост находит вентиляторы, Lumen красит каждый своим цветом, подсказка прячется', async () => {
     const { LianLiTL, portDevices, colorLine } = require('../src/main/tlfan');
     const devs = portDevices([3, 0, 1, 0]);
@@ -786,6 +833,9 @@ async function test(name, fn) {
     const w = core.state.settings.widgets;
     assert.deepStrictEqual([w.enabled, w.clock, w.city, w.corner, w.size], [true, true, 'bКазань/b', 'tr', 'm']);
     core.setSettings({ widgets: { items: { net: false, vram: true }, size: 'l' } });
+    core.setSettings({ widgets: { style: 'neon', opacity: 'взлом', clockStyle: 'mono', accent: 'white', media: true, calendar: true, note: true, noteText: '<script>x</script> попить воды' } });
+    const w2 = core.state.settings.widgets;
+    assert.deepStrictEqual([w2.style, w2.opacity, w2.clockStyle, w2.accent, w2.media, w2.calendar, w2.note, w2.noteText], ['neon', 'mid', 'mono', 'white', true, true, true, 'scriptx/script попить воды']);
     assert.deepStrictEqual([core.state.settings.widgets.items.net, core.state.settings.widgets.items.vram, core.state.settings.widgets.items.cpu, core.state.settings.widgets.size], [false, true, true, 'l'], 'по одному пункту, остальное не трогаем');
     core.shutdown();
     core.widgetFeed.stop();

@@ -63,7 +63,7 @@ class MediaWatcher extends EventEmitter {
     this.helper = null;
     this.timer = null;
     this.key = '';
-    this.track = { playing: false, colors: null, app: '' };
+    this.track = { playing: false, colors: null, app: '', title: '', artist: '', cover: '' };
     this.status = { state: 'off', message: '' };
   }
 
@@ -97,7 +97,7 @@ class MediaWatcher extends EventEmitter {
     this.timer = null;
     if (this.helper) { this.helper.close(); this.helper = null; }
     this.key = '';
-    this._update({ playing: false, colors: null, app: '' });
+    this._update({ playing: false, colors: null, app: '', title: '', artist: '', cover: '' });
     this._set('off');
   }
 
@@ -107,22 +107,36 @@ class MediaWatcher extends EventEmitter {
     if (JSON.stringify(this.track) !== before) this.emit('track', this.track);
   }
 
+  // Пауза/продолжить, следующий, предыдущий трек. Опрос сразу после — чтобы кнопки откликались быстро.
+  async control(what) {
+    if (!['play', 'next', 'prev'].includes(what) || !this.available) return false;
+    try {
+      if (!this.helper || this.helper.dead) this.helper = new this.Helper(this._script());
+      const r = JSON.parse(await this.helper.cmd('ctl ' + what, 8000));
+      setTimeout(() => this.poll(), 400);
+      return !!r.ok;
+    } catch (_) { return false; }
+  }
+
   async poll() {
     try {
       if (!this.helper || this.helper.dead) this.helper = new this.Helper(this._script());
       const line = await this.helper.cmd('poll ' + this.key, 10000);
       const r = JSON.parse(line);
       if (!r.ok) throw new Error(r.error || 'нет ответа');
-      if (!r.playing) { this._update({ playing: false }); this._set('ok'); return; }
-      let colors = this.track.colors;
+      // ничего не открыто — пусто; на паузе — оставляем трек, чтобы его можно было продолжить кнопкой
+      if (!r.key) { this._update({ playing: false, title: '', artist: '', cover: '' }); this._set('ok'); return; }
+      let colors = this.track.colors, cover = this.track.cover || '';
       if (r.key !== this.key) {
         this.key = r.key;
         colors = null;
+        cover = '';
         if (r.img) {
           try { const img = this.decode(Buffer.from(r.img, 'base64')); if (img && img.data && img.data.length) colors = coverPalette(img.data, { bgr: !!img.bgr }); } catch (_) { /* не картинка */ }
+          if (r.img.length < 900000) cover = 'data:image/jpeg;base64,' + r.img; // обложка для виджета (браузер сам узнает PNG)
         }
       }
-      this._update({ playing: true, colors, app: r.app || '' });
+      this._update({ playing: !!r.playing, colors, app: r.app || '', title: String(r.title || '').slice(0, 120), artist: String(r.artist || '').slice(0, 120), cover, pos: Math.max(0, Number(r.pos) || 0), dur: Math.max(0, Number(r.dur) || 0), at: Date.now() });
       this._set('ok');
     } catch (e) {
       this._set('error', 'Не получилось узнать, что играет: ' + e.message);

@@ -287,6 +287,19 @@ class WidgetFeed extends EventEmitter {
     this.emit('data', this.data);
   }
 
+  // «Сейчас играет» — приходит от MediaWatcher
+  setMedia(m) {
+    const before = JSON.stringify(this.data.media || null);
+    this.data.media = m || null;
+    if (JSON.stringify(this.data.media) !== before) this.emit('data', this.data);
+  }
+
+  setLyrics(l) {
+    if ((this.data.lyrics && this.data.lyrics.key) === (l && l.key)) return;
+    this.data.lyrics = l || null;
+    this.emit('data', this.data);
+  }
+
   stop() { this.cfg = null; this._restart(); }
 }
 

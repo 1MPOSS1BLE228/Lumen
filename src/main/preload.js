@@ -65,5 +65,7 @@ contextBridge.exposeInMainWorld('lumen', {
   onHotkeys: (cb) => on('hotkeys', cb),
   onHealth: (cb) => on('health', cb),
   onRemote: (cb) => on('remote', cb),
+  onNowPlaying: (cb) => on('nowplaying', cb),
+  mediaControl: (what) => ipcRenderer.invoke('media:ctl', what),
   onUpdate: (cb) => on('update', cb),
 });

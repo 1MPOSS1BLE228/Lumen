@@ -13,6 +13,7 @@ const { OpenRGBClient, deviceLayout } = require('./openrgb');
 const { createDemoDevices } = require('./devices');
 const { NativeBackend } = require('./native');
 const { LianLiTL } = require('./tlfan');
+const { Lyrics } = require('./lyrics');
 const { WinTheme } = require('./wintheme');
 const { pickAccent } = require('../shared/accent');
 const { Sensors } = require('./sensors');
@@ -82,6 +83,8 @@ const DEFAULTS = {
     hiddenHints: [],
     photoRotate: 0,
     widgets: { enabled: false, clock: true, weather: true, system: true, city: '', corner: 'tr', size: 'm', forecast: true, seconds: false,
+      media: false, lyrics: true, calendar: false, note: false, noteText: '',
+      style: 'glass', opacity: 'mid', clockStyle: 'thin', accent: 'theme',
       items: { cpu: true, ram: true, gpu: true, vram: false, net: true, disk: true, uptime: false } },
   },
 };
@@ -98,7 +101,11 @@ function sanitizeWidgets(w) {
   const it = w.items && typeof w.items === 'object' ? w.items : {};
   const items = {};
   for (const k of Object.keys(d.items)) items[k] = typeof it[k] === 'boolean' ? it[k] : d.items[k];
+  const one = (k, list) => (list.includes(w[k]) ? w[k] : d[k]);
   return { enabled: b('enabled'), clock: b('clock'), weather: b('weather'), system: b('system'), forecast: b('forecast'), seconds: b('seconds'),
+    media: b('media'), lyrics: b('lyrics'), calendar: b('calendar'), note: b('note'), noteText: String(w.noteText == null ? '' : w.noteText).replace(/[<>]/g, '').slice(0, 160),
+    style: one('style', ['glass', 'solid', 'minimal', 'neon']), opacity: one('opacity', ['low', 'mid', 'high']),
+    clockStyle: one('clockStyle', ['thin', 'bold', 'mono']), accent: one('accent', ['theme', 'white']),
     city: String(w.city || '').replace(/[<>]/g, '').trim().slice(0, 60), corner: ['tr', 'tl', 'br', 'bl'].includes(w.corner) ? w.corner : 'tr',
     size: ['s', 'm', 'l'].includes(w.size) ? w.size : 'm', items };
 }
@@ -176,7 +183,9 @@ class Core extends EventEmitter {
     this.health = { conflicts: [], missing: [], unsupported: [] };
     this.notify = notify || new NotifyWatcher({ platform });
     this.media = media || new MediaWatcher({ dataDir, decode: hooks.decodeImage, Helper: DesktopHelper, platform });
+    this.lyrics = new Lyrics();
     this.media.on('track', (t) => {
+      this._onTrack(t);
       if (!this.state.settings.musicColors) return;
       const key = JSON.stringify([t.playing, t.colors]);
       if (key !== this._coverKey) { this._coverKey = key; if (t.playing && t.colors) this.log('Цвета под музыку: ' + t.colors.join(' ')); this._emitState(); }
@@ -437,6 +446,45 @@ class Core extends EventEmitter {
     return h;
   }
 
+  // Трек сменился или идёт дальше: виджет «Сейчас играет», строчка текста, карточка в окне и на телефоне
+  _onTrack(t) {
+    const has = !!(t.title || t.artist);
+    const np = has ? { title: t.title || '', artist: t.artist || '', app: t.app || '', cover: t.cover || '', playing: !!t.playing, pos: t.pos || 0, dur: t.dur || 0, at: t.at || Date.now() } : null;
+    this.nowPlaying = np;
+    const key = has ? `${t.artist}|${t.title}` : '';
+    if (this.widgetFeed) {
+      const w = this.state.settings.widgets;
+      this.widgetFeed.setMedia(np && np.playing ? np : null);
+      if (key !== this._lyricsKey) {
+        this._lyricsKey = key;
+        this.widgetFeed.setLyrics(null);
+        if (key && w.enabled && w.media && w.lyrics) {
+          this.lyrics.get({ artist: t.artist, title: t.title, dur: t.dur }).then((lines) => {
+            if (this._lyricsKey !== key) return;
+            if (lines === null) { this._lyricsKey = ''; return; } // нет сети — спросим при следующем опросе
+            this.widgetFeed.setLyrics(lines.length ? { key, lines } : null);
+          }).catch(() => {});
+        }
+      }
+    }
+    // в окно и на телефон — без обложки, если трек тот же (обложка тяжёлая)
+    const sig = np ? [np.title, np.artist, np.app, np.playing, np.cover.length].join('|') : '';
+    if (sig !== this._npSig) { this._npSig = sig; this.emit('nowplaying', np); }
+  }
+
+  mediaControl(what) { return this.media.control(what); }
+
+  // Окно Lumen видно (для плеера на главной следим за музыкой, пока окно открыто)
+  get wantFrames() { return !!this._wantFrames; }
+  set wantFrames(v) { const was = this._wantFrames; this._wantFrames = !!v; if (was !== this._wantFrames && this.media && this.state) this._syncMedia(); }
+
+  // Что играет — нужно для «цветов под музыку», виджета «Сейчас играет» и плеера в окне
+  _syncMedia() {
+    const st = this.state.settings;
+    const want = st.musicColors || (st.widgets.enabled && st.widgets.media) || this.wantFrames || st.remote.enabled;
+    if (want) this.media.start(); else this.media.stop();
+  }
+
   // Скрыть подсказку про неподдерживаемое устройство («Понятно»)
   hideHint(id) {
     const st = this.state.settings;
@@ -608,7 +656,7 @@ class Core extends EventEmitter {
       scenario: this.scenarioStatus(),
       sensors: this.sensors.data,
       catalog: { themes: THEMES, effects: EFFECTS, directions: DIRECTIONS, wallStyles: WALL_STYLES },
-      lang: this.lang(), langs: LANGS, health: this.health, remote: this.remote.status, notifyApps: NOTIFY_APPS.map((a) => ({ id: a.id, name: a.name, color: a.color })),
+      lang: this.lang(), langs: LANGS, health: this.health, nowPlaying: this.nowPlaying || null, remote: this.remote.status, notifyApps: NOTIFY_APPS.map((a) => ({ id: a.id, name: a.name, color: a.color })),
       version: this.version,
       platform: this.platform,
     };
@@ -749,7 +797,7 @@ class Core extends EventEmitter {
     if ('winWallpaperStyle' in patch && WALL_STYLES[patch.winWallpaperStyle]) st.winWallpaperStyle = patch.winWallpaperStyle;
     if ('language' in patch && (patch.language === 'auto' || LANGS[patch.language])) { st.language = patch.language; this._langChanged = true; }
     if ('photoRotate' in patch) { st.photoRotate = [0, 30, 60, 180, 1440].includes(Number(patch.photoRotate)) ? Number(patch.photoRotate) : 0; this.lastRotate = Date.now(); }
-    if ('musicColors' in patch) { st.musicColors = !!patch.musicColors; this._coverKey = null; if (st.musicColors) this.media.start(); else this.media.stop(); }
+    if ('musicColors' in patch) { st.musicColors = !!patch.musicColors; this._coverKey = null; this._syncMedia(); }
     if ('remote' in patch) {
       const pr = patch.remote || {};
       st.remote = { ...st.remote, enabled: 'enabled' in pr ? !!pr.enabled : st.remote.enabled };
@@ -763,7 +811,7 @@ class Core extends EventEmitter {
       st.notify = { enabled: 'enabled' in pn ? !!pn.enabled : cur.enabled, apps, otherColor: isHex(pn.otherColor) ? pn.otherColor.toLowerCase() : cur.otherColor };
       this._syncNotify();
     }
-    if ('widgets' in patch) { const pw = patch.widgets || {}; st.widgets = sanitizeWidgets({ ...st.widgets, ...pw, items: { ...st.widgets.items, ...(pw.items || {}) } }); }
+    if ('widgets' in patch) { const pw = patch.widgets || {}; st.widgets = sanitizeWidgets({ ...st.widgets, ...pw, items: { ...st.widgets.items, ...(pw.items || {}) } }); this._syncMedia(); }
     this._save();
     if (this._langChanged) { this._langChanged = false; this.emit('lang', this.lang()); this._syncLive(); }
     if ('autostart' in patch && this.hooks.setAutostart) this.hooks.setAutostart(st.autostart, st.startHidden);
@@ -916,7 +964,9 @@ class Core extends EventEmitter {
     const t = makeTranslator(this.lang()).t;
     const themes = this.allThemes();
     const cur = themes.find((x) => x.id === s.themeId);
+    const np = this.nowPlaying;
     return { power: e.power, brightness: s.brightness, speed: s.speed, themeId: s.themeId, themeName: cur ? t(cur.name) : '', colors: e.colors,
+      media: np ? { title: np.title, artist: np.artist, playing: np.playing } : null,
       themes: themes.map((x) => ({ id: x.id, name: t(x.name), colors: x.effect === 'rainbow' ? ['#ff2a2a', '#ffb000', '#9dff00', '#00e5a0', '#00a2ff', '#8b3dff'] : x.colors.length > 1 ? x.colors : [x.colors[0], x.colors[0]] })) };
   }
 
@@ -927,6 +977,7 @@ class Core extends EventEmitter {
     else if ('speed' in c && num(c.speed)) this.setState({ speed: clampInt(c.speed, 1, 100, this.state.speed) });
     else if ('theme' in c && this.allThemes().some((x) => x.id === c.theme)) this.applyTheme(String(c.theme));
     else if (c.surprise) this.surprise();
+    else if (['play', 'next', 'prev'].includes(c.media)) this.mediaControl(c.media);
     else return false;
     return true;
   }
@@ -1277,7 +1328,7 @@ class Core extends EventEmitter {
     this.rotateTimer = setInterval(() => this._rotatePhoto(), 60000);
     this._syncNotify();
     this._syncRemote();
-    if (st.musicColors) this.media.start();
+    this._syncMedia();
     this.healthTimer = setInterval(() => this.checkHealth(), 60000);
     if (this.healthTimer.unref) this.healthTimer.unref();
     setTimeout(() => this.checkHealth(), 12000).unref();

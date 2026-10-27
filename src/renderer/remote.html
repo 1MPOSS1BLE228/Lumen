@@ -28,11 +28,19 @@
   .th span{display:block;padding:9px 11px;font-size:14px;font-weight:600}
   .th.on{border-color:#fff}
   .err{color:#ffb454;text-align:center;padding:30px 10px}
+  .mu{display:flex;align-items:center;gap:12px}
+  .mu .tx{flex:1;min-width:0}
+  .mu .tx b,.mu .tx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mu .tx span{color:var(--dim);font-size:13px}
+  .mu button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#1a1a27;color:var(--text);display:grid;place-items:center;padding:0}
+  .mu button.pp{width:52px;height:52px;background:linear-gradient(135deg,var(--a),var(--b));border:0}
+  .mu svg{width:20px;height:20px;fill:currentColor}
 </style>
 </head>
 <body>
 <header><div><h1>Lumen</h1><div class="sub" id="cur"></div></div>
 <button class="pw" id="pw" aria-label="__POWER__"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 7.2a8 8 0 1 0 11.4 0"/></svg></button></header>
+<div class="card mu" id="mu" hidden><div class="tx"><b id="mt"></b><span id="ma"></span></div><button id="mp" aria-label="prev"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button><button id="mpp" class="pp" aria-label="play"></button><button id="mn" aria-label="next"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button></div>
 <div class="card"><div class="row"><span>__BRIGHT__</span><b id="bv"></b></div><input type="range" id="br" min="0" max="100"></div>
 <div class="card"><div class="row"><span>__SPEED__</span><b id="sv"></b></div><input type="range" id="sp" min="1" max="100"></div>
 <button class="btn" id="sur">🎲 __SURPRISE__</button>
@@ -55,6 +63,13 @@
     const c = S.colors || [];
     document.documentElement.style.setProperty('--a', c[0] || '#8b5cff');
     document.documentElement.style.setProperty('--b', c[c.length - 1] || '#00e5ff');
+    const m = S.media;
+    $('mu').hidden = !m;
+    if (m) {
+      $('mt').textContent = m.title || '—';
+      $('ma').textContent = m.artist || '';
+      $('mpp').innerHTML = m.playing ? '<svg viewBox="0 0 24 24"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M7 4.5v15L19.5 12z"/></svg>';
+    }
     $('th').innerHTML = S.themes.map((t) => `<button class="th${t.id === S.themeId ? ' on' : ''}" data-id="${esc(t.id)}"><div class="g" style="background:linear-gradient(90deg,${t.colors.map(esc).join(',')})"></div><span>${esc(t.name)}</span></button>`).join('');
   }
   async function load() {
@@ -69,6 +84,9 @@
   }
   $('pw').onclick = () => act({ power: !S.power });
   $('sur').onclick = () => act({ surprise: true });
+  $('mp').onclick = () => act({ media: 'prev' });
+  $('mpp').onclick = () => act({ media: 'play' });
+  $('mn').onclick = () => act({ media: 'next' });
   $('th').onclick = (e) => { const b = e.target.closest('.th'); if (b) act({ theme: b.dataset.id }); };
   for (const [id, k] of [['br', 'brightness'], ['sp', 'speed']]) {
     let tm = null;

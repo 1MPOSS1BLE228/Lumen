@@ -367,3 +367,33 @@ h3{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px}
 .tour-acts>div{display:flex;gap:8px}
 @media (prefers-reduced-motion:reduce){.tour-hole,.tour-card{transition:none}}
 .zpre .chip.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,transparent);color:#fff}
+
+/* Поиск */
+.search-btn{display:flex;align-items:center;gap:9px;width:100%;margin:2px 0 10px;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;cursor:pointer;text-align:left}
+.search-btn:hover{border-color:rgba(255,255,255,.22);color:var(--text,#fff)}
+.search-btn span{flex:1}
+.search-btn kbd,.search kbd{font:600 10.5px/1 Inter,sans-serif;padding:4px 6px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.04)}
+.search-back{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:flex-start;padding-top:12vh;background:rgba(3,3,8,.55);backdrop-filter:blur(5px)}
+.search{width:min(620px,92vw);max-height:68vh;display:flex;flex-direction:column;border-radius:18px;background:var(--panel2);border:1px solid var(--line2);box-shadow:0 30px 80px rgba(0,0,0,.55);overflow:hidden}
+.search .sbar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);color:var(--muted)}
+.search input{flex:1;border:0;background:none;color:inherit;font:500 16px Inter,sans-serif;outline:none;color:var(--text,#fff)}
+.search input::-webkit-search-cancel-button{display:none}
+.search .sr{list-style:none;margin:0;padding:6px;overflow:auto}
+.search .sr li{display:grid;grid-template-columns:96px 1fr;column-gap:12px;padding:9px 12px;border-radius:10px;cursor:pointer}
+.search .sr li .k{grid-row:span 2;align-self:center;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+.search .sr li b{font-weight:600;font-size:14px}
+.search .sr li i{font-style:normal;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search .sr li.on,.search .sr li:hover{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.search .sr li.none{display:block;color:var(--muted);cursor:default;background:none}
+.found{animation:found 2s ease}
+@keyframes found{0%,40%{box-shadow:0 0 0 2px var(--accent),0 0 24px color-mix(in srgb,var(--accent) 45%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+
+/* Сейчас играет */
+.player{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:18px}
+.player .cv{width:52px;height:52px;flex:none;border-radius:12px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 40%,#000));background-size:cover;background-position:center;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.player .txt{flex:1;min-width:0}
+.player .txt b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .txt span{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-btns{display:flex;gap:6px;align-items:center}
+.btn.icon{width:38px;height:38px;padding:0;display:grid;place-items:center;border-radius:50%}
+.btn.icon.primary{width:44px;height:44px}

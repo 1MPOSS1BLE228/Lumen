@@ -50,6 +50,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     openLightingSettings: () => { core.__lightingOpened = true; return true; }, rescanNative: () => { core.native.rescan(); return true; },
     exportTheme: (id) => { const c = core.exportTheme(id); core.__clipboard = c; return c; }, importTheme: (c) => core.importTheme(c), surprise: () => core.surprise(),
     setScenarios: (sc) => core.setScenarios(sc), resumeScenario: () => core.resumeScenario(), listApps: () => ['cs2.exe', 'discord.exe', 'vlc.exe'],
+    mediaControl: (w) => { core.__media = (core.__media || []).concat(w); return true; },
     photoOptions: (pg) => core.photoOptions(pg), pickPhoto: (it) => core.pickPhoto(it), newRemoteLink: () => core.newRemoteLink(), flash: (c) => core.flash(c), restartEngine: () => true, closeConflict: () => ({ ok: true }), forgetMissing: () => true, checkHealth: () => core.checkHealth(), bugReport: () => ({ ok: true }),
     hotkeysInfo: () => ({ list: [{ keys: 'Ctrl+Alt+L', label: 'Включить или выключить подсветку' }, { keys: 'Ctrl+Alt+R', label: 'Удиви меня (случайная тема)' }], failed: ['Ctrl+Alt+R'] }),
   };
@@ -60,7 +61,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   });
   await page.exposeFunction('__audio', () => {});
   await page.addInitScript(() => {
-    const subs = { remote: [], health: [], state: [], devices: [], conn: [], frames: [], native: [], wintheme: [], scenario: [], sensors: [], hotkeys: [] };
+    const subs = { nowplaying: [], remote: [], health: [], state: [], devices: [], conn: [], frames: [], native: [], wintheme: [], scenario: [], sensors: [], hotkeys: [] };
     const sub = (ch) => (cb) => { subs[ch].push(cb); return () => {}; };
     window.__push = (ch, data) => {
       if (ch === 'frames') for (const k of Object.keys(data)) data[k] = Uint8Array.from(data[k]);
@@ -81,7 +82,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       connect: call('connect'), disconnect: call('disconnect'), setColorOrder: call('setColorOrder'), setZoneSize: call('setZoneSize'), testZone: call('testZone'), pickOpenRGB: call('pickOpenRGB'),
       launchOpenRGB: call('launchOpenRGB'), openExternal: call('openExternal'), openLightingSettings: call('openLightingSettings'), rescanNative: call('rescanNative'),
       exportTheme: call('exportTheme'), importTheme: call('importTheme'), surprise: call('surprise'), setScenarios: call('setScenarios'), copyReport: async () => 1, openLog: async () => '', reportError: (m) => console.error('renderer:', m),
-      photoOptions: call('photoOptions'), pickPhoto: call('pickPhoto'), newRemoteLink: call('newRemoteLink'), flash: call('flash'), restartEngine: call('restartEngine'), closeConflict: call('closeConflict'), forgetMissing: call('forgetMissing'), checkHealth: call('checkHealth'), bugReport: call('bugReport'), onRemote: sub('remote'), onHealth: sub('health'), resumeScenario: call('resumeScenario'), listApps: call('listApps'), hotkeysInfo: call('hotkeysInfo'), sendScreen: (f) => window.__screen(f),
+      photoOptions: call('photoOptions'), pickPhoto: call('pickPhoto'), newRemoteLink: call('newRemoteLink'), flash: call('flash'), restartEngine: call('restartEngine'), closeConflict: call('closeConflict'), forgetMissing: call('forgetMissing'), checkHealth: call('checkHealth'), bugReport: call('bugReport'), onRemote: sub('remote'), onNowPlaying: sub('nowplaying'), mediaControl: call('mediaControl'), onHealth: sub('health'), resumeScenario: call('resumeScenario'), listApps: call('listApps'), hotkeysInfo: call('hotkeysInfo'), sendScreen: (f) => window.__screen(f),
       sendAudio: (b) => window.__audio(b), setFramesWanted: () => {},
       onState: sub('state'), onDevices: sub('devices'), onConn: sub('conn'), onFrames: sub('frames'), onNative: sub('native'), onWinTheme: sub('wintheme'),
       onScenario: sub('scenario'), onSensors: sub('sensors'), onHotkeys: sub('hotkeys'),
@@ -411,7 +412,8 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   // Пульт на телефоне и предупреждения
   core.state.settings.remote.port = 47823;
   core.setSettings({ remote: { enabled: true } });
-  core.health = { conflicts: [{ id: 'signalrgb', name: 'SignalRGB', exes: ['signalrgb.exe'] }], missing: [{ name: 'ENE DRAM', source: 'openrgb', kind: 'ram' }] };
+  core.health = { conflicts: [{ id: 'signalrgb', name: 'SignalRGB', exes: ['signalrgb.exe'] }], missing: [{ name: 'ENE DRAM', source: 'openrgb', kind: 'ram' }], unsupported: [] };
+  core.checkHealth = async () => core.health; // фоновые проверки не должны перетирать подставленное
   core.emit('health', core.health);
   await wait(600);
   await page.click('.nav[data-page="devices"]');
@@ -428,6 +430,44 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   core.health = { conflicts: [], missing: [] };
   core.emit('health', core.health);
   await page.click('.nav[data-page="home"]');
+
+  // Плеер на главной
+  await page.click('.nav[data-page="home"]');
+  await push('nowplaying', { title: 'Ночной город', artist: 'Пример', app: 'Spotify.exe', cover: '', playing: true, pos: 0, dur: 0, at: Date.now() });
+  await wait(400);
+  check((await page.textContent('.player')).includes('Ночной город'), 'на главной карточка «Сейчас играет»');
+  await page.click('.player [data-m="next"]');
+  await wait(200);
+  check(JSON.stringify(core.__media) === '["next"]', 'кнопка «следующий трек» уходит в плеер');
+  await shot('27-player');
+  await push('nowplaying', null);
+  await wait(300);
+  check(!(await page.$('.player')), 'музыка выключена — карточка исчезла');
+
+  // Поиск: Ctrl+K, находим настройку, переходим к ней; тема — применяется
+  await page.keyboard.press('Control+K');
+  await page.waitForSelector('.search input');
+  await page.fill('.search input', 'пульт');
+  await wait(200);
+  const firstHit = await page.textContent('.search .sr li.on');
+  check(/Пульт на телефоне|Управление с телефона/.test(firstHit), 'поиск «пульт» нашёл пульт на телефоне: ' + firstHit.replace(/\s+/g, ' '));
+  await shot('26-search');
+  await page.keyboard.press('Enter');
+  await wait(700);
+  check(await page.$eval('.nav[data-page="settings"]', (e) => e.classList.contains('on')), 'Enter открыл «Настройки»');
+  check((await page.$$('#view .found')).length === 1, 'найденный пункт подсвечен');
+  await page.click('#search-btn');
+  await page.fill('.search input', 'лава');
+  await wait(200);
+  await page.keyboard.press('Enter');
+  await wait(600);
+  check(core.state.themeId === 'lava', 'поиск «лава» включил тему Лава');
+  await page.keyboard.press('Control+K');
+  await page.fill('.search input', 'вфывфывфы');
+  await wait(150);
+  check((await page.textContent('.search .sr')).includes('Ничего не нашлось'), 'пустой поиск — понятная надпись');
+  await page.keyboard.press('Escape');
+  check(!(await page.$('.search')), 'Esc закрывает поиск');
 
   // Другие языки: переключаем и перезагружаем окно (в приложении это делает main.js)
   for (const [lang, word] of [['en', 'Lighting'], ['de', 'Beleuchtung']]) {

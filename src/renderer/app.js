@@ -13,6 +13,7 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 let S = null, DEV = [], CONN = { status: 'disconnected', message: '', count: 0 }, CAT = null, VERSION = '';
 let NATIVE = { state: 'idle', message: '', count: 0 }, WIN = { available: false, state: 'off', message: '' }, PLATFORM = '';
 let HEALTH = { conflicts: [], missing: [] };
+let NP = null; // что сейчас играет
 let REMOTE = { state: 'off', message: '', url: '', qr: '' };
 let UPD = { state: 'idle', version: '', progress: 0, message: '' };
 let SCN = { active: null, paused: false, effect: null }, SENS = {}, HK = { list: [], failed: [] }, APPS = [];
@@ -306,7 +307,7 @@ function pageHome() {
         <button class="power js-power${S.power ? ' on' : ''}" data-act="power" aria-label="Включить или выключить подсветку" aria-pressed="${S.power}">${ICON_POWER}</button>
       </div>
     </div>
-    ${updateBanner()}${scenarioBanner()}${healthBanners(false)}
+    ${updateBanner()}${scenarioBanner()}${healthBanners(false)}${playerCard()}
     <div class="panel stage">${DEV.length ? DEV.map((d) => deviceCard(d)).join('') : '<div class="stage-empty">Нет устройств. Включи демо-режим или подключи OpenRGB в разделе «Устройства».</div>'}</div>
     <div class="panel controls">${slider('brightness', 'Яркость', S.brightness)}${slider('speed', 'Скорость', S.speed)}
       ${WIN.available ? `<div class="win-row"><div><b>Красить Windows в цвет подсветки</b><span>Панель задач, «Пуск» и заголовки окон меняют цвет вместе с темой.</span></div>${toggle('winThemeEnabled', S.settings.winThemeEnabled)}</div>
@@ -386,6 +387,23 @@ function musicRow() {
 }
 const appName = (aumid) => { const a = String(aumid || ''); if (/spotify/i.test(a)) return 'Spotify'; if (/yandex/i.test(a)) return 'Яндекс Музыка'; if (/chrome/i.test(a)) return 'Chrome'; if (/msedge|edge/i.test(a)) return 'Edge'; if (/firefox/i.test(a)) return 'Firefox'; if (/vk/i.test(a)) return 'VK'; return a.split(/[!\\.]/).pop() || 'музыка'; };
 
+// Что сейчас играет: обложка, название и кнопки плеера (работает со Spotify, Яндекс Музыкой, браузером…)
+const ICON_PREV = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>';
+const ICON_NEXT = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>';
+const ICON_PLAY = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 4.5v15L19.5 12z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg>';
+function playerCard() {
+  if (!NP) return '';
+  return `<div class="panel player">
+    <div class="cv"${NP.cover ? ` style="background-image:url('${esc(NP.cover)}')"` : ''}></div>
+    <div class="txt" data-noi18n><b>${esc(NP.title || '—')}</b><span>${esc(NP.artist || '')}${NP.app ? ` · ${esc(appName(NP.app))}` : ''}</span></div>
+    <div class="pl-btns">
+      <button class="btn icon" data-act="media" data-m="prev" aria-label="Предыдущий трек" title="Предыдущий трек">${ICON_PREV}</button>
+      <button class="btn icon primary" data-act="media" data-m="play" aria-label="${NP.playing ? 'Пауза' : 'Играть'}" title="${NP.playing ? 'Пауза' : 'Играть'}">${NP.playing ? ICON_PAUSE : ICON_PLAY}</button>
+      <button class="btn icon" data-act="media" data-m="next" aria-label="Следующий трек" title="Следующий трек">${ICON_NEXT}</button>
+    </div></div>`;
+}
+
 // Обновления: баннер на главной и блок в настройках
 function updateBanner() {
   if (UPD.state !== 'ready') return '';
@@ -426,14 +444,23 @@ function widgetsGroup(s) {
   const w = s.widgets || {};
   const wt = (k, on) => `<label class="tg"><input type="checkbox" data-widget="${k}" ${on ? 'checked' : ''}><span></span></label>`;
   const corners = { tr: 'Справа сверху', tl: 'Слева сверху', br: 'Справа снизу', bl: 'Слева снизу' };
+  const wsel = (k, opts, cur, label) => `<select class="field" data-widget="${k}" aria-label="${label}" style="height:34px;min-width:130px">${Object.entries(opts).map(([v, n]) => `<option value="${v}"${v === cur ? ' selected' : ''}>${n}</option>`).join('')}</select>`;
   const err = w.enabled && WIN.live && WIN.live.state === 'error' ? `<p class="note" style="color:var(--warn);padding:0 0 14px">${esc(WIN.live.message)}</p>` : '';
   return `<h3 class="grp">Виджеты на рабочем столе</h3><div class="panel group">
-    <div class="set"><div class="l"><b>Показывать виджеты</b><span>Часы, погода и нагрузка компьютера прямо на обоях, за значками. Обновляются редко и замирают, когда рабочий стол закрыт игрой или окном, — ресурсов почти не тратят.</span></div>${wt('enabled', w.enabled)}</div>
+    <div class="set"><div class="l"><b>Показывать виджеты</b><span>Часы, погода, нагрузка компьютера, музыка и календарь прямо на обоях, за значками. Обновляются редко и замирают, когда рабочий стол закрыт игрой или окном, — ресурсов почти не тратят.</span></div>${wt('enabled', w.enabled)}</div>
     ${w.enabled ? `<div class="set"><div class="l"><b>Часы и дата</b></div><div class="row-btns">${w.clock ? `<label class="chip"><input type="checkbox" data-widget="seconds" ${w.seconds ? 'checked' : ''}> секунды</label>` : ''}${wt('clock', w.clock)}</div></div>
-    <div class="set"><div class="l"><b>Погода</b><span>Бесплатный сервис Open-Meteo, обновляется раз в 15 минут.</span></div>
+    <div class="set"><div class="l"><b>Погода</b><span>Из бесплатных сервисов Open-Meteo, MET Norway и wttr.in — если один не отвечает, берётся другой. Обновляется раз в 15 минут.</span></div>
       <div class="row-btns">${w.weather ? `<label class="chip"><input type="checkbox" data-widget="forecast" ${w.forecast ? 'checked' : ''}> прогноз на 3 дня</label><input class="field" data-widget="city" value="${esc(w.city)}" placeholder="Город, например Москва" aria-label="Город для погоды" style="width:190px">` : ''}${wt('weather', w.weather)}</div></div>
     <div class="set"><div class="l"><b>Компьютер</b><span>Отметь, что показывать.</span></div>${wt('system', w.system)}</div>
     ${w.system ? `<div class="set"><div class="chips">${Object.entries(WIDGET_ITEMS).map(([k, v]) => `<label class="chip"><input type="checkbox" data-widget-item="${k}" ${w.items && w.items[k] ? 'checked' : ''}> ${v}</label>`).join('')}</div></div>` : ''}
+    <div class="set"><div class="l"><b>Сейчас играет</b><span>Название трека, исполнитель и обложка — из Spotify, Яндекс Музыки, браузера и других плееров. Видно, только пока играет музыка.</span></div><div class="row-btns">${w.media ? `<label class="chip"><input type="checkbox" data-widget="lyrics" ${w.lyrics ? 'checked' : ''}> строчка из текста песни</label>` : ''}${wt('media', w.media)}</div></div>
+    <div class="set"><div class="l"><b>Календарь</b><span>Текущий месяц, сегодняшний день выделен цветом подсветки.</span></div>${wt('calendar', w.calendar)}</div>
+    <div class="set"><div class="l"><b>Заметка</b><span>Любой текст на рабочем столе: напоминание, цель, цитата.</span></div><div class="row-btns">${w.note ? `<input class="field" data-widget="noteText" value="${esc(w.noteText || '')}" maxlength="160" placeholder="Например: попить воды 💧" aria-label="Текст заметки" style="width:230px">` : ''}${wt('note', w.note)}</div></div>
+    <div class="set"><div class="l"><b>Оформление</b><span>Как выглядят карточки, часы и полоски нагрузки.</span></div><div class="row-btns">
+      ${wsel('style', { glass: 'Стекло', solid: 'Плотные', minimal: 'Без подложки', neon: 'Неон' }, w.style, 'Стиль карточек')}
+      ${w.style === 'minimal' ? '' : wsel('opacity', { low: 'Прозрачные', mid: 'Полупрозрачные', high: 'Тёмные' }, w.opacity, 'Прозрачность')}
+      ${wsel('clockStyle', { thin: 'Часы: тонкие', bold: 'Часы: жирные', mono: 'Часы: как на табло' }, w.clockStyle, 'Шрифт часов')}
+      ${wsel('accent', { theme: 'Цвет: как подсветка', white: 'Цвет: белый' }, w.accent, 'Цвет акцентов')}</div></div>
     <div class="set"><div class="l"><b>Где и какого размера</b></div><div class="row-btns">
       <select class="field" data-widget="size" aria-label="Размер виджетов" style="height:34px;min-width:120px">${Object.entries({ s: 'Маленькие', m: 'Средние', l: 'Крупные' }).map(([k, v]) => `<option value="${k}"${k === w.size ? ' selected' : ''}>${v}</option>`).join('')}</select>
       <select class="field" data-widget="corner" aria-label="Угол экрана" style="height:34px;min-width:150px">${Object.entries(corners).map(([k, v]) => `<option value="${k}"${k === w.corner ? ' selected' : ''}>${v}</option>`).join('')}</select></div></div>` : ''}
@@ -742,7 +769,7 @@ function pageSettings() {
 // ---------- Рендер ----------
 function sigFor() {
   switch (page) {
-    case 'home': return [page, UPD.state, UPD.version, JSON.stringify(HEALTH.conflicts || []), themeTab, S.themeId, S.effect, JSON.stringify(S.customThemes), devSig(), WIN.available, S.settings.winThemeEnabled, S.settings.winWallpaper, S.settings.winWallpaperStyle, S.settings.photoRotate, S.settings.musicColors, JSON.stringify(WIN.media || {}), JSON.stringify((S.settings.photoPicks || {})[photoKey()] || ''), S.colors.join(), PH.ver].join('|');
+    case 'home': return [page, NP ? [NP.title, NP.artist, NP.playing, (NP.cover || '').length].join('/') : '', UPD.state, UPD.version, JSON.stringify(HEALTH.conflicts || []), themeTab, S.themeId, S.effect, JSON.stringify(S.customThemes), devSig(), WIN.available, S.settings.winThemeEnabled, S.settings.winWallpaper, S.settings.winWallpaperStyle, S.settings.photoRotate, S.settings.musicColors, JSON.stringify(WIN.media || {}), JSON.stringify((S.settings.photoPicks || {})[photoKey()] || ''), S.colors.join(), PH.ver].join('|');
     case 'effects': return [page, S.effect, S.colors.length, S.direction, audio.status, audio.message, screenCap.status, screenCap.message, S.effect === 'temperature' ? (SENS.gpuTemp == null) + (SENS.message || '') : '', devSig()].join('|');
     case 'devices': return [page, devSig(), CONN.status, CONN.message, CONN.count, CONN.bundled, JSON.stringify(CONN.admin || {}), JSON.stringify(HEALTH), NATIVE.state, NATIVE.message, NATIVE.count].join('|');
     case 'scenes': return [page, JSON.stringify(S.scenarios), JSON.stringify(SCN), APPS.join(), S.customThemes.length].join('|');
@@ -814,6 +841,7 @@ const ACT = {
   },
   'zone-preset'(el) { api.setZoneSize(el.dataset.dev, el.dataset.zone, Number(el.dataset.n)).then((ok) => { if (ok) toast('Количество светодиодов сохранено'); }); },
   'hide-hint'(el) { if (api.hideHint) api.hideHint(el.dataset.id); },
+  media(el) { if (api.mediaControl) api.mediaControl(el.dataset.m); },
   updtheme(el) { api.updateTheme(el.dataset.id).then((ok) => ok && toast('Тема обновлена текущими настройками')); },
   tab(el) { setThemeTab(el.dataset.id); },
   async surprise() { const t = await api.surprise(); toast(`«${t.name}» — понравилось? Сохрани в «Мои»`); lastSurpriseName = t.name; },
@@ -1161,6 +1189,7 @@ api.onConn((c) => { CONN = c; refresh(); });
 if (api.onUpdate) api.onUpdate((u) => { UPD = { ...UPD, ...u }; refresh(); });
 if (api.onRemote) api.onRemote((r) => { REMOTE = r || REMOTE; refresh(); });
 if (api.onHealth) api.onHealth((h) => { HEALTH = h || { conflicts: [], missing: [] }; refresh(); });
+if (api.onNowPlaying) api.onNowPlaying((n) => { NP = n || null; refresh(); });
 api.onNative((n) => { NATIVE = n; refresh(); });
 api.onWinTheme((w) => { WIN = w; refresh(); });
 api.onScenario((st) => { SCN = st; syncAudio(); refresh(); });
@@ -1176,6 +1205,7 @@ window.addEventListener('resize', () => { framesDirty = true; });
 api.init().then((init) => {
   if (init.langs) LANGS = init.langs;
   if (init.health) HEALTH = init.health;
+  if (init.nowPlaying) NP = init.nowPlaying;
   if (init.remote) REMOTE = init.remote;
   if (api.updateStatus) api.updateStatus().then((u) => { if (u) { UPD = { ...UPD, ...u }; refresh(); } }).catch(() => {});
   if (init.notifyApps) NOTIFY_APPS = init.notifyApps;
@@ -1191,6 +1221,19 @@ api.init().then((init) => {
   const startTour = () => window.LumenTour && window.LumenTour.start({ goPage: (p) => { if (page !== p) go(p); }, done: () => { if (!S.settings.tourDone) api.setSettings({ tourDone: true }); } });
   const hb = document.getElementById('help-btn');
   if (hb) hb.onclick = startTour;
+  // Поиск по разделам, темам, эффектам и настройкам (Ctrl+K / Ctrl+F)
+  if (window.LumenSearch) {
+    window.LumenSearch.init({
+      pages: { home: [NAV.home[0], pageHome], effects: [NAV.effects[0], pageEffects], devices: [NAV.devices[0], pageDevices], scenes: [NAV.scenes[0], pageScenes], settings: [NAV.settings[0], pageSettings] },
+      themes: () => allThemes().map((th) => ({ id: th.id, name: th.name, tagline: th.tagline, user: !CAT.themes.includes(th) })),
+      effects: () => CAT.effects,
+      go: (p) => { if (page !== p) go(p); },
+      applyTheme: (id) => api.applyTheme(id),
+      setEffect: (id) => api.setState({ effect: id }),
+    });
+    const sb = document.getElementById('search-btn');
+    if (sb) sb.onclick = () => window.LumenSearch.open();
+  }
   if (!S.settings.tourDone && !document.hidden) setTimeout(startTour, 700);
   else if (!S.settings.tourDone) document.addEventListener('visibilitychange', function once() { if (!document.hidden) { document.removeEventListener('visibilitychange', once); setTimeout(startTour, 500); } });
 });

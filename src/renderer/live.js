@@ -223,6 +223,7 @@
 
   function tickClock() {
     clearTimeout(clockTimer);
+    if (mode.widgets && mode.widgets.calendar && !paused) renderCalendar(); // новый день — новый «сегодня»
     if (!mode.widgets || !mode.widgets.clock || paused) return;
     const d = new Date();
     const sec = !!mode.widgets.seconds;
@@ -250,11 +251,85 @@
   const loc = () => (window.LumenDom ? window.LumenDom.locale() : 'ru-RU');
   const dayName = (iso) => new Date(iso + 'T12:00').toLocaleDateString(loc(), { weekday: 'short' }).replace('.', '');
 
+  // Строчка из текста песни, которая звучит сейчас
+  let lyTimer = null;
+  function lyricTick() {
+    clearTimeout(lyTimer);
+    const W = mode.widgets, m = wdata.media, L = wdata.lyrics;
+    const el = $('wl');
+    if (!el) return;
+    const want = W && W.media && W.lyrics !== false && m && L && L.lines && L.lines.length && L.key === `${m.artist}|${m.title}`;
+    el.style.display = want ? '' : 'none';
+    if (!want) return;
+    const pos = (m.pos || 0) + (m.playing ? Date.now() - (m.at || Date.now()) : 0);
+    let i = -1;
+    for (let k = 0; k < L.lines.length && L.lines[k].t <= pos + 150; k++) i = k;
+    const text = i >= 0 ? L.lines[i].text : '';
+    if (el.dataset.i !== String(i)) {
+      el.dataset.i = String(i);
+      el.classList.remove('in'); void el.offsetWidth;
+      el.textContent = text || '♪';
+      el.classList.add('in');
+    }
+    if (!paused && m.playing) {
+      const next = L.lines[i + 1];
+      const wait = next ? Math.max(120, Math.min(1500, next.t - pos - 100)) : 1500;
+      lyTimer = setTimeout(lyricTick, wait);
+    }
+  }
+
+  // Календарь на месяц, сегодня выделено; неделя с понедельника (кроме английского)
+  function renderCalendar() {
+    const now = new Date();
+    const key = now.toDateString() + loc();
+    if ($('wk').dataset.k === key) return;
+    $('wk').dataset.k = key;
+    const mondayFirst = !/^en-US/.test(loc());
+    const y = now.getFullYear(), mo = now.getMonth();
+    const first = new Date(y, mo, 1), days = new Date(y, mo + 1, 0).getDate();
+    const shift = mondayFirst ? (first.getDay() + 6) % 7 : first.getDay();
+    let h = '';
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(2024, 0, (mondayFirst ? 1 : 7) + i); // 1 янв 2024 — понедельник
+      h += `<span class="h">${esc(d.toLocaleDateString(loc(), { weekday: 'short' }).replace('.', '').slice(0, 2))}</span>`;
+    }
+    const prevDays = new Date(y, mo, 0).getDate();
+    for (let i = 0; i < shift; i++) h += `<span class="o">${prevDays - shift + i + 1}</span>`;
+    for (let d = 1; d <= days; d++) {
+      const wd = new Date(y, mo, d).getDay();
+      h += `<span class="${d === now.getDate() ? 'td' : wd === 0 || wd === 6 ? 'we' : ''}">${d}</span>`;
+    }
+    const tail = (7 - ((shift + days) % 7)) % 7;
+    for (let i = 1; i <= tail; i++) h += `<span class="o">${i}</span>`;
+    $('wk').innerHTML = `<div class="mh">${esc(now.toLocaleDateString(loc(), { month: 'long', year: 'numeric' }))}</div><div class="g">${h}</div>`;
+  }
+
   function renderWidgets() {
     const W = mode.widgets;
     const box = $('w');
     if (!W) { box.className = ''; return; }
-    box.className = 'on ' + (['tr', 'tl', 'br', 'bl'].includes(W.corner) ? W.corner : 'tr') + ' sz-' + (['s', 'm', 'l'].includes(W.size) ? W.size : 'm');
+    box.className = 'on ' + (['tr', 'tl', 'br', 'bl'].includes(W.corner) ? W.corner : 'tr') + ' sz-' + (['s', 'm', 'l'].includes(W.size) ? W.size : 'm')
+      + ' st-' + (W.style || 'glass') + ' op-' + (W.opacity || 'mid') + ' ck-' + (W.clockStyle || 'thin') + (W.accent === 'white' ? ' ac-white' : '');
+    // Сейчас играет (карточка видна, только пока что-то играет)
+    const m = wdata.media;
+    $('wm').style.display = W.media && m ? '' : 'none';
+    if (W.media && m) {
+      const key = [m.title, m.artist, m.app, (m.cover || '').length].join('|');
+      if ($('wm').dataset.k !== key) {
+        $('wm').dataset.k = key;
+        const id = String(m.app || '').toLowerCase();
+        const KNOWN = [['spotify', 'Spotify'], ['yandex', 'Яндекс Музыка'], ['vk', 'VK Музыка'], ['chrome', 'Chrome'], ['msedge', 'Edge'], ['firefox', 'Firefox'], ['opera', 'Opera'], ['zunemusic', 'Медиаплеер'], ['aimp', 'AIMP'], ['foobar', 'foobar2000'], ['apple', 'Apple Music'], ['youtube', 'YouTube']];
+        const app = (KNOWN.find(([k]) => id.includes(k)) || [])[1] || String(m.app || '').replace(/\.exe$/i, '').split(/[!._]/).filter(Boolean).pop() || '';
+        $('wm').innerHTML = `<div class="top"><div class="cv"${m.cover ? ` style="background-image:url('${m.cover.replace(/'/g, '')}')"` : ''}></div><div>
+          <div class="tt">${esc(m.title || '—')}</div><div class="ar">${esc(m.artist || '')}</div>
+          <div class="ap"><span class="eq"><i></i><i></i><i></i></span>${esc(app)}</div></div></div><div class="ly" id="wl"></div>`;
+      }
+    }
+    lyricTick();
+    $('wk').style.display = W.calendar ? '' : 'none';
+    if (W.calendar) renderCalendar();
+    $('wn').style.display = W.note && W.noteText ? '' : 'none';
+    if (W.note) $('wn').textContent = W.noteText || '';
     $('wc').style.display = W.clock ? '' : 'none';
     $('wc').classList.toggle('sec', !!W.seconds);
     $('ww').style.display = W.weather ? '' : 'none';
@@ -306,6 +381,8 @@
     });
     window.live.onPause((p) => {
       paused = !!p;
+      document.body.classList.toggle('paused', paused);
+      if (!paused) lyricTick();
       if (!paused) { loop(); tickClock(); } else clearTimeout(clockTimer);
     });
     window.live.onMode((m) => {
