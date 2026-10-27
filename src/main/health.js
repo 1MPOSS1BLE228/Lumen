@@ -13,6 +13,7 @@ const CONFLICTS = [
   { id: 'polychrome', name: 'ASRock Polychrome RGB', exes: ['polychromergb.exe', 'polychrome rgb.exe'] },
   { id: 'fusion', name: 'Gigabyte RGB Fusion', exes: ['rgbfusion.exe', 'gcc.exe'] },
   { id: 'steelseries', name: 'SteelSeries GG', exes: ['steelseriesgg.exe', 'steelseriesengine.exe'] },
+  { id: 'lconnect', name: 'Lian Li L-Connect', exes: ['l-connect 3.exe', 'l-connect3.exe', 'lconnect3.exe', 'l-connect.exe', 'lconnect.exe'] },
   { id: 'razer', name: 'Razer Synapse', exes: ['razer synapse 3.exe', 'razer synapse.exe', 'razercentralservice.exe'] },
 ];
 
@@ -21,10 +22,10 @@ const CONFLICTS = [
 const UNSUPPORTED = [
   {
     id: 'lianli-tl', ids: ['0416:7372'], name: 'Lian Li UNI FAN TL',
-    title: 'Вентиляторы Lian Li UNI FAN TL подключены к своему контроллеру',
+    title: 'Вентиляторы Lian Li UNI FAN TL не отвечают Lumen',
     steps: [
-      'Движок Lumen пока не умеет управлять контроллером UNI FAN TL напрямую — это умеет только L-Connect 3. Но вентиляторы можно подключить через материнскую плату.',
-      'Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.',
+      'Закрой L-Connect 3 и убери его из автозапуска — две программы не могут управлять контроллером одновременно. Lumen подхватит вентиляторы сам в течение минуты.',
+      'Не помогло — подключи вентиляторы через материнскую плату. Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.',
       'В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.',
       'Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.',
     ],

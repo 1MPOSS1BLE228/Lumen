@@ -83,7 +83,7 @@ Lumen красит **панель задач, меню «Пуск» и окна*
 
 Lumen работает через [OpenRGB](https://openrgb.org/devices.html) — он знает **тысячи устройств**: материнские платы ASUS Aura, MSI Mystic Light, Gigabyte RGB Fusion, ASRock, видеокарты, оперативную память (G.Skill, Kingston Fury, Corsair и др.), контроллеры вентиляторов и ленты, клавиатуры и мыши Corsair, Logitech, Razer, SteelSeries, HyperX. Плюс всё, что поддерживает «Динамическую подсветку» Windows 11.
 
-Подсветка оперативной памяти включается одной кнопкой — нужный драйвер Lumen поставит сам.
+Подсветка оперативной памяти включается одной кнопкой — нужный драйвер Lumen поставит сам. А вентиляторы **Lian Li UNI FAN TL** Lumen умеет красить напрямую через их контроллер, без L-Connect (бета).
 
 ## Установка
 
@@ -146,5 +146,7 @@ Lumen — свободная программа под лицензией [GNU G
 - [OpenRGB](https://codeberg.org/OpenRGB/OpenRGB) (GNU GPL v2.0) — движок подсветки, папка `vendor/OpenRGB`, без изменений;
 - установщик драйвера [PawnIO](https://pawnio.eu) — без изменений, распространяется с разрешения автора («This installer can be redistributed unmodified»);
 - [Electron](https://www.electronjs.org) (MIT).
+
+Протокол контроллера Lian Li UNI FAN TL — по материалам открытого проекта [lian-li-linux](https://github.com/sgtaziz/lian-li-linux) (MIT).
 
 Фото для обоев загружаются из [Wallhaven](https://wallhaven.cc), погода — [Open-Meteo](https://open-meteo.com).

@@ -12,6 +12,7 @@ const { THEMES } = require('../shared/catalog');
 const { OpenRGBClient, deviceLayout } = require('./openrgb');
 const { createDemoDevices } = require('./devices');
 const { NativeBackend } = require('./native');
+const { LianLiTL } = require('./tlfan');
 const { WinTheme } = require('./wintheme');
 const { pickAccent } = require('../shared/accent');
 const { Sensors } = require('./sensors');
@@ -111,7 +112,7 @@ function sanitizePhoto(p) {
 }
 
 class Core extends EventEmitter {
-  constructor({ dataDir, version = '2.0.0', hooks = {}, native, wintheme, wallpaper, live, adminEngine, notify, media, sensors, clock, platform = process.platform, bundledEngine = '' }) {
+  constructor({ dataDir, version = '2.0.0', hooks = {}, native, lianli, wintheme, wallpaper, live, adminEngine, notify, media, sensors, clock, platform = process.platform, bundledEngine = '' }) {
     super();
     this.dataDir = dataDir;
     // Встроенный в установщик OpenRGB (движок для плат, видеокарт, вентиляторов и т.д.)
@@ -148,6 +149,12 @@ class Core extends EventEmitter {
     this.native.on('devices', (list) => { this.nativeList = list; this._rebuildDevices(); });
     this.native.on('status', (st) => { this.emit('native', st); this.log(`Windows Dynamic Lighting: ${st.state} ${st.message || ''} (устройств: ${st.count})`); });
     this.native.on('log', (m) => this.emit('log', m));
+    // Вентиляторы Lian Li UNI FAN TL через их контроллер (запускается, только если контроллер подключён)
+    this.tlList = [];
+    this.lianli = lianli || new LianLiTL({ dataDir, platform });
+    this.lianli.on('devices', (list) => { this.tlList = list; this._rebuildDevices(); });
+    this.lianli.on('log', (m) => this.log(m));
+    this.lianli.on('status', (st) => { if (st.state === 'error') this.lianliFailedAt = Date.now(); });
     // Цвет оформления Windows под тему подсветки
     this.wintheme = wintheme || new WinTheme({ dataDir, platform });
     this.wintheme.on('status', (st) => { this.emit('wintheme', this._winStatus()); this.log(`Цвет Windows: ${st.state} ${st.message || ''} (акцент ${this.wintheme.applied || this.wintheme.accent || '-'})`); });
@@ -347,6 +354,7 @@ class Core extends EventEmitter {
       version: this.version, platform: this.platform, os: `${os.type()} ${os.release()}`,
       engine: { bundled: !!this.bundledEngine, running: !!this.engineChild, admin: !!this.state.settings.engineAdmin, adminInstalled: this.adminEngine.installed(), conn: this.conn },
       native: this.native.status,
+      lianli: this.lianli.status,
       devices: this.devices.map((d) => ({
         name: d.name, source: d.source, kind: d.kind, leds: d.leds.length, aspect: d.aspect, linear: d.linear,
         off: this.state.disabledDevices.includes(d.id), available: d.available !== false,
@@ -401,7 +409,13 @@ class Core extends EventEmitter {
     try { if (this.hooks.listProcesses) conflicts = findConflicts(await this.hooks.listProcesses()); } catch (_) { /* не страшно */ }
     const st = this.state.settings;
     let unsupported = [];
-    try { if (this.hooks.listUsb) unsupported = findUnsupported(await this.hooks.listUsb(), st.hiddenHints); } catch (_) { /* не страшно */ }
+    try { if (this.hooks.listUsb) unsupported = findUnsupported(await this.hooks.listUsb()); } catch (_) { /* не страшно */ }
+    if (unsupported.some((u) => u.id === 'lianli-tl')) {
+      // Контроллер Lian Li TL подключён — пробуем управлять им сами (после ошибки — не чаще раза в 10 минут)
+      if (!this.lianli.child && Date.now() - (this.lianliFailedAt || 0) > 600000) this.lianli.start();
+      if (['ready', 'starting'].includes(this.lianli.status.state)) unsupported = unsupported.filter((u) => u.id !== 'lianli-tl');
+    }
+    unsupported = unsupported.filter((u) => !st.hiddenHints.includes(u.id));
     let missing = [];
     // Список «моих устройств» и пропажи считаем, только когда движок спокойно поработал полминуты
     const settled = this.conn.status === 'connected' && Date.now() - (this.connectedAt || Date.now()) > 25000;
@@ -781,9 +795,9 @@ class Core extends EventEmitter {
 
   // --- Устройства --------------------------------------------------------
   _rebuildDevices() {
-    const hasReal = this.nativeList.length > 0 || !!this.client;
+    const hasReal = this.nativeList.length > 0 || this.tlList.length > 0 || !!this.client;
     const demoOn = this.state.settings.demoMode && !hasReal; // демо — пока нет настоящих устройств
-    this.devices = (demoOn ? this.demo : []).concat(this.nativeList, this.real);
+    this.devices = (demoOn ? this.demo : []).concat(this.nativeList, this.tlList, this.real);
     const alive = new Set(this.devices.map((d) => d.id));
     for (const k of this.sent.keys()) if (!alive.has(k)) this.sent.delete(k);
     this.frames = {};
@@ -842,7 +856,7 @@ class Core extends EventEmitter {
     }
 
     const orgbLive = this.conn.status === 'connected' && !!this.client;
-    const nativeLive = this.nativeList.length > 0 && this.native.status.state === 'ready';
+    const nativeLive = (this.nativeList.length > 0 && this.native.status.state === 'ready') || (this.tlList.length > 0 && this.lianli.status.state === 'ready');
     const still = !e.power || e.effect === 'static' || e.brightness === 0;
     // при открытом окне держим 30 кадров, чтобы ползунки отзывались мгновенно
     this._idleTick = (still && !this.test && !this.wantFrames) || (!this.wantFrames && !orgbLive && !nativeLive);
@@ -863,7 +877,7 @@ class Core extends EventEmitter {
       else renderDevice(d, params, this.T, this.audio, out);
       if (flash && e.power && !off.has(d.id)) this._applyFlash(out, flash, now);
       if (this.test && this.test.devId === d.id) this._applyTest(d, out, now);
-      if ((d.source === 'openrgb' && orgbLive) || (d.source === 'native' && nativeLive)) this._sendToHardware(d, out, now);
+      if ((d.source === 'openrgb' && orgbLive) || ((d.source === 'native' || d.source === 'lianli') && nativeLive)) this._sendToHardware(d, out, now);
     }
     if (this.wantFrames) this.emit('frames', this.frames);
   }
@@ -974,7 +988,7 @@ class Core extends EventEmitter {
     const buf = this._hwBuffer(d, out);
     const prev = this.sent.get(d.id);
     if (prev && now - prev.t < KEEPALIVE_MS && Buffer.compare(prev.buf, buf) === 0) return;
-    const ok = d.source === 'native' ? this.native.setLeds(d.id, buf) : this.client.setLeds(d.openrgbIdx, buf);
+    const ok = d.source === 'native' ? this.native.setLeds(d.id, buf) : d.source === 'lianli' ? this.lianli.setLeds(d.id, buf) : this.client.setLeds(d.openrgbIdx, buf);
     if (ok) this.sent.set(d.id, { buf: Buffer.from(buf), t: now });
   }
 
@@ -1217,6 +1231,7 @@ class Core extends EventEmitter {
     this.sensors.stop();
     clearTimeout(this.refreshTimer);
     this.native.stop();
+    this.lianli.stop();
     if (lightsOff && this.client) {
       for (const d of this.real) this.client.setLeds(d.openrgbIdx, new Uint8Array(d.leds.length * 3));
     }

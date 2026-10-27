@@ -695,6 +695,31 @@ async function test(name, fn) {
     assert.deepStrictEqual([metCode('clearsky_night'), metCode('heavyrainandthunder'), metCode('lightsnowshowers_day'), wwoCode('113'), wwoCode(389), wwoCode('338')], [0, 95, 71, 0, 95, 75]);
   });
 
+  await test('Lian Li UNI FAN TL: мост находит вентиляторы, Lumen красит каждый своим цветом, подсказка прячется', async () => {
+    const { LianLiTL, portDevices, colorLine } = require('../src/main/tlfan');
+    const devs = portDevices([3, 0, 1, 0]);
+    assert.deepStrictEqual(devs.map((d) => [d.id, d.fans, d.leds.length]), [['lianli:tl:0', 3, 3], ['lianli:tl:2', 1, 1]]);
+    assert.strictEqual(colorLine(devs, new Map([['lianli:tl:0', Uint8Array.from([255, 0, 0, 0, 255, 0, 0, 0, 255])], ['lianli:tl:2', Uint8Array.from([1, 2, 3])]])), 'ff000000ff000000ff010203');
+    const dir = tmp();
+    const log = path.join(dir, 'tl.log');
+    process.env.TLFAN_LOG = log;
+    const lianli = new LianLiTL({ dataDir: dir, command: process.execPath, args: [path.join(__dirname, 'mock-tlfan.js')] });
+    const core = new Core({ dataDir: dir, lianli, platform: 'win32', hooks: { listUsb: async () => new Set(['0416:7372']), listProcesses: async () => new Set() } });
+    core.setSettings({ autoConnect: false, launchOpenrgb: false, nativeEnabled: false });
+    core.start();
+    const h0 = await core.checkHealth();
+    assert.deepStrictEqual(h0.unsupported, [], 'пока мост запускается, подсказку не показываем');
+    assert.ok(await until(() => core.devices.filter((d) => d.source === 'lianli').length === 2), 'вентиляторы появились: ' + core.devices.map((d) => d.name));
+    assert.ok(!core.devices.some((d) => d.vendor === 'Demo' || /демо/i.test(d.name)), 'демо-устройства убраны');
+    core.setState({ power: true, effect: 'static', colors: ['#00ff00'], brightness: 100 });
+    assert.ok(await until(() => fs.existsSync(log) && /^C (00ff00){4}$/m.test(fs.readFileSync(log, 'utf8'))), 'зелёный ушёл на все 4 вентилятора: ' + (fs.existsSync(log) ? fs.readFileSync(log, 'utf8') : ''));
+    assert.deepStrictEqual((await core.checkHealth()).unsupported, []);
+    core.shutdown();
+    await wait(200);
+    assert.ok(/^Q$/m.test(fs.readFileSync(log, 'utf8')), 'при выходе мост закрывается');
+    delete process.env.TLFAN_LOG;
+  });
+
   await test('зоны ARGB: без размера Lumen ставит 40 сам, случайные «1–2» исправляет, подсказка про Lian Li TL', async () => {
     const { parseUsbIds, findUnsupported } = require('../src/main/health');
     const ids = parseUsbIds('USB\\VID_0416&PID_7372&MI_00\\9&1\r\nHID\\VID_0B05&PID_19AF&MI_02\\a');

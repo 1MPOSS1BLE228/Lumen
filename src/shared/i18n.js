@@ -636,7 +636,10 @@
 "В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.": "In L-Connect 3 turn on motherboard sync (MB Lighting Sync / MB Sync). The setting usually stays in the controller, so you can close L-Connect afterwards.",
 "Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.": "Here on the “Devices” page, open “Set up zones” for the motherboard and give that header plenty of LEDs, for example 80.",
 "сервисы погоды не ответили": "weather services did not respond",
-"сервис погоды просит подождать": "the weather service asks to wait"
+"сервис погоды просит подождать": "the weather service asks to wait",
+"Вентиляторы Lian Li UNI FAN TL не отвечают Lumen": "Lian Li UNI FAN TL fans don’t respond to Lumen",
+"Закрой L-Connect 3 и убери его из автозапуска — две программы не могут управлять контроллером одновременно. Lumen подхватит вентиляторы сам в течение минуты.": "Close L-Connect 3 and remove it from startup — two programs can’t control the controller at once. Lumen will pick the fans up by itself within a minute.",
+"Не помогло — подключи вентиляторы через материнскую плату. Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.": "Didn’t help? Connect the fans through the motherboard. Make sure the controller is connected with an ARGB cable (3-pin, 5 V) to an ARGB header on the motherboard."
 },
 "uk": {
 "Подсветка": "Підсвітка",
@@ -1265,7 +1268,10 @@
 "В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.": "У L-Connect 3 увімкни синхронізацію з материнською платою (MB Lighting Sync / MB Sync). Зазвичай налаштування залишається в контролері, і L-Connect потім можна закрити.",
 "Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.": "Тут, на сторінці «Пристрої», у материнської плати відкрий «Налаштувати зони» і постав для цього роз'єму більше світлодіодів, наприклад 80.",
 "сервисы погоды не ответили": "сервіси погоди не відповіли",
-"сервис погоды просит подождать": "сервіс погоди просить зачекати"
+"сервис погоды просит подождать": "сервіс погоди просить зачекати",
+"Вентиляторы Lian Li UNI FAN TL не отвечают Lumen": "Вентилятори Lian Li UNI FAN TL не відповідають Lumen",
+"Закрой L-Connect 3 и убери его из автозапуска — две программы не могут управлять контроллером одновременно. Lumen подхватит вентиляторы сам в течение минуты.": "Закрий L-Connect 3 і прибери його з автозапуску — дві програми не можуть керувати контролером одночасно. Lumen підхопить вентилятори сам протягом хвилини.",
+"Не помогло — подключи вентиляторы через материнскую плату. Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.": "Не допомогло — підключи вентилятори через материнську плату. Перевір, що контролер з'єднаний кабелем ARGB (3 контакти, 5 В) з роз'ємом ARGB на материнській платі."
 },
 "de": {
 "Подсветка": "Beleuchtung",
@@ -1894,7 +1900,10 @@
 "В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.": "Aktiviere in L-Connect 3 die Mainboard-Synchronisierung (MB Lighting Sync / MB Sync). Die Einstellung bleibt meist im Controller, L-Connect kann danach geschlossen werden.",
 "Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.": "Öffne hier auf der Seite „Geräte“ beim Mainboard „Zonen einrichten“ und gib diesem Anschluss reichlich LEDs, zum Beispiel 80.",
 "сервисы погоды не ответили": "Wetterdienste antworten nicht",
-"сервис погоды просит подождать": "der Wetterdienst bittet zu warten"
+"сервис погоды просит подождать": "der Wetterdienst bittet zu warten",
+"Вентиляторы Lian Li UNI FAN TL не отвечают Lumen": "Lian Li UNI FAN TL-Lüfter reagieren nicht auf Lumen",
+"Закрой L-Connect 3 и убери его из автозапуска — две программы не могут управлять контроллером одновременно. Lumen подхватит вентиляторы сам в течение минуты.": "Schließe L-Connect 3 und entferne es aus dem Autostart — zwei Programme können den Controller nicht gleichzeitig steuern. Lumen übernimmt die Lüfter innerhalb einer Minute selbst.",
+"Не помогло — подключи вентиляторы через материнскую плату. Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.": "Hat nicht geholfen? Schließe die Lüfter über das Mainboard an. Prüfe, ob der Controller mit einem ARGB-Kabel (3-polig, 5 V) an einem ARGB-Anschluss des Mainboards hängt."
 },
 "es": {
 "Подсветка": "Iluminación",
@@ -2523,7 +2532,10 @@
 "В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.": "En L-Connect 3 activa la sincronización con la placa base (MB Lighting Sync / MB Sync). El ajuste suele quedarse en el controlador y luego puedes cerrar L-Connect.",
 "Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.": "Aquí, en la página «Dispositivos», abre «Configurar zonas» de la placa base y pon bastantes LED en ese conector, por ejemplo 80.",
 "сервисы погоды не ответили": "los servicios del tiempo no respondieron",
-"сервис погоды просит подождать": "el servicio del tiempo pide esperar"
+"сервис погоды просит подождать": "el servicio del tiempo pide esperar",
+"Вентиляторы Lian Li UNI FAN TL не отвечают Lumen": "Los ventiladores Lian Li UNI FAN TL no responden a Lumen",
+"Закрой L-Connect 3 и убери его из автозапуска — две программы не могут управлять контроллером одновременно. Lumen подхватит вентиляторы сам в течение минуты.": "Cierra L-Connect 3 y quítalo del inicio — dos programas no pueden controlar el controlador a la vez. Lumen detectará los ventiladores en un minuto.",
+"Не помогло — подключи вентиляторы через материнскую плату. Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.": "¿No ha funcionado? Conecta los ventiladores a través de la placa base. Comprueba que el controlador está conectado con un cable ARGB (3 pines, 5 V) a un conector ARGB de la placa base."
 }
 };
 
