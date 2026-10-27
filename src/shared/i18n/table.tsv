@@ -598,3 +598,20 @@
 нет ответа	no response	немає відповіді	keine Antwort	sin respuesta
 Не получилось узнать, что играет	Couldn't tell what's playing	Не вдалося дізнатися, що грає	Konnte nicht erkennen, was gerade läuft	No se pudo saber qué se reproduce
 занят другой программой	is used by another app	зайнятий іншою програмою	wird von einem anderen Programm verwendet	está ocupado por otro programa
+Обновления	Updates	Оновлення	Updates	Actualizaciones
+Обновлять автоматически	Update automatically	Оновлювати автоматично	Automatisch aktualisieren	Actualizar automáticamente
+Lumen сам проверяет новые версии на GitHub, скачивает их в фоне и проверяет контрольную сумму. Устанавливает — только по твоей кнопке.	Lumen checks GitHub for new versions, downloads them in the background and verifies the checksum. It installs only when you press the button.	Lumen сам перевіряє нові версії на GitHub, завантажує їх у фоні та перевіряє контрольну суму. Встановлює — тільки за твоєю кнопкою.	Lumen sucht auf GitHub nach neuen Versionen, lädt sie im Hintergrund herunter und prüft die Prüfsumme. Installiert wird nur auf deinen Knopfdruck.	Lumen busca nuevas versiones en GitHub, las descarga en segundo plano y verifica la suma de control. Solo instala cuando pulsas el botón.
+Версия	Version	Версія	Version	Versión
+Проверяю…	Checking…	Перевіряю…	Prüfe…	Comprobando…
+У тебя последняя версия.	You have the latest version.	У тебе остання версія.	Du hast die neueste Version.	Tienes la última versión.
+Есть версия	Version	Є версія	Version	Versión
+скачиваю…	downloading…	завантажую…	wird geladen…	descargando…
+Скачиваю версию	Downloading version	Завантажую версію	Lade Version	Descargando versión
+скачана и готова к установке.	is downloaded and ready to install.	завантажена й готова до встановлення.	ist geladen und bereit zur Installation.	está descargada y lista para instalar.
+Проверить обновления	Check for updates	Перевірити оновлення	Nach Updates suchen	Buscar actualizaciones
+Обновить сейчас	Update now	Оновити зараз	Jetzt aktualisieren	Actualizar ahora
+Готова новая версия Lumen	A new version of Lumen is ready	Нова версія Lumen готова	Eine neue Lumen-Version ist bereit	Hay una nueva versión de Lumen lista
+Обновление уже скачано. Lumen закроется на несколько секунд и запустится снова.	The update is already downloaded. Lumen will close for a few seconds and start again.	Оновлення вже завантажено. Lumen закриється на кілька секунд і запуститься знову.	Das Update ist bereits geladen. Lumen schließt sich für ein paar Sekunden und startet neu.	La actualización ya está descargada. Lumen se cerrará unos segundos y volverá a iniciarse.
+Ставлю обновление… Lumen сейчас перезапустится	Installing the update… Lumen will restart now	Встановлюю оновлення… Lumen зараз перезапуститься	Update wird installiert… Lumen startet gleich neu	Instalando la actualización… Lumen se reiniciará ahora
+нет интернета	no internet connection	немає інтернету	keine Internetverbindung	sin conexión a internet
+GitHub не ответил	GitHub did not respond	GitHub не відповів	GitHub antwortet nicht	GitHub no respondió
