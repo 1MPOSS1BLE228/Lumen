@@ -56,7 +56,7 @@ jobs:
           if ("v$v" -ne "${{ github.ref_name }}") { throw "Метка ${{ github.ref_name }}, а в package.json версия $v" }
 
       - name: Сборка программы (без установщика)
-        run: npx electron-builder --win --x64 --dir
+        run: npx electron-builder --win --x64 --dir --publish never
 
       # --- Подпись Lumen.exe (SignPath) ---
       - name: Отдать программу на подпись
@@ -78,7 +78,7 @@ jobs:
           output-artifact-directory: dist/win-unpacked
 
       - name: Сборка установщика
-        run: npx electron-builder --win --x64 --prepackaged dist/win-unpacked
+        run: npx electron-builder --win --x64 --prepackaged dist/win-unpacked --publish never
 
       # --- Подпись установщика (SignPath) ---
       - name: Отдать установщик на подпись
