@@ -376,7 +376,7 @@ app.whenReady().then(() => {
     engineDir: path.dirname(bundledEngine),
     pawnio: app.isPackaged ? path.join(process.resourcesPath, 'PawnIO', 'PawnIO_setup.exe') : path.join(ROOT, 'vendor', 'PawnIO', 'PawnIO_setup.exe'),
   });
-  const live = new LiveWallpaper({ electron: { BrowserWindow, screen }, dataDir: app.getPath('userData') });
+  const live = new LiveWallpaper({ electron: { BrowserWindow, screen, ipcMain }, dataDir: app.getPath('userData') });
   core = new Core({ dataDir: app.getPath('userData'), version: app.getVersion(), hooks: { setAutostart: applyAutostart, getScreenSize, listProcesses, listUsb, killProcesses, decodeImage, getLocale: () => (app.getPreferredSystemLanguages()[0] || app.getLocale()) }, bundledEngine, live, adminEngine });
   T = makeTranslator(core.lang()).t;
   live.setLang(core.lang());

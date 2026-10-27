@@ -759,12 +759,50 @@ async function test(name, fn) {
     assert.strictEqual(np.length, 1, 'позиция в треке не дёргает окно');
     media.emit('track', { playing: false, title: 'Песня (Remastered)', artist: 'Тест', app: 'Spotify.exe', cover: '', pos: 4000, dur: 201000, at: Date.now() });
     assert.strictEqual(np.length, 2, 'пауза — в окне меняется кнопка');
-    assert.strictEqual(core.widgetFeed.data.media, null, 'на паузе виджет прячется');
+    assert.strictEqual(core.widgetFeed.data.media.playing, false, 'на паузе виджет остаётся — чтобы продолжить кнопкой');
     assert.strictEqual(core._remoteState().media.playing, false);
     assert.ok(core._remoteAct({ media: 'next' }));
     assert.ok(!core._remoteAct({ media: 'rm -rf' }));
     await core.mediaControl('play');
     assert.deepStrictEqual(ctl, ['next', 'play']);
+    core.shutdown();
+  });
+
+  await test('кнопки плеера на рабочем столе: прямоугольники в пикселях экрана, клик -> плеер, в игре слежение выключено', async () => {
+    const { DeskInput, rectsLine } = require('../src/main/deskinput');
+    const win = { x: -1920, y: 0, width: 1920, height: 1080 };
+    assert.strictEqual(rectsLine([{ id: 'next', x: 0.5, y: 0.25, w: 0.025, h: 0.05 }, { id: 'bad id!', x: 0, y: 0, w: 1, h: 1 }, { id: 'prev', x: 0, y: 0, w: 0.0001, h: 0.0001 }], win), 'R next -960 270 -912 324');
+    const dir = tmp();
+    const log = path.join(dir, 'in.log');
+    fs.writeFileSync(path.join(dir, 'mock-in.js'), `
+      const fs = require('fs');
+      process.stdout.write(JSON.stringify({ event: 'ready' }) + '\\n');
+      let b = '';
+      process.stdin.on('data', (d) => { b += d; let i; while ((i = b.indexOf('\\n')) >= 0) { const l = b.slice(0, i); b = b.slice(i + 1); fs.appendFileSync(${JSON.stringify(log)}, l + '\\n');
+        if (l.startsWith('R next')) setTimeout(() => process.stdout.write(JSON.stringify({ event: 'click', id: 'next' }) + '\\n'), 20);
+        if (l === 'Q') process.exit(0); } });`);
+    const inp = new DeskInput({ dataDir: dir, command: process.execPath, args: [path.join(dir, 'mock-in.js')] });
+    const clicks = [];
+    inp.on('click', (id) => clicks.push(id));
+    inp.setButtons([], win);
+    assert.ok(!inp.child, 'нет кнопок — помощник не запускаем');
+    inp.setButtons([{ id: 'next', x: 0.5, y: 0.25, w: 0.025, h: 0.05 }], win);
+    assert.ok(await until(() => clicks.length === 1), 'клик дошёл');
+    inp.setPaused(true);
+    inp.setPaused(false);
+    inp.setButtons([], win);
+    await wait(100);
+    assert.deepStrictEqual(fs.readFileSync(log, 'utf8').trim().split('\n'), ['R next -960 270 -912 324', 'P', 'U', 'R']);
+    inp.stop();
+    // ядро: действие из виджета -> плеер
+    const ctl = [];
+    const live = Object.assign(new (require('events').EventEmitter)(), { available: false, status: { state: 'off', message: '' }, configure() {}, setTheme() {}, shutdown() {}, update() {}, setLang() {}, setWidgetData() {}, setSuspended() {} });
+    const media = Object.assign(new (require('events').EventEmitter)(), { start() {}, stop() {}, control: async (w) => { ctl.push(w); return true; }, status: { state: 'off' } });
+    const core = new Core({ dataDir: tmp(), live, media });
+    live.emit('action', 'next');
+    live.emit('action', 'format c:');
+    assert.deepStrictEqual(ctl, ['next']);
+    assert.strictEqual(core.state.settings.widgets.mediaButtons, true, 'кнопки включены по умолчанию');
     core.shutdown();
   });
 

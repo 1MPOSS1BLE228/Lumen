@@ -683,7 +683,9 @@
 "Цвет приложения, если заметен": "App color if visible",
 "Всегда контрастный к подсветке": "Always contrasting with lighting",
 "Всегда цвет приложения": "Always the app color",
-"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "A notification arrives in Discord, Telegram and others — the lighting flashes twice in the app’s color. Lumen doesn’t read message text, only which app sent it."
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "A notification arrives in Discord, Telegram and others — the lighting flashes twice in the app’s color. Lumen doesn’t read message text, only which app sent it.",
+"кнопки плеера": "player buttons",
+"Щелчок по кнопке на рабочем столе переключает трек. Lumen замечает такие щелчки, только пока рабочий стол открыт; в играх и развёрнутых окнах — нет.": "Clicking a button on the desktop switches tracks. Lumen notices such clicks only while the desktop is visible — never in games or maximized windows."
 },
 "uk": {
 "Подсветка": "Підсвітка",
@@ -1359,7 +1361,9 @@
 "Цвет приложения, если заметен": "Колір застосунку, якщо помітний",
 "Всегда контрастный к подсветке": "Завжди контрастний до підсвітки",
 "Всегда цвет приложения": "Завжди колір застосунку",
-"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Прийшло сповіщення в Discord, Telegram та інших — підсвітка двічі спалахує кольором застосунку. Текст повідомлень Lumen не читає, лише від кого прийшло сповіщення."
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Прийшло сповіщення в Discord, Telegram та інших — підсвітка двічі спалахує кольором застосунку. Текст повідомлень Lumen не читає, лише від кого прийшло сповіщення.",
+"кнопки плеера": "кнопки плеєра",
+"Щелчок по кнопке на рабочем столе переключает трек. Lumen замечает такие щелчки, только пока рабочий стол открыт; в играх и развёрнутых окнах — нет.": "Клацання по кнопці на робочому столі перемикає трек. Lumen помічає такі клацання, лише поки робочий стіл відкритий; в іграх і розгорнутих вікнах — ні."
 },
 "de": {
 "Подсветка": "Beleuchtung",
@@ -2035,7 +2039,9 @@
 "Цвет приложения, если заметен": "App-Farbe, wenn sichtbar",
 "Всегда контрастный к подсветке": "Immer kontrastreich zur Beleuchtung",
 "Всегда цвет приложения": "Immer die App-Farbe",
-"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Kommt eine Benachrichtigung in Discord, Telegram usw., blitzt die Beleuchtung zweimal in der Farbe der App. Lumen liest keine Nachrichtentexte, nur von welcher App sie kommt."
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Kommt eine Benachrichtigung in Discord, Telegram usw., blitzt die Beleuchtung zweimal in der Farbe der App. Lumen liest keine Nachrichtentexte, nur von welcher App sie kommt.",
+"кнопки плеера": "Player-Tasten",
+"Щелчок по кнопке на рабочем столе переключает трек. Lumen замечает такие щелчки, только пока рабочий стол открыт; в играх и развёрнутых окнах — нет.": "Ein Klick auf eine Taste auf dem Desktop wechselt den Titel. Lumen bemerkt solche Klicks nur, solange der Desktop sichtbar ist — nie in Spielen oder maximierten Fenstern."
 },
 "es": {
 "Подсветка": "Iluminación",
@@ -2711,7 +2717,9 @@
 "Цвет приложения, если заметен": "Color de la app si se ve",
 "Всегда контрастный к подсветке": "Siempre en contraste con la iluminación",
 "Всегда цвет приложения": "Siempre el color de la app",
-"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Llega una notificación de Discord, Telegram u otras — la iluminación destella dos veces con el color de la app. Lumen no lee el texto de los mensajes, solo de qué app vienen."
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Llega una notificación de Discord, Telegram u otras — la iluminación destella dos veces con el color de la app. Lumen no lee el texto de los mensajes, solo de qué app vienen.",
+"кнопки плеера": "botones del reproductor",
+"Щелчок по кнопке на рабочем столе переключает трек. Lumen замечает такие щелчки, только пока рабочий стол открыт; в играх и развёрнутых окнах — нет.": "Al hacer clic en un botón del escritorio se cambia de pista. Lumen detecta esos clics solo mientras el escritorio está visible — nunca en juegos ni en ventanas maximizadas."
 }
 };
 

@@ -84,7 +84,7 @@ const DEFAULTS = {
     hiddenHints: [],
     photoRotate: 0,
     widgets: { enabled: false, clock: true, weather: true, system: true, city: '', corner: 'tr', size: 'm', forecast: true, seconds: false,
-      media: true, lyrics: true, calendar: false, note: false, noteText: '',
+      media: true, lyrics: true, mediaButtons: true, calendar: false, note: false, noteText: '',
       style: 'glass', opacity: 'mid', clockStyle: 'thin', accent: 'theme',
       items: { cpu: true, ram: true, gpu: true, vram: false, net: true, disk: true, uptime: false } },
   },
@@ -104,7 +104,7 @@ function sanitizeWidgets(w) {
   for (const k of Object.keys(d.items)) items[k] = typeof it[k] === 'boolean' ? it[k] : d.items[k];
   const one = (k, list) => (list.includes(w[k]) ? w[k] : d[k]);
   return { enabled: b('enabled'), clock: b('clock'), weather: b('weather'), system: b('system'), forecast: b('forecast'), seconds: b('seconds'),
-    media: b('media'), lyrics: b('lyrics'), calendar: b('calendar'), note: b('note'), noteText: String(w.noteText == null ? '' : w.noteText).replace(/[<>]/g, '').slice(0, 160),
+    media: b('media'), lyrics: b('lyrics'), mediaButtons: b('mediaButtons'), calendar: b('calendar'), note: b('note'), noteText: String(w.noteText == null ? '' : w.noteText).replace(/[<>]/g, '').slice(0, 160),
     style: one('style', ['glass', 'solid', 'minimal', 'neon']), opacity: one('opacity', ['low', 'mid', 'high']),
     clockStyle: one('clockStyle', ['thin', 'bold', 'mono']), accent: one('accent', ['theme', 'white']),
     city: String(w.city || '').replace(/[<>]/g, '').trim().slice(0, 60), corner: ['tr', 'tl', 'br', 'bl'].includes(w.corner) ? w.corner : 'tr',
@@ -175,6 +175,8 @@ class Core extends EventEmitter {
     if (this.live.on) {
       this.live.on('status', (st) => { this.emit('wintheme', this._winStatus()); this.log(`Живые обои: ${st.state} ${st.message || ''}`); });
       this.live.on('log', (m) => this.log(m));
+      // кнопки плеера в виджете на рабочем столе
+      this.live.on('action', (id) => { if (['prev', 'play', 'next'].includes(id)) this.mediaControl(id); });
       this.live.on('paused', (p) => this.widgetFeed.setPaused(p));
     }
     // Температура видеокарты (для эффекта «Температура»)
@@ -455,7 +457,7 @@ class Core extends EventEmitter {
     const key = has ? `${t.artist}|${t.title}` : '';
     if (this.widgetFeed) {
       const w = this.state.settings.widgets;
-      this.widgetFeed.setMedia(np && np.playing ? np : null);
+      this.widgetFeed.setMedia(np); // и на паузе — чтобы кнопкой можно было продолжить
       if (key !== this._lyricsKey) {
         this._lyricsKey = key;
         this.widgetFeed.setLyrics(null);

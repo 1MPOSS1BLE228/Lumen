@@ -47,6 +47,16 @@
     .mu .ar{color:rgba(255,255,255,.65);margin-top:.3vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .mu .ap{color:rgba(255,255,255,.42);font-size:1.15vh;margin-top:.5vh;text-transform:uppercase;letter-spacing:.06em}
     .mu .top>div{min-width:0}
+    .mu .ctl{display:flex;justify-content:center;align-items:center;gap:2.2vh;margin-top:1.4vh}
+    .mu .cb{width:4.4vh;height:4.4vh;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:background .15s,transform .15s}
+    .mu .cb svg{width:2vh;height:2vh;fill:#fff}
+    .mu .cb.pp{width:5.4vh;height:5.4vh;background:linear-gradient(135deg,var(--a),var(--b));border:0;box-shadow:0 .6vh 2vh color-mix(in srgb,var(--a) 45%,transparent)}
+    .mu .cb.pp svg{width:2.4vh;height:2.4vh}
+    .mu .cb.hov{background:rgba(255,255,255,.2);transform:scale(1.08)}
+    .mu .cb.pp.hov{filter:brightness(1.15)}
+    .mu .cb.prs{animation:prs .35s ease}
+    @keyframes prs{40%{transform:scale(.86)}100%{transform:scale(1)}}
+    .mu.pz .eq i{animation:none;height:35%}
     .mu .eq{display:inline-flex;gap:.25vh;align-items:flex-end;height:1.2vh;margin-right:.6vh;vertical-align:-.1vh}
     .mu .eq i{width:.35vh;background:var(--a);border-radius:.2vh;animation:eq 1s ease-in-out infinite}
     .mu .eq i:nth-child(2){animation-delay:-.4s}.mu .eq i:nth-child(3){animation-delay:-.7s}

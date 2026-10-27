@@ -66,6 +66,8 @@ class DesktopHelper {
   }
 }
 
+const { DeskInput } = require('./deskinput');
+
 class LiveWallpaper extends EventEmitter {
   // electron: { BrowserWindow, screen } — передаётся из main.js
   constructor({ electron, dataDir, platform = process.platform } = {}) {
@@ -85,6 +87,20 @@ class LiveWallpaper extends EventEmitter {
     this.poll = null;
     this.restartTimer = null;
     this.status = { state: 'off', message: '' };
+    // Кнопки виджетов («назад / пауза / вперёд»): клики по рабочему столу в этих местах
+    this.input = new DeskInput({ dataDir, platform });
+    this.input.on('click', (id) => {
+      this.emit('action', id);
+      for (const w of this.windows) if (w.primary) this._send(w.win, 'live:press', id);
+    });
+    this.input.on('hover', (id) => { for (const w of this.windows) if (w.primary) this._send(w.win, 'live:hover', id); });
+    this.input.on('log', (m) => this.emit('log', m));
+    if (electron && electron.ipcMain) {
+      electron.ipcMain.on('live:buttons', (e, buttons) => {
+        const w = this.windows.find((x) => x.primary && !x.win.isDestroyed() && x.win.webContents === e.sender);
+        if (w) this.input.setButtons(Array.isArray(buttons) ? buttons.slice(0, 8) : [], w.rect);
+      });
+    }
   }
 
   get available() { return this.platform === 'win32' && !!this.electron; }
@@ -184,6 +200,7 @@ class LiveWallpaper extends EventEmitter {
     const p = this.cover || this.suspended;
     if (p === this.paused) return;
     this.paused = p;
+    this.input.setPaused(p); // рабочий стол закрыт — за мышью не следим вовсе
     for (const w of this.windows) this._send(w.win, 'live:pause', p);
     this.emit('paused', p);
   }
@@ -276,6 +293,7 @@ class LiveWallpaper extends EventEmitter {
     this.paused = false;
     this.cover = false;
     if (!keepHelper && this.helper) { this.helper.close(); this.helper = null; }
+    this.input.stop();
     if (!keepHelper) this._set('off', '');
   }
 

@@ -278,6 +278,29 @@
     }
   }
 
+  // Где на экране кнопки плеера — чтобы Lumen понял, что по ним щёлкнули на рабочем столе
+  let lastButtons = '';
+  function sendButtons() {
+    if (!window.live || !window.live.setButtons) return;
+    requestAnimationFrame(() => {
+      const list = [];
+      const box = $('wm');
+      if (box && box.style.display !== 'none' && mode.widgets && mode.widgets.media && mode.widgets.mediaButtons !== false) {
+        box.querySelectorAll('.cb').forEach((el) => {
+          const r = el.getBoundingClientRect();
+          const pad = 4; // чуть больше самой кнопки — легче попасть
+          list.push({ id: el.dataset.b, x: (r.left - pad) / innerWidth, y: (r.top - pad) / innerHeight, w: (r.width + pad * 2) / innerWidth, h: (r.height + pad * 2) / innerHeight });
+        });
+      }
+      const s = JSON.stringify(list);
+      if (s !== lastButtons) { lastButtons = s; window.live.setButtons(list); }
+    });
+  }
+  if (window.live && window.live.onHover) {
+    window.live.onHover((id) => document.querySelectorAll('#wm .cb').forEach((el) => el.classList.toggle('hov', el.dataset.b === id)));
+    window.live.onPress((id) => { const el = document.querySelector(`#wm .cb[data-b="${id}"]`); if (el) { el.classList.remove('prs'); void el.offsetWidth; el.classList.add('prs'); } });
+  }
+
   // Календарь на месяц, сегодня выделено; неделя с понедельника (кроме английского)
   function renderCalendar() {
     const now = new Date();
@@ -314,7 +337,7 @@
     const m = wdata.media;
     $('wm').style.display = W.media && m ? '' : 'none';
     if (W.media && m) {
-      const key = [m.title, m.artist, m.app, (m.cover || '').length].join('|');
+      const key = [m.title, m.artist, m.app, (m.cover || '').length, m.playing, W.mediaButtons !== false].join('|');
       if ($('wm').dataset.k !== key) {
         $('wm').dataset.k = key;
         const id = String(m.app || '').toLowerCase();
@@ -322,10 +345,15 @@
         const app = (KNOWN.find(([k]) => id.includes(k)) || [])[1] || String(m.app || '').replace(/\.exe$/i, '').split(/[!._]/).filter(Boolean).pop() || '';
         $('wm').innerHTML = `<div class="top"><div class="cv"${m.cover ? ` style="background-image:url('${m.cover.replace(/'/g, '')}')"` : ''}></div><div>
           <div class="tt">${esc(m.title || '—')}</div><div class="ar">${esc(m.artist || '')}</div>
-          <div class="ap"><span class="eq"><i></i><i></i><i></i></span>${esc(app)}</div></div></div><div class="ly" id="wl"></div>`;
+          <div class="ap"><span class="eq"><i></i><i></i><i></i></span>${esc(app)}</div></div></div>${W.mediaButtons !== false ? `<div class="ctl">
+            <span class="cb" data-b="prev"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></span>
+            <span class="cb pp" data-b="play"><svg viewBox="0 0 24 24">${m.playing ? '<path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/>' : '<path d="M7 4.5v15L19.5 12z"/>'}</svg></span>
+            <span class="cb" data-b="next"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></span></div>` : ''}<div class="ly" id="wl"></div>`;
+        $('wm').classList.toggle('pz', !m.playing);
       }
     }
     lyricTick();
+    sendButtons();
     $('wk').style.display = W.calendar ? '' : 'none';
     if (W.calendar) renderCalendar();
     $('wn').style.display = W.note && W.noteText ? '' : 'none';
@@ -406,7 +434,7 @@
     if (window.live.onLang) window.live.onLang((l) => { if (window.LumenDom) window.LumenDom.set(l); renderWidgets(); tickClock(); });
   }
   let rt = null;
-  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (mode.waves) { rebuild(false); draw(performance.now()); } else drawImage(); }, 300); });
+  window.addEventListener('resize', () => { lastButtons = ''; sendButtons(); clearTimeout(rt); rt = setTimeout(() => { if (mode.waves) { rebuild(false); draw(performance.now()); } else drawImage(); }, 300); });
   rebuild(false);
   setAccent();
   loop();

@@ -8,4 +8,7 @@ contextBridge.exposeInMainWorld('live', {
   onImage: (cb) => ipcRenderer.on('live:image', (_e, buf) => cb(buf)),
   onData: (cb) => ipcRenderer.on('live:data', (_e, d) => cb(d)),
   onLang: (cb) => ipcRenderer.on('live:lang', (_e, l) => cb(l)),
+  onPress: (cb) => ipcRenderer.on('live:press', (_e, id) => cb(id)),
+  onHover: (cb) => ipcRenderer.on('live:hover', (_e, id) => cb(id)),
+  setButtons: (b) => ipcRenderer.send('live:buttons', b),
 });
