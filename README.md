@@ -133,15 +133,6 @@ Free code signing provided by [SignPath.io](https://about.signpath.io), certific
 Конечно — пиши в [задачи (Issues)](https://github.com/1MPOSS1BLE228/Lumen/issues). А если Lumen понравился — поставь ⭐ репозиторию, так его найдут другие.
 </details>
 
-## Сборка из исходников
-
-- Быстро на своём компьютере: дважды кликни `Собрать-установщик.bat` — поставит Node.js и соберёт установщик в `dist`.
-- Вручную: `npm install --no-save electron@45.0.0 electron-builder@26`, затем `npm test` и `npm run dist`.
-- Выпуск: поменяй версию в `package.json`, допиши `CHANGELOG.md` и отправь в `main` — установщик соберёт, поставит метку `vX.Y.Z` и опубликует GitHub Actions (`.github/workflows/release.yml`).
-
-Переводы — `src/shared/i18n/table.tsv` (колонки: русский, English, Українська, Deutsch, Español);
-после правки: `python scripts/gen-i18n.py src/shared/i18n/table.tsv src/shared/i18n.js`.
-
 ## English
 
 **Lumen** is a free, open-source Windows 10/11 app that controls all your PC RGB lighting from one place — motherboard, GPU, RAM, fans, keyboard and mouse — without SignalRGB, iCUE or vendor tools. It ships with 19 themes and 15 effects (wave, fire, music-reactive, screen ambient, GPU temperature), matches the Windows accent color and wallpaper to your lighting, shows desktop widgets (clock, weather, system load), flashes on notifications, takes colors from the album art of the current track and can be controlled from your phone. The UI is available in English, Russian, Ukrainian, German and Spanish.
