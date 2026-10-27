@@ -14,6 +14,7 @@ const { createDemoDevices } = require('./devices');
 const { NativeBackend } = require('./native');
 const { LianLiTL } = require('./tlfan');
 const { Lyrics } = require('./lyrics');
+const { pickFlashColor } = require('./contrast');
 const { WinTheme } = require('./wintheme');
 const { pickAccent } = require('../shared/accent');
 const { Sensors } = require('./sensors');
@@ -78,12 +79,12 @@ const DEFAULTS = {
     musicColors: false,
     tourDone: false,
     autoUpdate: true,
-    notify: { enabled: false, apps: { discord: true, telegram: true, whatsapp: true, vk: true, mail: true, steam: false, other: false }, otherColor: '#ffffff' },
+    notify: { enabled: false, apps: { discord: true, telegram: true, whatsapp: true, vk: true, mail: true, steam: false, other: false }, otherColor: '#ffffff', mode: 'auto' },
     photoPicks: {},
     hiddenHints: [],
     photoRotate: 0,
     widgets: { enabled: false, clock: true, weather: true, system: true, city: '', corner: 'tr', size: 'm', forecast: true, seconds: false,
-      media: false, lyrics: true, calendar: false, note: false, noteText: '',
+      media: true, lyrics: true, calendar: false, note: false, noteText: '',
       style: 'glass', opacity: 'mid', clockStyle: 'thin', accent: 'theme',
       items: { cpu: true, ram: true, gpu: true, vram: false, net: true, disk: true, uptime: false } },
   },
@@ -190,7 +191,7 @@ class Core extends EventEmitter {
       const key = JSON.stringify([t.playing, t.colors]);
       if (key !== this._coverKey) { this._coverKey = key; if (t.playing && t.colors) this.log('Цвета под музыку: ' + t.colors.join(' ')); this._emitState(); }
     });
-    this.media.on('status', () => this.emit('wintheme', this._winStatus()));
+    this.media.on('status', (st) => { this.emit('wintheme', this._winStatus()); if (st) this.log(`Музыка: ${st.state} ${st.message || ''}`); });
     this.remote = new RemoteServer({ api: { state: () => this._remoteState(), act: (c) => this._remoteAct(c) }, page: () => this._remotePage() });
     this.remote.on('status', (st) => this.emit('remote', st));
     this.notify.on('notification', (n) => this._onNotification(n));
@@ -469,7 +470,11 @@ class Core extends EventEmitter {
     }
     // в окно и на телефон — без обложки, если трек тот же (обложка тяжёлая)
     const sig = np ? [np.title, np.artist, np.app, np.playing, np.cover.length].join('|') : '';
-    if (sig !== this._npSig) { this._npSig = sig; this.emit('nowplaying', np); }
+    if (sig !== this._npSig) {
+      this._npSig = sig;
+      if (np) this.log(`Сейчас играет: трек в ${np.app || 'плеере'}${np.playing ? '' : ' (пауза)'}`); // без названия — журнал уходит в отчёты
+      this.emit('nowplaying', np);
+    }
   }
 
   mediaControl(what) { return this.media.control(what); }
@@ -598,7 +603,7 @@ class Core extends EventEmitter {
       const d = DEFAULTS.settings.notify, n = s.settings.notify && typeof s.settings.notify === 'object' ? s.settings.notify : {};
       const apps = {};
       for (const k of Object.keys(d.apps)) apps[k] = n.apps && typeof n.apps[k] === 'boolean' ? n.apps[k] : d.apps[k];
-      s.settings.notify = { enabled: !!n.enabled, apps, otherColor: isHex(n.otherColor) ? n.otherColor : d.otherColor };
+      s.settings.notify = { enabled: !!n.enabled, apps, otherColor: isHex(n.otherColor) ? n.otherColor : d.otherColor, mode: ['auto', 'contrast', 'app'].includes(n.mode) ? n.mode : 'auto' };
     }
     s.settings.knownDevices = (Array.isArray(s.settings.knownDevices) ? s.settings.knownDevices : [])
       .filter((d) => d && typeof d.name === 'string' && ['openrgb', 'native'].includes(d.source))
@@ -621,6 +626,8 @@ class Core extends EventEmitter {
     s.zoneAuto = {};
     for (const k of Object.keys(za)) if (za[k] === true) s.zoneAuto[k] = true;
     if (!Array.isArray(s.settings.hiddenHints)) s.settings.hiddenHints = [];
+    // В 2.10.0 «Сейчас играет» был выключен по умолчанию, и его просто не находили — включаем один раз
+    if (!s.widgetsV211) { s.settings.widgets.media = true; s.settings.widgets.lyrics = true; s.widgetsV211 = true; }
     for (const [k, v] of Object.entries(co)) if (ORDERS.includes(v) && v !== 'RGB') s.colorOrders[k] = v;
     s.customThemes = Array.isArray(s.customThemes) ? s.customThemes.filter((t) => t && t.id && t.name) : [];
     const exists = (id) => THEMES.some((t) => t.id === id) || s.customThemes.some((t) => t.id === id);
@@ -808,7 +815,7 @@ class Core extends EventEmitter {
       const cur = st.notify;
       const apps = { ...cur.apps };
       for (const [k, v] of Object.entries(pn.apps || {})) if (k in apps) apps[k] = !!v;
-      st.notify = { enabled: 'enabled' in pn ? !!pn.enabled : cur.enabled, apps, otherColor: isHex(pn.otherColor) ? pn.otherColor.toLowerCase() : cur.otherColor };
+      st.notify = { enabled: 'enabled' in pn ? !!pn.enabled : cur.enabled, apps, otherColor: isHex(pn.otherColor) ? pn.otherColor.toLowerCase() : cur.otherColor, mode: ['auto', 'contrast', 'app'].includes(pn.mode) ? pn.mode : cur.mode };
       this._syncNotify();
     }
     if ('widgets' in patch) { const pw = patch.widgets || {}; st.widgets = sanitizeWidgets({ ...st.widgets, ...pw, items: { ...st.widgets.items, ...(pw.items || {}) } }); this._syncMedia(); }
@@ -931,13 +938,20 @@ class Core extends EventEmitter {
   }
 
   // Вспышка поверх эффекта: два мягких импульса цветом приложения
+  // Две вспышки; перед каждой подсветка на мгновение темнеет — так вспышку видно на любом фоне
   _applyFlash(out, f, now) {
-    const p = (now - f.t0) / f.ms;
-    const k = Math.pow(Math.max(0, Math.sin(Math.PI * ((p * 2) % 1))), 1.5) * 0.92;
+    const q = (((now - f.t0) / f.ms) * 2) % 1; // фаза внутри одной вспышки
+    const DIP = 0.16;
+    if (q < DIP) {
+      const dim = 1 - 0.85 * Math.sin((Math.PI / 2) * (q / DIP));
+      for (let i = 0; i < out.length; i++) out[i] *= dim;
+      return;
+    }
+    const k = Math.pow(Math.sin(Math.PI * ((q - DIP) / (1 - DIP))), 1.2);
     for (let i = 0; i < out.length; i += 3) {
-      out[i] += (f.rgb[0] - out[i]) * k;
-      out[i + 1] += (f.rgb[1] - out[i + 1]) * k;
-      out[i + 2] += (f.rgb[2] - out[i + 2]) * k;
+      out[i] = out[i] * 0.15 * (1 - k) + f.rgb[0] * k;
+      out[i + 1] = out[i + 1] * 0.15 * (1 - k) + f.rgb[1] * k;
+      out[i + 2] = out[i + 2] * 0.15 * (1 - k) + f.rgb[2] * k;
     }
   }
 
@@ -946,7 +960,10 @@ class Core extends EventEmitter {
     if (!isHex(color)) return false;
     const now = Date.now();
     if (this.flashFx && now - this.flashFx.t0 < 900) return false; // пачка уведомлений — одна вспышка
-    this.flashFx = { rgb: hexToRgb(color), t0: now, ms: 1600 };
+    // цвет приложения — если он заметен на фоне подсветки, иначе самый контрастный к ней
+    const e = this.effective();
+    const rgb = pickFlashColor(hexToRgb(color), (e.colors || []).filter(isHex).map(hexToRgb), this.state.settings.notify.mode, e.effect === 'rainbow');
+    this.flashFx = { rgb, t0: now, ms: 1700 };
     return true;
   }
 

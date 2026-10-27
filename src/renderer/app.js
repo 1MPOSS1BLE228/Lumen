@@ -364,9 +364,11 @@ function notifyGroup(s) {
   const chips = NOTIFY_APPS.map((a) => `<label class="chip"><input type="checkbox" data-notify-app="${a.id}" ${n.apps[a.id] ? 'checked' : ''}><i class="sw" style="background:${a.color}"></i> <span data-noi18n>${esc(a.id === 'mail' ? window.LumenDom ? window.LumenDom.t(a.name) : a.name : a.name)}</span></label>`).join('')
     + `<label class="chip"><input type="checkbox" data-notify-app="other" ${n.apps.other ? 'checked' : ''}> Другие приложения <input type="color" data-notify-color value="${esc(n.otherColor)}" aria-label="Цвет для других приложений" class="sw-in"></label>`;
   return `<h3 class="grp">Подсветка от уведомлений</h3><div class="panel group">
-    <div class="set"><div class="l"><b>Мигать при новом сообщении</b><span>Пришло уведомление в Discord, Telegram и других — подсветка дважды мягко вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.</span></div>
+    <div class="set"><div class="l"><b>Мигать при новом сообщении</b><span>Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.</span></div>
       <div class="row-btns">${n.enabled ? '<button class="btn small" data-act="notify-test">Проверить</button>' : ''}<label class="tg"><input type="checkbox" data-notify="enabled" ${n.enabled ? 'checked' : ''}><span></span></label></div></div>
-    ${n.enabled ? `<div class="set"><div class="chips">${chips}</div></div>` : ''}
+    ${n.enabled ? `<div class="set"><div class="chips">${chips}</div></div>
+    <div class="set"><div class="l"><b>Цвет вспышки</b><span>Чтобы уведомление было видно на любой подсветке: перед вспышкой подсветка на миг гаснет, а цвет подбирается непохожим на текущие.</span></div>
+      <select class="field" data-notify="mode" aria-label="Цвет вспышки" style="height:34px;min-width:220px">${Object.entries({ auto: 'Цвет приложения, если заметен', contrast: 'Всегда контрастный к подсветке', app: 'Всегда цвет приложения' }).map(([k, v]) => `<option value="${k}"${k === (n.mode || 'auto') ? ' selected' : ''}>${v}</option>`).join('')}</select></div>` : ''}
     ${n.enabled && st.state === 'error' ? `<p class="note" style="color:var(--warn);padding:0 0 14px">${esc(st.message)}</p>` : ''}
     ${n.enabled ? '<p class="note" style="padding:0 0 14px">Работает для уведомлений, которые Windows показывает в углу экрана. Если в Windows включён режим «Не беспокоить», Lumen тоже не мигает.</p>' : ''}
   </div>`;
@@ -958,7 +960,7 @@ view.addEventListener('change', (e) => {
   } else if (el.dataset.remote) {
     api.setSettings({ remote: { enabled: el.checked } });
   } else if (el.dataset.notify) {
-    api.setSettings({ notify: { enabled: el.checked } });
+    api.setSettings({ notify: el.dataset.notify === 'mode' ? { mode: el.value } : { enabled: el.checked } });
   } else if (el.dataset.notifyApp) {
     api.setSettings({ notify: { apps: { [el.dataset.notifyApp]: el.checked } } });
   } else if (el.dataset.notifyColor !== undefined) {

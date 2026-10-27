@@ -695,6 +695,32 @@ async function test(name, fn) {
     assert.deepStrictEqual([metCode('clearsky_night'), metCode('heavyrainandthunder'), metCode('lightsnowshowers_day'), wwoCode('113'), wwoCode(389), wwoCode('338')], [0, 95, 71, 0, 95, 75]);
   });
 
+  await test('уведомления: вспышка заметна на любой подсветке (контрастный цвет и затемнение перед вспышкой)', async () => {
+    const { pickFlashColor, deltaE } = require('../src/main/contrast');
+    const blue = [88, 101, 242]; // Discord
+    assert.deepStrictEqual(pickFlashColor(blue, [[255, 0, 0], [255, 80, 0]], 'auto'), blue, 'на красном синий и так видно');
+    const onBlue = pickFlashColor(blue, [[60, 90, 255], [255, 255, 255]], 'auto');
+    assert.ok(deltaE(onBlue, [60, 90, 255]) > 60 && deltaE(onBlue, [255, 255, 255]) > 60, 'на бело-синей — непохожий цвет: ' + onBlue);
+    assert.deepStrictEqual(pickFlashColor(blue, [[60, 90, 255]], 'app'), blue, 'режим «всегда цвет приложения»');
+    assert.deepStrictEqual(pickFlashColor(blue, [[255, 0, 0]], 'auto', true), [255, 255, 255], 'радуга — белый');
+    const core = new Core({ dataDir: tmp() });
+    core.setState({ power: true, effect: 'static', colors: ['#3c5aff', '#ffffff'], brightness: 100 });
+    core.setSettings({ notify: { mode: 'contrast' } });
+    assert.strictEqual(core.state.settings.notify.mode, 'contrast');
+    core.setSettings({ notify: { mode: 'взлом' } });
+    assert.strictEqual(core.state.settings.notify.mode, 'contrast', 'чужое значение не принимаем');
+    assert.ok(core.flash('#5865f2'));
+    const f = core.flashFx;
+    assert.ok(deltaE(f.rgb, [60, 90, 255]) > 60, 'вспышка не синяя: ' + f.rgb);
+    const out = new Uint8Array([60, 90, 255]);
+    core._applyFlash(out, f, f.t0 + 60);
+    assert.ok(out[2] < 120, 'в начале — затемнение: ' + out);
+    const out2 = new Uint8Array([60, 90, 255]);
+    core._applyFlash(out2, f, f.t0 + f.ms * 0.29);
+    assert.ok(deltaE([out2[0], out2[1], out2[2]], f.rgb) < 15, 'в середине — цвет вспышки: ' + out2);
+    core.shutdown();
+  });
+
   await test('сейчас играет: строчка текста по времени трека, кнопки плеера из окна и с телефона', async () => {
     const { Lyrics, parseLrc, cleanTitle } = require('../src/main/lyrics');
     assert.deepStrictEqual(parseLrc('[00:01.50] Первая\n[00:04.2]Вторая\n[01:00.000][01:10.00] Припев\nбез времени'), [{ t: 1500, text: 'Первая' }, { t: 4200, text: 'Вторая' }, { t: 60000, text: 'Припев' }, { t: 70000, text: 'Припев' }]);

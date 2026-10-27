@@ -677,7 +677,13 @@
 "Следующий трек": "Next track",
 "Пауза": "Pause",
 "Играть": "Play",
-"строчка из текста песни": "line from the lyrics"
+"строчка из текста песни": "line from the lyrics",
+"Цвет вспышки": "Flash color",
+"Чтобы уведомление было видно на любой подсветке: перед вспышкой подсветка на миг гаснет, а цвет подбирается непохожим на текущие.": "So notifications are visible on any lighting: the lighting dims for a moment before the flash, and the color is picked to differ from the current ones.",
+"Цвет приложения, если заметен": "App color if visible",
+"Всегда контрастный к подсветке": "Always contrasting with lighting",
+"Всегда цвет приложения": "Always the app color",
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "A notification arrives in Discord, Telegram and others — the lighting flashes twice in the app’s color. Lumen doesn’t read message text, only which app sent it."
 },
 "uk": {
 "Подсветка": "Підсвітка",
@@ -1347,7 +1353,13 @@
 "Следующий трек": "Наступний трек",
 "Пауза": "Пауза",
 "Играть": "Грати",
-"строчка из текста песни": "рядок із тексту пісні"
+"строчка из текста песни": "рядок із тексту пісні",
+"Цвет вспышки": "Колір спалаху",
+"Чтобы уведомление было видно на любой подсветке: перед вспышкой подсветка на миг гаснет, а цвет подбирается непохожим на текущие.": "Щоб сповіщення було видно на будь-якій підсвітці: перед спалахом підсвітка на мить гасне, а колір підбирається несхожим на поточні.",
+"Цвет приложения, если заметен": "Колір застосунку, якщо помітний",
+"Всегда контрастный к подсветке": "Завжди контрастний до підсвітки",
+"Всегда цвет приложения": "Завжди колір застосунку",
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Прийшло сповіщення в Discord, Telegram та інших — підсвітка двічі спалахує кольором застосунку. Текст повідомлень Lumen не читає, лише від кого прийшло сповіщення."
 },
 "de": {
 "Подсветка": "Beleuchtung",
@@ -2017,7 +2029,13 @@
 "Следующий трек": "Nächster Titel",
 "Пауза": "Pause",
 "Играть": "Abspielen",
-"строчка из текста песни": "Zeile aus dem Songtext"
+"строчка из текста песни": "Zeile aus dem Songtext",
+"Цвет вспышки": "Blitzfarbe",
+"Чтобы уведомление было видно на любой подсветке: перед вспышкой подсветка на миг гаснет, а цвет подбирается непохожим на текущие.": "Damit Benachrichtigungen bei jeder Beleuchtung sichtbar sind: Vor dem Blitz wird kurz abgedunkelt, und die Farbe wird abweichend von den aktuellen gewählt.",
+"Цвет приложения, если заметен": "App-Farbe, wenn sichtbar",
+"Всегда контрастный к подсветке": "Immer kontrastreich zur Beleuchtung",
+"Всегда цвет приложения": "Immer die App-Farbe",
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Kommt eine Benachrichtigung in Discord, Telegram usw., blitzt die Beleuchtung zweimal in der Farbe der App. Lumen liest keine Nachrichtentexte, nur von welcher App sie kommt."
 },
 "es": {
 "Подсветка": "Iluminación",
@@ -2687,7 +2705,13 @@
 "Следующий трек": "Pista siguiente",
 "Пауза": "Pausa",
 "Играть": "Reproducir",
-"строчка из текста песни": "línea de la letra"
+"строчка из текста песни": "línea de la letra",
+"Цвет вспышки": "Color del destello",
+"Чтобы уведомление было видно на любой подсветке: перед вспышкой подсветка на миг гаснет, а цвет подбирается непохожим на текущие.": "Para que las notificaciones se vean con cualquier iluminación: antes del destello se atenúa un instante y el color se elige distinto de los actuales.",
+"Цвет приложения, если заметен": "Color de la app si se ve",
+"Всегда контрастный к подсветке": "Siempre en contraste con la iluminación",
+"Всегда цвет приложения": "Siempre el color de la app",
+"Пришло уведомление в Discord, Telegram и других — подсветка дважды вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.": "Llega una notificación de Discord, Telegram u otras — la iluminación destella dos veces con el color de la app. Lumen no lee el texto de los mensajes, solo de qué app vienen."
 }
 };
 
