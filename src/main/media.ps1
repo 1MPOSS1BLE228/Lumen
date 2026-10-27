@@ -18,6 +18,14 @@ $null = [Windows.Media.Control.GlobalSystemMediaTransportControlsSessionManager,
 $null = [Windows.Storage.Streams.DataReader, Windows.Storage.Streams, ContentType = WindowsRuntime]
 $mgr = Await ([Windows.Media.Control.GlobalSystemMediaTransportControlsSessionManager]::RequestAsync()) ([Windows.Media.Control.GlobalSystemMediaTransportControlsSessionManager])
 
+# Закрыть объект Windows Runtime. В Windows PowerShell 5.1 у потоков и DataReader нет .Dispose() —
+# пробуем Dispose, потом Close, а если нет ни того ни другого — оставляем сборщику мусора.
+function Close-WinRt($o) {
+    if ($null -eq $o) { return }
+    try { $o.Dispose(); return } catch { }
+    try { $o.Close() } catch { }
+}
+
 function Poll([string]$lastKey) {
     $s = $mgr.GetCurrentSession()
     if ($null -eq $s) { return @{ ok = $true; playing = $false } }
@@ -34,9 +42,9 @@ function Poll([string]$lastKey) {
             $bytes = New-Object byte[] $size
             $r.ReadBytes($bytes)
             $img = [Convert]::ToBase64String($bytes)
-            $r.Dispose()
+            Close-WinRt $r
         }
-        $st.Dispose()
+        Close-WinRt $st
     }
     # где мы в треке: позиция на момент последнего обновления + сколько прошло с тех пор
     $pos = 0; $dur = 0
