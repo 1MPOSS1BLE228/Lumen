@@ -386,6 +386,8 @@ async function test(name, fn) {
 
   console.log('Встроенный движок (OpenRGB внутри установщика)');
   await test('Lumen сам запускает движок без окна, подключается и гасит его при выходе', async () => {
+    // поддельный движок — shell-скрипт, в Windows его не запустить; там это проверяет реальный запуск
+    if (process.platform === 'win32') return;
     const dir = tmp();
     const exe = path.join(dir, 'OpenRGB.exe');
     fs.writeFileSync(exe, `#!/bin/sh\nexec "${process.execPath}" "${path.join(__dirname, 'mock-engine.js')}" "$@"\n`, { mode: 0o755 });
