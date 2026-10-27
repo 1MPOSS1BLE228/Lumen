@@ -594,16 +594,19 @@ function zonesBlock(d) {
   if (!d.zones || !d.zones.length) return '';
   const rows = d.zones.map((z) => {
     const cur = (S.colorOrders || {})[`${d.id}|${z.name}`] || 'RGB';
+    const auto = (S.zoneAuto || {})[`${d.id}|${z.name}`];
+    const presets = [8, 12, 16, 24, 40, 60, 80, 120].filter((n) => n >= z.min && n <= z.max);
     const size = z.resizable
-      ? `<label class="zsize"><input class="field" type="number" min="${z.min}" max="${z.max}" value="${z.count}" data-size-dev="${esc(d.id)}" data-size-zone="${esc(z.name)}" aria-label="Светодиодов в зоне ${esc(z.name)}"><span>светод.</span></label>`
+      ? `<label class="zsize"><input class="field" type="number" min="${z.min}" max="${z.max}" value="${z.count}" data-size-dev="${esc(d.id)}" data-size-zone="${esc(z.name)}" aria-label="Светодиодов в зоне ${esc(z.name)}"><span>светод.</span>${auto ? '<b class="zauto">поставил сам — уточни</b>' : ''}</label>
+        <div class="zpre">${presets.map((n) => `<button class="chip${n === z.count ? ' on' : ''}" data-act="zone-preset" data-dev="${esc(d.id)}" data-zone="${esc(z.name)}" data-n="${n}">${n}</button>`).join('')}</div>`
       : `<span class="zfixed">${z.count} ${plural(z.count, 'светодиод', 'светодиода', 'светодиодов')}</span>`;
     return `<div class="zone"><div class="zn">${esc(z.name)}${size}</div>
       <select class="field" data-order-dev="${esc(d.id)}" data-order-zone="${esc(z.name)}" aria-label="Порядок цветов: ${esc(z.name)}">${Object.keys(ORDER_LABEL).map((o) => `<option value="${o}"${o === cur ? ' selected' : ''}>${ORDER_LABEL[o]}</option>`).join('')}</select>
       <button class="btn small" data-act="testzone" data-dev="${esc(d.id)}" data-zone="${esc(z.name)}">Проверить</button></div>`;
   }).join('');
-  const needSize = d.zones.some((z) => z.resizable && z.count === 0);
+  const needSize = d.zones.some((z) => z.resizable && (z.count === 0 || (S.zoneAuto || {})[`${d.id}|${z.name}`]));
   return `<details class="zones" data-key="zones:${esc(d.id)}"${needSize ? ' open' : ''}><summary>Настроить зоны: количество светодиодов и порядок цветов${needSize ? ' <b class="warn">— укажи, сколько светодиодов подключено</b>' : ''}</summary>
-    <p class="note">У разъёмов на материнской плате укажи, сколько светодиодов подключено (вентилятор обычно 8–24, лента — смотри по упаковке). Если цвета не совпадают, нажми «Проверить»: зона загорится красным, зелёным и синим по очереди. Если увидишь другие цвета, выбери другой порядок.</p>${rows}</details>`;
+    <p class="note">${d.zones.some((z) => z.resizable) ? 'У разъёмов на материнской плате укажи, сколько светодиодов подключено: один вентилятор — обычно 8–24, несколько вентиляторов цепочкой — складывай, лента — смотри по упаковке. <b>Не знаешь точно — ставь больше:</b> лишние светодиоды ничего не ломают, а если поставить мало, светится только начало вентилятора. ' : ''}Если цвета не совпадают, нажми «Проверить»: зона загорится красным, зелёным и синим по очереди. Если увидишь другие цвета, выбери другой порядок.</p>${rows}</details>`;
 }
 
 // Предупреждения: другая RGB-программа забирает устройства / движок нашёл не все устройства
@@ -614,6 +617,11 @@ function healthBanners(withMissing) {
     h += `<div class="panel banner warnb"><i class="dot" style="width:10px;height:10px;background:var(--warn)"></i>
       <div class="txt"><b>Подсветкой сейчас управляет другая программа: <span data-noi18n>${esc(c.name)}</span></b><span>Пока она запущена, Lumen не может подсвечивать часть устройств. Закрой её и выключи её запуск вместе с Windows в её настройках.</span></div>
       <button class="btn primary" data-act="close-conflict" data-id="${esc(c.id)}">Закрыть программу</button></div>`;
+  }
+  if (withMissing) for (const u of H.unsupported || []) {
+    h += `<div class="panel banner warnb hint"><i class="dot" style="width:10px;height:10px;background:var(--warn)"></i>
+      <div class="txt"><b>${esc(u.title)}</b><ol>${u.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></div>
+      <button class="btn small" data-act="hide-hint" data-id="${esc(u.id)}">Понятно</button></div>`;
   }
   if (withMissing && (H.missing || []).length) {
     h += `<div class="panel banner warnb"><i class="dot" style="width:10px;height:10px;background:var(--warn)"></i>
@@ -804,6 +812,8 @@ const ACT = {
     if (!t) return;
     openNameDialog({ title: 'Переименовать тему', value: t.name, okLabel: 'Сохранить название', onOk: (v) => api.renameTheme(t.id, v).then((ok) => ok && toast('Название сохранено')) });
   },
+  'zone-preset'(el) { api.setZoneSize(el.dataset.dev, el.dataset.zone, Number(el.dataset.n)).then((ok) => { if (ok) toast('Количество светодиодов сохранено'); }); },
+  'hide-hint'(el) { if (api.hideHint) api.hideHint(el.dataset.id); },
   updtheme(el) { api.updateTheme(el.dataset.id).then((ok) => ok && toast('Тема обновлена текущими настройками')); },
   tab(el) { setThemeTab(el.dataset.id); },
   async surprise() { const t = await api.surprise(); toast(`«${t.name}» — понравилось? Сохрани в «Мои»`); lastSurpriseName = t.name; },

@@ -16,6 +16,35 @@ const CONFLICTS = [
   { id: 'razer', name: 'Razer Synapse', exes: ['razer synapse 3.exe', 'razer synapse.exe', 'razercentralservice.exe'] },
 ];
 
+// Устройства, которыми движок (OpenRGB) пока не умеет управлять напрямую, но есть обходной путь.
+// ids — USB VID:PID в нижнем регистре.
+const UNSUPPORTED = [
+  {
+    id: 'lianli-tl', ids: ['0416:7372'], name: 'Lian Li UNI FAN TL',
+    title: 'Вентиляторы Lian Li UNI FAN TL подключены к своему контроллеру',
+    steps: [
+      'Движок Lumen пока не умеет управлять контроллером UNI FAN TL напрямую — это умеет только L-Connect 3. Но вентиляторы можно подключить через материнскую плату.',
+      'Проверь, что контроллер соединён кабелем ARGB (3 контакта, 5 В) с разъёмом ARGB на материнской плате.',
+      'В L-Connect 3 включи синхронизацию с материнской платой (MB Lighting Sync / MB Sync). Обычно настройка остаётся в контроллере, и L-Connect потом можно закрыть.',
+      'Здесь, на странице «Устройства», у материнской платы открой «Настроить зоны» и поставь у этого разъёма побольше светодиодов, например 80.',
+    ],
+  },
+];
+
+// Строки с VID_xxxx&PID_xxxx -> набор 'vvvv:pppp'
+function parseUsbIds(text) {
+  const set = new Set();
+  const re = /VID_([0-9A-F]{4})&PID_([0-9A-F]{4})/gi;
+  let m;
+  while ((m = re.exec(String(text || '')))) set.add(`${m[1]}:${m[2]}`.toLowerCase());
+  return set;
+}
+
+function findUnsupported(ids, hidden = []) {
+  const set = ids instanceof Set ? ids : new Set(ids || []);
+  return UNSUPPORTED.filter((u) => !hidden.includes(u.id) && u.ids.some((i) => set.has(i))).map((u) => ({ id: u.id, name: u.name, title: u.title, steps: u.steps }));
+}
+
 // Разбор вывода tasklist /fo csv /nh -> имена процессов в нижнем регистре
 function parseTasklist(out) {
   const names = new Set();
@@ -46,4 +75,4 @@ function missingDevices(known, current) {
   return (known || []).filter((d) => !cur.has(`${d.source}|${d.name}`)).map((d) => ({ name: d.name, kind: d.kind, source: d.source }));
 }
 
-module.exports = { CONFLICTS, parseTasklist, findConflicts, mergeKnown, missingDevices };
+module.exports = { CONFLICTS, UNSUPPORTED, parseTasklist, findConflicts, mergeKnown, missingDevices, parseUsbIds, findUnsupported };

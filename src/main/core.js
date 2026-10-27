@@ -16,7 +16,11 @@ const { WinTheme } = require('./wintheme');
 const { pickAccent } = require('../shared/accent');
 const { Sensors } = require('./sensors');
 const { WidgetFeed } = require('./widgets');
-const { findConflicts, mergeKnown, missingDevices } = require('./health');
+const { findConflicts, mergeKnown, missingDevices, findUnsupported } = require('./health');
+
+// Сколько светодиодов ставить разъёму ARGB, пока пользователь не указал сам. Лишние ничего не ломают:
+// лента или вентилятор просто не получат «хвост» данных, а с маленьким числом светится только начало.
+const DEFAULT_ZONE_LEDS = 40;
 const { NotifyWatcher, APPS: NOTIFY_APPS } = require('./notify');
 const { RemoteServer, newToken, DEFAULT_PORT } = require('./remote');
 const { MediaWatcher } = require('./media');
@@ -45,6 +49,7 @@ const DEFAULTS = {
   disabledDevices: [],
   colorOrders: {},
   zoneSizes: {},
+  zoneAuto: {},
   customThemes: [],
   scenarios: DEFAULT_SCENARIOS,
   settings: {
@@ -73,6 +78,7 @@ const DEFAULTS = {
     autoUpdate: true,
     notify: { enabled: false, apps: { discord: true, telegram: true, whatsapp: true, vk: true, mail: true, steam: false, other: false }, otherColor: '#ffffff' },
     photoPicks: {},
+    hiddenHints: [],
     photoRotate: 0,
     widgets: { enabled: false, clock: true, weather: true, system: true, city: '', corner: 'tr', size: 'm', forecast: true, seconds: false,
       items: { cpu: true, ram: true, gpu: true, vram: false, net: true, disk: true, uptime: false } },
@@ -160,7 +166,7 @@ class Core extends EventEmitter {
     this.sensors = sensors || new Sensors({ platform });
     this.sensors.on('data', (d) => this.emit('sensors', d));
     this.sensors.on('log', (m) => this.log(m));
-    this.health = { conflicts: [], missing: [] };
+    this.health = { conflicts: [], missing: [], unsupported: [] };
     this.notify = notify || new NotifyWatcher({ platform });
     this.media = media || new MediaWatcher({ dataDir, decode: hooks.decodeImage, Helper: DesktopHelper, platform });
     this.media.on('track', (t) => {
@@ -394,6 +400,8 @@ class Core extends EventEmitter {
     let conflicts = [];
     try { if (this.hooks.listProcesses) conflicts = findConflicts(await this.hooks.listProcesses()); } catch (_) { /* не страшно */ }
     const st = this.state.settings;
+    let unsupported = [];
+    try { if (this.hooks.listUsb) unsupported = findUnsupported(await this.hooks.listUsb(), st.hiddenHints); } catch (_) { /* не страшно */ }
     let missing = [];
     // Список «моих устройств» и пропажи считаем, только когда движок спокойно поработал полминуты
     const settled = this.conn.status === 'connected' && Date.now() - (this.connectedAt || Date.now()) > 25000;
@@ -405,7 +413,7 @@ class Core extends EventEmitter {
         if (JSON.stringify(merged) !== JSON.stringify(st.knownDevices)) { st.knownDevices = merged; this._save(); }
       }
     }
-    const h = { conflicts, missing };
+    const h = { conflicts, missing, unsupported };
     if (JSON.stringify(h) !== JSON.stringify(this.health)) {
       if (conflicts.length && JSON.stringify(conflicts) !== JSON.stringify(this.health.conflicts)) this.log('Мешают программы: ' + conflicts.map((c) => c.name).join(', '));
       if (missing.length && JSON.stringify(missing) !== JSON.stringify(this.health.missing)) this.log('Не найдены устройства: ' + missing.map((d) => d.name).join(', '));
@@ -413,6 +421,17 @@ class Core extends EventEmitter {
       this.emit('health', h);
     }
     return h;
+  }
+
+  // Скрыть подсказку про неподдерживаемое устройство («Понятно»)
+  hideHint(id) {
+    const st = this.state.settings;
+    if (typeof id !== 'string' || st.hiddenHints.includes(id)) return false;
+    st.hiddenHints = [...st.hiddenHints, id].slice(-20);
+    this._save();
+    this.health = { ...this.health, unsupported: (this.health.unsupported || []).filter((u) => u.id !== id) };
+    this.emit('health', this.health);
+    return true;
   }
 
   // «Я больше не пользуюсь этим устройством» — запомнить текущий набор как обычный
@@ -533,6 +552,13 @@ class Core extends EventEmitter {
     const zs = s.zoneSizes && typeof s.zoneSizes === 'object' ? s.zoneSizes : {};
     s.zoneSizes = {};
     for (const [k, v] of Object.entries(zs)) if (Number.isInteger(v) && v >= 0 && v <= 1000) s.zoneSizes[k] = v;
+    // До 2.8.1 поле было крошечным, и многие случайно ставили 1–2 светодиода (горело только начало вентилятора).
+    // Такие размеры сбрасываем один раз — Lumen подставит разумное число сам.
+    if (!s.zoneFixV1) { for (const [k, v] of Object.entries(s.zoneSizes)) if (v > 0 && v <= 2) delete s.zoneSizes[k]; s.zoneFixV1 = true; }
+    const za = s.zoneAuto && typeof s.zoneAuto === 'object' ? s.zoneAuto : {};
+    s.zoneAuto = {};
+    for (const k of Object.keys(za)) if (za[k] === true) s.zoneAuto[k] = true;
+    if (!Array.isArray(s.settings.hiddenHints)) s.settings.hiddenHints = [];
     for (const [k, v] of Object.entries(co)) if (ORDERS.includes(v) && v !== 'RGB') s.colorOrders[k] = v;
     s.customThemes = Array.isArray(s.customThemes) ? s.customThemes.filter((t) => t && t.id && t.name) : [];
     const exists = (id) => THEMES.some((t) => t.id === id) || s.customThemes.some((t) => t.id === id);
@@ -679,6 +705,7 @@ class Core extends EventEmitter {
     if (!z || !z.resizable) return false;
     const n = Math.max(z.min, Math.min(z.max, Math.round(Number(size)) || 0));
     this.state.zoneSizes[`${devId}|${zone}`] = n;
+    delete this.state.zoneAuto[`${devId}|${zone}`];
     this._save();
     this._emitState();
     if (this.client && n !== z.count) {
@@ -1115,7 +1142,17 @@ class Core extends EventEmitter {
     let changed = false;
     for (const c of list) {
       c.zones.forEach((z, zi) => {
-        const want = this.state.zoneSizes[`${this._orgbId(c)}|${z.name}`];
+        const key = `${this._orgbId(c)}|${z.name}`;
+        let want = this.state.zoneSizes[key];
+        // Разъём ARGB без размера (0–2 светодиода): ставим разумное число сами и подсказываем уточнить
+        if (want == null && z.ledsMin !== z.ledsMax && z.ledsCount <= 2 && z.ledsMax >= 8) {
+          want = Math.max(z.ledsMin, Math.min(z.ledsMax, DEFAULT_ZONE_LEDS));
+          this.state.zoneSizes[key] = want;
+          this.state.zoneAuto[key] = true;
+          this.log(`Зона «${z.name}» (${c.name}): размер не указан, ставлю ${want} светодиодов`);
+          this._save();
+          this._emitState();
+        }
         if (want == null || z.ledsMin === z.ledsMax || want === z.ledsCount || want < z.ledsMin || want > z.ledsMax) return;
         client.resizeZone(c.index, zi, want);
         changed = true;

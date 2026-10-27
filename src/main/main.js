@@ -24,7 +24,7 @@ const { Core } = require('./core');
 const { LiveWallpaper } = require('./livewall');
 const { AdminEngine } = require('./adminengine');
 const { makeTranslator } = require('../shared/i18n');
-const { parseTasklist } = require('./health');
+const { parseTasklist, parseUsbIds } = require('./health');
 const { buildReport } = require('./bugreport');
 const { Updater } = require('./updater');
 const PKG = require('../../package.json');
@@ -82,6 +82,19 @@ function listProcesses() {
   return new Promise((resolve) => {
     if (process.platform !== 'win32') { resolve(new Set()); return; }
     execFile('tasklist', ['/fo', 'csv', '/nh'], { windowsHide: true, maxBuffer: 8 * 1024 * 1024 }, (err, out) => resolve(err ? new Set() : parseTasklist(out)));
+  });
+}
+// USB-устройства компьютера (VID:PID) — чтобы подсказать про контроллеры, которые движок не знает.
+// Спрашиваем Windows не чаще раза в 10 минут.
+let usbCache = { t: 0, ids: new Set() };
+function listUsb() {
+  if (process.platform !== 'win32') return Promise.resolve(new Set());
+  if (Date.now() - usbCache.t < 600000) return Promise.resolve(usbCache.ids);
+  return new Promise((resolve) => {
+    execFile('powershell.exe', ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -like '*VID_*' } | ForEach-Object { $_.InstanceId }"], { windowsHide: true, timeout: 20000, maxBuffer: 8 * 1024 * 1024 }, (err, out) => {
+      usbCache = { t: Date.now(), ids: err ? usbCache.ids : parseUsbIds(out) };
+      resolve(usbCache.ids);
+    });
   });
 }
 // Закрыть программу по именам процессов (только по кнопке пользователя)
@@ -304,6 +317,7 @@ function registerIpc() {
     return true;
   });
   ipcMain.handle('health:check', () => core.checkHealth());
+  ipcMain.handle('health:hide', (_e, id) => core.hideHint(id));
   ipcMain.handle('health:close', (_e, id) => core.closeConflict(String(id)));
   ipcMain.handle('health:forget', () => { core.forgetMissing(); return true; });
   ipcMain.handle('photos:list', (_e, page) => core.photoOptions(Math.max(1, Math.min(50, Number(page) || 1))));
@@ -362,7 +376,7 @@ app.whenReady().then(() => {
     pawnio: app.isPackaged ? path.join(process.resourcesPath, 'PawnIO', 'PawnIO_setup.exe') : path.join(ROOT, 'vendor', 'PawnIO', 'PawnIO_setup.exe'),
   });
   const live = new LiveWallpaper({ electron: { BrowserWindow, screen }, dataDir: app.getPath('userData') });
-  core = new Core({ dataDir: app.getPath('userData'), version: app.getVersion(), hooks: { setAutostart: applyAutostart, getScreenSize, listProcesses, killProcesses, decodeImage, getLocale: () => (app.getPreferredSystemLanguages()[0] || app.getLocale()) }, bundledEngine, live, adminEngine });
+  core = new Core({ dataDir: app.getPath('userData'), version: app.getVersion(), hooks: { setAutostart: applyAutostart, getScreenSize, listProcesses, listUsb, killProcesses, decodeImage, getLocale: () => (app.getPreferredSystemLanguages()[0] || app.getLocale()) }, bundledEngine, live, adminEngine });
   T = makeTranslator(core.lang()).t;
   live.setLang(core.lang());
   // Сменили язык: перевод главного процесса, меню, обои-виджеты и окно (перезагружаем — так проще всего)

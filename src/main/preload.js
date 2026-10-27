@@ -44,6 +44,7 @@ contextBridge.exposeInMainWorld('lumen', {
   checkUpdate: () => ipcRenderer.invoke('update:check'),
   installUpdate: () => ipcRenderer.invoke('update:install'),
   checkHealth: () => ipcRenderer.invoke('health:check'),
+  hideHint: (id) => ipcRenderer.invoke('health:hide', id),
   closeConflict: (id) => ipcRenderer.invoke('health:close', id),
   forgetMissing: () => ipcRenderer.invoke('health:forget'),
   photoOptions: (page) => ipcRenderer.invoke('photos:list', page),

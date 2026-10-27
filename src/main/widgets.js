@@ -1,7 +1,8 @@
 'use strict';
 // Данные для виджетов на рабочем столе: загрузка процессора и памяти, видеокарта, погода.
 // Всё опрашивается редко и только пока виджеты видны: нагрузка — раз в 3 с, погода — раз в 15 минут.
-// Погода — бесплатный сервис Open-Meteo (без ключа), город ищется через его же геокодер.
+// Погода — бесплатные сервисы без ключа, по очереди: Open-Meteo, MET Norway (yr.no), wttr.in.
+// Если один не отвечает или ограничил запросы, берём следующий; тот, что сработал, спрашиваем первым.
 const os = require('os');
 const fs = require('fs');
 const { EventEmitter } = require('events');
@@ -18,6 +19,33 @@ const WMO = {
   80: ['Ливень', 'rain'], 81: ['Ливень', 'rain'], 82: ['Сильный ливень', 'rain'], 85: ['Снегопад', 'snow'], 86: ['Сильный снегопад', 'snow'],
   95: ['Гроза', 'storm'], 96: ['Гроза с градом', 'storm'], 99: ['Гроза с градом', 'storm'],
 };
+
+const UA = 'Lumen (https://github.com/1MPOSS1BLE228/Lumen)';
+const localDate = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+// Значки MET Norway (clearsky_day, lightrainshowers_night…) -> код WMO
+function metCode(sym) {
+  const s = String(sym || '').replace(/_(day|night|polartwilight)$/, '');
+  if (/thunder/.test(s)) return 95;
+  if (s === 'clearsky') return 0;
+  if (s === 'fair') return 1;
+  if (s === 'partlycloudy') return 2;
+  if (s === 'cloudy') return 3;
+  if (s === 'fog') return 45;
+  if (/sleet/.test(s)) return 66;
+  if (/snow/.test(s)) return /^heavy/.test(s) ? 75 : /^light/.test(s) ? 71 : 73;
+  if (/rain/.test(s)) return /^heavy/.test(s) ? 65 : /^light/.test(s) ? 61 : 63;
+  return 3;
+}
+
+// Коды World Weather Online (их отдаёт wttr.in) -> код WMO
+function wwoCode(c) {
+  const n = Number(c);
+  const g = [[[113], 0], [[116], 2], [[119, 122], 3], [[143, 248], 45], [[260], 48], [[263, 266], 51], [[176, 293, 296, 353], 61], [[299, 302, 356], 63], [[305, 308, 359], 65],
+    [[179, 182, 185, 281, 284, 311, 314, 317, 320, 350, 362, 365, 374, 377], 66], [[323, 326, 368], 71], [[227, 329, 332, 371], 73], [[230, 335, 338, 392, 395], 75], [[200, 386, 389], 95]];
+  for (const [list, code] of g) if (list.includes(n)) return code;
+  return 3;
+}
 
 function cpuTimes() {
   let idle = 0, total = 0;
@@ -133,52 +161,133 @@ class WidgetFeed extends EventEmitter {
     this.emit('data', this.data);
   }
 
-  async _json(url) {
+  async _json(url, ms = 9000) {
     const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 15000);
+    const tm = setTimeout(() => ctrl.abort(), ms);
     try {
-      const r = await this.fetch(url, { signal: ctrl.signal });
+      const r = await this.fetch(url, { signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: 'application/json' } });
+      if (r.status === 429) throw new Error('сервис погоды просит подождать');
       if (!r.ok) throw new Error(`сервис погоды ответил ${r.status}`);
       return await r.json();
-    } finally { clearTimeout(t); }
+    } finally { clearTimeout(tm); }
+  }
+
+  // Координаты города: геокодер Open-Meteo, запасной — OpenStreetMap (Nominatim)
+  async _geo(city, lang) {
+    const q = city + '|' + lang;
+    if (this.geo && this.geo.q === q) return this.geo;
+    let res = null, err = null;
+    try {
+      const g = await this._json(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=${lang}&format=json`);
+      const r = g.results && g.results[0];
+      if (r) res = { q, name: r.name, lat: r.latitude, lon: r.longitude };
+      else err = new Error(`не нашёл город «${city}»`);
+    } catch (e) { err = e; }
+    if (!res) {
+      try {
+        const g = await this._json(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1&accept-language=${lang}`);
+        const r = Array.isArray(g) && g[0];
+        if (r) res = { q, name: String(r.name || r.display_name || city).split(',')[0], lat: Number(r.lat), lon: Number(r.lon) };
+      } catch (e) { if (!err) err = e; }
+    }
+    if (!res) throw err || new Error(`не нашёл город «${city}»`);
+    this.geo = res;
+    return res;
+  }
+
+  async _openMeteo(city, lang) {
+    const geo = await this._geo(city, lang);
+    const w = await this._json(`https://api.open-meteo.com/v1/forecast?latitude=${geo.lat}&longitude=${geo.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone=auto&forecast_days=4&wind_speed_unit=ms`);
+    const c = w.current || {};
+    if (c.temperature_2m == null) throw new Error('пустой ответ');
+    return {
+      city: geo.name, temp: Math.round(c.temperature_2m), feels: Math.round(c.apparent_temperature), code: c.weather_code, night: c.is_day === 0,
+      wind: Math.round(c.wind_speed_10m), humidity: c.relative_humidity_2m == null ? null : Math.round(c.relative_humidity_2m),
+      max: w.daily ? Math.round(w.daily.temperature_2m_max[0]) : null, min: w.daily ? Math.round(w.daily.temperature_2m_min[0]) : null,
+      rain: w.daily && w.daily.precipitation_probability_max ? w.daily.precipitation_probability_max[0] : null,
+      days: w.daily && w.daily.time ? w.daily.time.slice(1, 4).map((d, i) => ({ date: d, max: Math.round(w.daily.temperature_2m_max[i + 1]), min: Math.round(w.daily.temperature_2m_min[i + 1]), code: w.daily.weather_code[i + 1] })) : [],
+    };
+  }
+
+  // MET Norway (yr.no): почасовой прогноз, дни собираем сами
+  async _metNo(city, lang) {
+    const geo = await this._geo(city, lang);
+    const d = await this._json(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${(+geo.lat).toFixed(3)}&lon=${(+geo.lon).toFixed(3)}`);
+    const ts = (d.properties && d.properties.timeseries) || [];
+    if (!ts.length) throw new Error('пустой ответ');
+    const sym = (t) => ((t.data.next_1_hours || t.data.next_6_hours || {}).summary || {}).symbol_code || '';
+    const now = ts[0].data.instant.details;
+    const byDay = new Map();
+    for (const t of ts) {
+      const day = localDate(new Date(t.time));
+      const v = t.data.instant.details.air_temperature;
+      const e = byDay.get(day) || { max: -Infinity, min: Infinity, code: null, noon: Infinity };
+      e.max = Math.max(e.max, v); e.min = Math.min(e.min, v);
+      const off = Math.abs(new Date(t.time).getHours() - 13); // значок дня — ближе к полудню
+      if (off < e.noon && sym(t)) { e.noon = off; e.code = metCode(sym(t)); }
+      byDay.set(day, e);
+    }
+    const days = [...byDay.entries()];
+    const today = days[0][1];
+    return {
+      city: geo.name, temp: Math.round(now.air_temperature), feels: Math.round(now.air_temperature), code: metCode(sym(ts[0])), night: /_night/.test(sym(ts[0])),
+      wind: Math.round(now.wind_speed), humidity: now.relative_humidity == null ? null : Math.round(now.relative_humidity),
+      max: Math.round(today.max), min: Math.round(today.min), rain: null,
+      days: days.slice(1, 4).map(([date, e]) => ({ date, max: Math.round(e.max), min: Math.round(e.min), code: e.code })),
+    };
+  }
+
+  // wttr.in: сам ищет город по названию
+  async _wttr(city, lang) {
+    const d = await this._json(`https://wttr.in/${encodeURIComponent(city)}?format=j1&lang=${lang}`);
+    const c = d.current_condition && d.current_condition[0];
+    if (!c) throw new Error('пустой ответ');
+    const w = d.weather || [];
+    const area = d.nearest_area && d.nearest_area[0];
+    const name = (area && area.areaName && area.areaName[0] && area.areaName[0].value) || city;
+    const rainOf = (x) => Math.max(0, ...(x.hourly || []).map((h) => Number(h.chanceofrain) || 0));
+    const hour = new Date().getHours();
+    return {
+      city: name, temp: Number(c.temp_C), feels: Number(c.FeelsLikeC), code: wwoCode(c.weatherCode), night: hour < 6 || hour >= 20,
+      wind: Math.round((Number(c.windspeedKmph) || 0) / 3.6), humidity: c.humidity == null ? null : Number(c.humidity),
+      max: w[0] ? Number(w[0].maxtempC) : null, min: w[0] ? Number(w[0].mintempC) : null, rain: w[0] ? rainOf(w[0]) : null,
+      days: w.slice(1, 4).map((x) => ({ date: x.date, max: Number(x.maxtempC), min: Number(x.mintempC), code: wwoCode((x.hourly[4] || x.hourly[0] || {}).weatherCode) })),
+    };
   }
 
   async _weather() {
     const city = String((this.cfg && this.cfg.city) || '').trim();
     if (!city) { this.data.weather = { error: 'Укажи город в настройках виджетов', at: Date.now() }; this.emit('data', this.data); return; }
-    try {
-      const lang = (this.cfg && this.cfg.lang) || 'ru';
-      if (!this.geo || this.geo.q !== city + '|' + lang) {
-        const g = await this._json(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=${lang}&format=json`);
-        const r = g.results && g.results[0];
-        if (!r) throw new Error(`не нашёл город «${city}»`);
-        this.geo = { q: city + '|' + lang, name: r.name, lat: r.latitude, lon: r.longitude };
+    const lang = (this.cfg && this.cfg.lang) || 'ru';
+    const all = { openmeteo: () => this._openMeteo(city, lang), metno: () => this._metNo(city, lang), wttr: () => this._wttr(city, lang) };
+    const order = [this.wxBest, ...Object.keys(all)].filter((k, i, a) => k && all[k] && a.indexOf(k) === i);
+    let first = null;
+    for (const k of order) {
+      try {
+        const r = await all[k]();
+        this.wxBest = k;
+        const [text, icon] = WMO[r.code] || ['', 'cloud'];
+        this.data.weather = {
+          city: r.city, temp: r.temp, feels: r.feels, wind: r.wind, text, icon: icon === 'sun' && r.night ? 'moon' : icon,
+          max: r.max, min: r.min, humidity: r.humidity, rain: r.rain,
+          days: (r.days || []).map((x) => ({ date: x.date, max: x.max, min: x.min, icon: (WMO[x.code] || ['', 'cloud'])[1] })),
+          source: k, at: Date.now(),
+        };
+        this.emit('data', this.data);
+        return;
+      } catch (e) {
+        if (/не нашёл город/.test(e.message)) { first = e; break; }
+        if (!first) first = e;
       }
-      const w = await this._json(`https://api.open-meteo.com/v1/forecast?latitude=${this.geo.lat}&longitude=${this.geo.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone=auto&forecast_days=4&wind_speed_unit=ms`);
-      const c = w.current || {};
-      const [text, icon] = WMO[c.weather_code] || ['', 'cloud'];
-      this.data.weather = {
-        city: this.geo.name, temp: Math.round(c.temperature_2m), feels: Math.round(c.apparent_temperature),
-        wind: Math.round(c.wind_speed_10m), text, icon: icon === 'sun' && c.is_day === 0 ? 'moon' : icon,
-        max: w.daily ? Math.round(w.daily.temperature_2m_max[0]) : null, min: w.daily ? Math.round(w.daily.temperature_2m_min[0]) : null,
-        humidity: c.relative_humidity_2m == null ? null : Math.round(c.relative_humidity_2m),
-        rain: w.daily && w.daily.precipitation_probability_max ? w.daily.precipitation_probability_max[0] : null,
-        // прогноз на 3 следующих дня
-        days: w.daily && w.daily.time ? w.daily.time.slice(1, 4).map((d, i) => ({
-          date: d, max: Math.round(w.daily.temperature_2m_max[i + 1]), min: Math.round(w.daily.temperature_2m_min[i + 1]),
-          icon: (WMO[w.daily.weather_code[i + 1]] || ['', 'cloud'])[1],
-        })) : [],
-        at: Date.now(),
-      };
-    } catch (e) {
-      const msg = e.name === 'AbortError' ? 'сервис погоды не ответил' : /fetch failed|ENOTFOUND|net::/i.test(e.message) ? 'нет интернета' : e.message;
-      // старые данные оставляем, если они свежее часа
-      if (!this.data.weather || this.data.weather.error || Date.now() - this.data.weather.at > 3600000) this.data.weather = { error: 'Погода: ' + msg, at: Date.now() };
     }
+    const e = first || new Error('нет ответа');
+    const msg = e.name === 'AbortError' ? 'сервисы погоды не ответили' : /fetch failed|ENOTFOUND|net::/i.test(e.message) ? 'нет интернета' : e.message;
+    // старые данные оставляем, если они свежее часа
+    if (!this.data.weather || this.data.weather.error || Date.now() - this.data.weather.at > 3600000) this.data.weather = { error: 'Погода: ' + msg, at: Date.now() };
     this.emit('data', this.data);
   }
 
   stop() { this.cfg = null; this._restart(); }
 }
 
-module.exports = { WidgetFeed, WMO };
+module.exports = { WidgetFeed, WMO, metCode, wwoCode };

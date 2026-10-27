@@ -421,7 +421,7 @@ async function test(name, fn) {
     core.start();
     await core.connect({ manual: true });
     const strip = core.devices.find((d) => d.name === 'Mock Strip');
-    assert.deepStrictEqual(core.deviceInfos().find((d) => d.id === strip.id).zones.map((z) => [z.name, z.count, z.resizable]), [['Strip', 10, true], ['Header 2', 0, true]]);
+    assert.deepStrictEqual(core.deviceInfos().find((d) => d.id === strip.id).zones.map((z) => [z.name, z.count, z.resizable]), [['Strip', 10, true], ['Header 2', 40, true]], 'разъём без размера получил 40 светодиодов сам');
     core.setState({ effect: 'static', colors: ['#ff0000'], brightness: 100 });
     core.setColorOrder(strip.id, 'Strip', 'GRB');
     core.setColorOrder(strip.id, 'Strip', 'НЕТ');
@@ -460,7 +460,7 @@ async function test(name, fn) {
     assert.strictEqual(core.setZoneSize(strip.id, 'Header 2', 12), true);
     assert.strictEqual(core.setZoneSize(strip.id, 'Нет такой', 5), false);
     assert.ok(await until(() => core.devices.find((d) => d.name === 'Mock Strip').leds.length === 22), 'после изменения устройство должно перечитаться');
-    assert.deepStrictEqual(m1.log.resizes, [{ dev: 1, zi: 1, size: 12 }]);
+    assert.deepStrictEqual(m1.log.resizes, [{ dev: 1, zi: 1, size: 40 }, { dev: 1, zi: 1, size: 12 }], 'сначала 40 сам, потом как сказал пользователь');
     core.setZoneSize(strip.id, 'Header 2', 5000);
     assert.strictEqual(core.state.zoneSizes[`${strip.id}|Header 2`], 100, 'размер ограничивается максимумом зоны');
     core.setZoneSize(strip.id, 'Header 2', 12);
@@ -637,6 +637,90 @@ async function test(name, fn) {
     assert.ok(calls.includes('start:6742'));
     await core.setEngineAdmin(false);
     assert.ok(calls.includes('stop') && !core.state.settings.engineAdmin);
+    core.shutdown();
+  });
+
+  await test('погода: если Open-Meteo ограничил запросы — берём MET Norway, потом wttr.in; рабочий сервис спрашиваем первым', async () => {
+    const { WidgetFeed } = require('../src/main/widgets');
+    const metno = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixture-metno.json'), 'utf8'));
+    const wttr = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixture-wttr.json'), 'utf8'));
+    const hits = [];
+    let down = new Set(['api.open-meteo.com']);
+    const fetchImpl = async (u, opts) => {
+      const host = new URL(u).host;
+      hits.push(host);
+      assert.ok(/Lumen/.test(opts.headers['User-Agent']), 'сервисы просят представиться');
+      if (down.has(host)) return { ok: false, status: 429, json: async () => ({}) };
+      if (host.startsWith('geocoding')) return { ok: true, status: 200, json: async () => ({ results: [{ name: 'Москва', latitude: 55.75, longitude: 37.62 }] }) };
+      if (host === 'api.met.no') return { ok: true, status: 200, json: async () => metno };
+      if (host === 'wttr.in') return { ok: true, status: 200, json: async () => wttr };
+      throw new Error('неожиданный адрес ' + u);
+    };
+    const feed = new WidgetFeed({ sensors: { data: {} }, fetchImpl });
+    feed.cfg = { city: 'Москва', lang: 'ru' };
+    await feed._weather();
+    let w = feed.data.weather;
+    assert.ok(!w.error, w.error);
+    assert.strictEqual(w.source, 'metno');
+    assert.ok(Number.isFinite(w.temp) && w.text && w.days.length === 3 && w.days.every((d) => /^\d{4}-\d\d-\d\d$/.test(d.date) && Number.isFinite(d.max)), JSON.stringify(w));
+    // в следующий раз Open-Meteo уже не дёргаем
+    hits.length = 0;
+    await feed._weather();
+    assert.strictEqual(hits[0], 'api.met.no');
+    // MET Norway тоже лёг — wttr.in
+    down = new Set(['api.open-meteo.com', 'api.met.no']);
+    await feed._weather();
+    w = feed.data.weather;
+    assert.strictEqual(w.source, 'wttr');
+    assert.ok(w.city === 'Москва' && Number.isFinite(w.temp) && w.days.length >= 2 && w.humidity != null, JSON.stringify(w));
+    // все лежат: свежие данные не стираем, а через час — понятная ошибка
+    down = new Set(['api.open-meteo.com', 'api.met.no', 'wttr.in']);
+    await feed._weather();
+    assert.strictEqual(feed.data.weather.source, 'wttr', 'свежая погода осталась');
+    feed.data.weather.at -= 2 * 3600000;
+    await feed._weather();
+    assert.ok(/подождать|ответил/.test(feed.data.weather.error), feed.data.weather.error);
+    // геокодер Open-Meteo недоступен — город ищем через OpenStreetMap
+    const f2 = new WidgetFeed({ sensors: { data: {} }, fetchImpl: async (u) => {
+      const host = new URL(u).host;
+      if (host.startsWith('geocoding') || host === 'api.open-meteo.com') return { ok: false, status: 503, json: async () => ({}) };
+      if (host === 'nominatim.openstreetmap.org') return { ok: true, status: 200, json: async () => [{ name: 'Казань', lat: '55.79', lon: '49.12' }] };
+      if (host === 'api.met.no') { assert.ok(u.includes('lat=55.790')); return { ok: true, status: 200, json: async () => metno }; }
+      throw new Error(u);
+    } });
+    f2.cfg = { city: 'Казань', lang: 'ru' };
+    await f2._weather();
+    assert.strictEqual(f2.data.weather.city, 'Казань');
+    const { metCode, wwoCode } = require('../src/main/widgets');
+    assert.deepStrictEqual([metCode('clearsky_night'), metCode('heavyrainandthunder'), metCode('lightsnowshowers_day'), wwoCode('113'), wwoCode(389), wwoCode('338')], [0, 95, 71, 0, 95, 75]);
+  });
+
+  await test('зоны ARGB: без размера Lumen ставит 40 сам, случайные «1–2» исправляет, подсказка про Lian Li TL', async () => {
+    const { parseUsbIds, findUnsupported } = require('../src/main/health');
+    const ids = parseUsbIds('USB\\VID_0416&PID_7372&MI_00\\9&1\r\nHID\\VID_0B05&PID_19AF&MI_02\\a');
+    assert.ok(ids.has('0416:7372') && ids.has('0b05:19af'));
+    assert.deepStrictEqual(findUnsupported(ids).map((u) => u.id), ['lianli-tl']);
+    assert.deepStrictEqual(findUnsupported(ids, ['lianli-tl']), [], 'после «Понятно» не показываем');
+    const dir = tmp();
+    fs.writeFileSync(path.join(dir, 'lumen-settings.json'), JSON.stringify({ zoneSizes: { 'orgb:B|x|Header 1': 1, 'orgb:B|x|Header 2': 30 } }));
+    const core = new Core({ dataDir: dir, hooks: { listUsb: async () => ids, listProcesses: async () => new Set() } });
+    assert.deepStrictEqual(core.state.zoneSizes, { 'orgb:B|x|Header 2': 30 }, 'случайную единицу сбросили, настоящий размер оставили');
+    const calls = [];
+    const client = { resizeZone: (...a) => calls.push(a) };
+    const list = [{ index: 0, name: 'B', location: 'x', zones: [
+      { name: 'Header 1', ledsCount: 1, ledsMin: 0, ledsMax: 500 },
+      { name: 'Header 2', ledsCount: 0, ledsMin: 0, ledsMax: 500 },
+      { name: 'Header 3', ledsCount: 0, ledsMin: 0, ledsMax: 500 },
+      { name: 'Fixed', ledsCount: 1, ledsMin: 1, ledsMax: 1 },
+    ] }];
+    assert.ok(core._applyZoneSizes(client, list));
+    assert.deepStrictEqual(calls, [[0, 0, 40], [0, 1, 30], [0, 2, 40]]);
+    assert.ok(core.state.zoneAuto['orgb:B|x|Header 1'] && !core.state.zoneAuto['orgb:B|x|Header 2']);
+    const h = await core.checkHealth();
+    assert.strictEqual(h.unsupported[0].id, 'lianli-tl');
+    core.hideHint('lianli-tl');
+    assert.deepStrictEqual(core.health.unsupported, []);
+    assert.deepStrictEqual((await core.checkHealth()).unsupported, []);
     core.shutdown();
   });
 
