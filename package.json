@@ -1,7 +1,7 @@
 {
   "name": "lumen-rgb",
   "productName": "Lumen",
-  "version": "2.12.2",
+  "version": "2.12.3",
   "description": "Lumen — управление RGB-подсветкой компьютера: темы, эффекты, музыка",
   "main": "src/main/main.js",
   "author": "1MPOSS1BLE228",
