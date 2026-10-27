@@ -24,6 +24,9 @@ const { findConflicts, mergeKnown, missingDevices, findUnsupported } = require('
 // Сколько светодиодов ставить разъёму ARGB, пока пользователь не указал сам. Лишние ничего не ломают:
 // лента или вентилятор просто не получат «хвост» данных, а с маленьким числом светится только начало.
 const DEFAULT_ZONE_LEDS = 40;
+// Сколько ждать после подключения движка, прежде чем говорить «не нашёл устройство»:
+// некоторые платы (ASRock, часть MSI) движок находит только через 30–40 секунд.
+const SETTLE_MS = 75000;
 const { NotifyWatcher, APPS: NOTIFY_APPS } = require('./notify');
 const { RemoteServer, newToken, DEFAULT_PORT } = require('./remote');
 const { MediaWatcher } = require('./media');
@@ -430,7 +433,7 @@ class Core extends EventEmitter {
     unsupported = unsupported.filter((u) => !st.hiddenHints.includes(u.id));
     let missing = [];
     // Список «моих устройств» и пропажи считаем, только когда движок спокойно поработал полминуты
-    const settled = this.conn.status === 'connected' && Date.now() - (this.connectedAt || Date.now()) > 25000;
+    const settled = this.conn.status === 'connected' && Date.now() - (this.connectedAt || Date.now()) > SETTLE_MS;
     if (settled) {
       const cur = this._realDevices();
       missing = missingDevices(st.knownDevices, cur);
@@ -1068,7 +1071,7 @@ class Core extends EventEmitter {
     if (status === 'connected' && (!this.conn || this.conn.status !== 'connected')) {
       this.connectedAt = Date.now();
       clearTimeout(this.healthSoon);
-      this.healthSoon = setTimeout(() => this.checkHealth(), 26000);
+      this.healthSoon = setTimeout(() => this.checkHealth(), SETTLE_MS + 1000);
       if (this.healthSoon.unref) this.healthSoon.unref();
     }
     this.conn = { status, message, count: this.real.length, bundled: !!this.bundledEngine, admin: { available: !!ae.available, on: !!(this.state && this.state.settings.engineAdmin), ...ae.status } };
