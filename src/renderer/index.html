@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'; media-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lumen</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="titlebar">
+    <img src="../../assets/icon.png" width="20" height="20" alt="">
+    <span class="brand">Lumen</span>
+  </header>
+
+  <div class="app">
+    <nav class="rail" aria-label="Разделы">
+      <button class="nav" data-page="home"></button>
+      <button class="nav" data-page="effects"></button>
+      <button class="nav" data-page="devices"></button>
+      <button class="nav" data-page="scenes"></button>
+      <button class="nav" data-page="settings"></button>
+      <div class="rail-foot">
+        <button class="help-btn" id="help-btn" title="Как пользоваться Lumen">?<span>Как пользоваться</span></button>
+        <div class="pill" id="pill"><i class="dot"></i><span id="pill-text">Запуск…</span></div>
+      </div>
+    </nav>
+    <main id="view" tabindex="-1"></main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-back" id="modal" hidden></div>
+
+  <script src="../shared/i18n.js"></script>
+  <script src="i18n-dom.js"></script>
+  <script src="tour.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

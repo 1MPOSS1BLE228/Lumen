@@ -1,0 +1,600 @@
+Подсветка	Lighting	Підсвітка	Beleuchtung	Iluminación
+Эффекты	Effects	Ефекти	Effekte	Efectos
+Устройства	Devices	Пристрої	Geräte	Dispositivos
+Сценарии	Scenes	Сценарії	Szenarien	Escenarios
+Настройки	Settings	Налаштування	Einstellungen	Ajustes
+Вправо	Right	Праворуч	Rechts	Derecha
+Влево	Left	Ліворуч	Links	Izquierda
+Вверх	Up	Вгору	Hoch	Arriba
+Вниз	Down	Вниз	Runter	Abajo
+Устройств	Devices	Пристроїв	Geräte	Dispositivos
+Подключаюсь…	Connecting…	Підключаюся…	Verbinde…	Conectando…
+Ищу устройства…	Looking for devices…	Шукаю пристрої…	Suche Geräte…	Buscando dispositivos…
+Демо-режим	Demo mode	Демо-режим	Demo-Modus	Modo demo
+Нет устройств	No devices	Немає пристроїв	Keine Geräte	Sin dispositivos
+Записать в тему текущие эффект, цвета и скорость	Save the current effect, colors and speed to this theme	Записати в тему поточні ефект, кольори та швидкість	Aktuellen Effekt, Farben und Tempo in dieses Theme speichern	Guardar el efecto, los colores y la velocidad actuales en este tema
+Обновить	Update	Оновити	Aktualisieren	Actualizar
+Имя	Name	Назва	Name	Nombre
+Скопировать код темы, чтобы отправить другу	Copy the theme code to send to a friend	Скопіювати код теми, щоб надіслати другу	Theme-Code kopieren, um ihn einem Freund zu schicken	Copiar el código del tema para enviarlo a un amigo
+Поделиться	Share	Поділитися	Teilen	Compartir
+Удалить тему	Delete theme	Видалити тему	Theme löschen	Eliminar tema
+Удалить	Delete	Видалити	Löschen	Eliminar
+Своих тем пока нет	No themes of your own yet	Власних тем поки немає	Noch keine eigenen Themes	Aún no tienes temas propios
+Настрой эффект, цвета и скорость (на этой странице или в «Эффектах») и сохрани — тема появится здесь. Или нажми «Удиви меня» и сохрани то, что понравится. Тему от друга можно добавить по коду.	Set up the effect, colors and speed (here or in “Effects”) and save — the theme will appear here. Or press “Surprise me” and save what you like. A friend's theme can be added by its code.	Налаштуй ефект, кольори та швидкість (тут або в «Ефектах») і збережи — тема з'явиться тут. Або натисни «Здивуй мене» і збережи те, що сподобається. Тему від друга можна додати за кодом.	Stelle Effekt, Farben und Tempo ein (hier oder unter „Effekte“) und speichere — das Theme erscheint hier. Oder drücke „Überrasch mich“ und speichere, was dir gefällt. Das Theme eines Freundes fügst du per Code hinzu.	Ajusta el efecto, los colores y la velocidad (aquí o en «Efectos») y guarda: el tema aparecerá aquí. O pulsa «Sorpréndeme» y guarda lo que te guste. El tema de un amigo se añade con su código.
+Сохранить текущие настройки как тему	Save current settings as a theme	Зберегти поточні налаштування як тему	Aktuelle Einstellungen als Theme speichern	Guardar ajustes actuales como tema
+Добавить по коду	Add by code	Додати за кодом	Per Code hinzufügen	Añadir por código
+Темы	Themes	Теми	Themes	Temas
+Готовые	Built-in	Готові	Fertige	Incluidos
+Мои	Mine	Мої	Meine	Míos
+Случайная красивая тема (Ctrl+Alt+R)	Random beautiful theme (Ctrl+Alt+R)	Випадкова красива тема (Ctrl+Alt+R)	Zufälliges schönes Theme (Strg+Alt+R)	Tema bonito al azar (Ctrl+Alt+R)
+Удиви меня	Surprise me	Здивуй мене	Überrasch mich	Sorpréndeme
+Включить или выключить подсветку	Turn lighting on or off	Увімкнути або вимкнути підсвітку	Beleuchtung ein- oder ausschalten	Encender o apagar la iluminación
+Нет устройств. Включи демо-режим или подключи OpenRGB в разделе «Устройства».	No devices. Turn on demo mode or connect OpenRGB in “Devices”.	Немає пристроїв. Увімкни демо-режим або підключи OpenRGB у розділі «Пристрої».	Keine Geräte. Schalte den Demo-Modus ein oder verbinde OpenRGB unter „Geräte“.	No hay dispositivos. Activa el modo demo o conecta OpenRGB en «Dispositivos».
+Яркость	Brightness	Яскравість	Helligkeit	Brillo
+Скорость	Speed	Швидкість	Tempo	Velocidad
+Красить Windows в цвет подсветки	Color Windows to match the lighting	Фарбувати Windows у колір підсвітки	Windows in der Lichtfarbe einfärben	Colorear Windows como la iluminación
+Панель задач, «Пуск» и заголовки окон меняют цвет вместе с темой.	The taskbar, Start menu and window titles change color with the theme.	Панель завдань, «Пуск» і заголовки вікон змінюють колір разом із темою.	Taskleiste, Startmenü und Fenstertitel wechseln die Farbe mit dem Theme.	La barra de tareas, Inicio y los títulos de ventana cambian de color con el tema.
+Обои под тему	Wallpaper to match	Шпалери під тему	Passendes Hintergrundbild	Fondo a juego
+рисует обои рабочего стола в цветах подсветки. Прежние обои вернутся, когда выключишь.	paints the desktop wallpaper in the lighting colors. Your old wallpaper comes back when you turn this off.	малює шпалери робочого столу в кольорах підсвітки. Попередні шпалери повернуться, коли вимкнеш.	malt das Desktop-Hintergrundbild in den Lichtfarben. Dein altes Bild kommt zurück, wenn du das ausschaltest.	pinta el fondo de escritorio con los colores de la iluminación. Tu fondo anterior vuelve al desactivarlo.
+Не удалось загрузить варианты	Couldn't load the options	Не вдалося завантажити варіанти	Vorschläge konnten nicht geladen werden	No se pudieron cargar las opciones
+Фото	Photo	Фото	Foto	Foto
+Подбираю фото в цветах темы…	Finding photos in the theme colors…	Добираю фото в кольорах теми…	Suche Fotos in den Theme-Farben…	Buscando fotos con los colores del tema…
+Под этот цвет ничего не нашлось — попробуй другую тему.	Nothing found for this color — try another theme.	Під цей колір нічого не знайшлося — спробуй іншу тему.	Für diese Farbe nichts gefunden — probiere ein anderes Theme.	No se encontró nada para este color: prueba otro tema.
+Фото для этой темы	Photo for this theme	Фото для цієї теми	Foto für dieses Theme	Foto para este tema
+Выбери вариант — Lumen запомнит его для темы. Картинки из каталога Wallhaven.	Pick one — Lumen remembers it for this theme. Pictures from the Wallhaven catalog.	Обери варіант — Lumen запам'ятає його для теми. Зображення з каталогу Wallhaven.	Wähle eins — Lumen merkt es sich für dieses Theme. Bilder aus dem Wallhaven-Katalog.	Elige una: Lumen la recordará para este tema. Imágenes del catálogo Wallhaven.
+Ещё варианты	More options	Ще варіанти	Mehr Vorschläge	Más opciones
+Менять фото само	Change photo automatically	Змінювати фото самостійно	Foto automatisch wechseln	Cambiar la foto sola
+Слайд-шоу	Slideshow	Слайд-шоу	Diashow	Presentación
+не менять	never	не змінювати	nie	nunca
+каждые 30 минут	every 30 minutes	кожні 30 хвилин	alle 30 Minuten	cada 30 minutos
+каждый час	every hour	щогодини	jede Stunde	cada hora
+каждые 3 часа	every 3 hours	кожні 3 години	alle 3 Stunden	cada 3 horas
+раз в день	once a day	раз на день	einmal am Tag	una vez al día
+Процессор	CPU	Процесор	CPU	CPU
+Память	Memory	Пам'ять	Arbeitsspeicher	Memoria
+Видеокарта (нагрузка, °C, ватты)	Graphics card (load, °C, watts)	Відеокарта (навантаження, °C, вати)	Grafikkarte (Last, °C, Watt)	Tarjeta gráfica (carga, °C, vatios)
+Видеопамять	Video memory	Відеопам'ять	Grafikspeicher	Memoria de vídeo
+Скорость сети	Network speed	Швидкість мережі	Netzwerktempo	Velocidad de red
+Свободно на диске C	Free space on drive C	Вільно на диску C	Frei auf Laufwerk C	Libre en el disco C
+Сколько включён компьютер	How long the PC has been on	Скільки увімкнений комп'ютер	Wie lange der PC läuft	Tiempo encendido
+Справа сверху	Top right	Праворуч угорі	Oben rechts	Arriba a la derecha
+Слева сверху	Top left	Ліворуч угорі	Oben links	Arriba a la izquierda
+Справа снизу	Bottom right	Праворуч унизу	Unten rechts	Abajo a la derecha
+Слева снизу	Bottom left	Ліворуч унизу	Unten links	Abajo a la izquierda
+Виджеты на рабочем столе	Desktop widgets	Віджети на робочому столі	Desktop-Widgets	Widgets de escritorio
+Показывать виджеты	Show widgets	Показувати віджети	Widgets anzeigen	Mostrar widgets
+Часы, погода и нагрузка компьютера прямо на обоях, за значками. Обновляются редко и замирают, когда рабочий стол закрыт игрой или окном, — ресурсов почти не тратят.	Clock, weather and PC load right on the wallpaper, behind the icons. They update rarely and freeze when a game or window covers the desktop, so they use almost no resources.	Годинник, погода та навантаження комп'ютера просто на шпалерах, за значками. Оновлюються рідко й завмирають, коли робочий стіл закритий грою чи вікном, — ресурсів майже не витрачають.	Uhr, Wetter und PC-Auslastung direkt auf dem Hintergrund, hinter den Symbolen. Sie aktualisieren selten und pausieren, wenn ein Spiel oder Fenster den Desktop verdeckt — kaum Ressourcenverbrauch.	Reloj, tiempo y carga del PC sobre el fondo, detrás de los iconos. Se actualizan poco y se pausan cuando un juego o una ventana tapa el escritorio, así que casi no gastan recursos.
+Часы и дата	Clock and date	Годинник і дата	Uhr und Datum	Reloj y fecha
+секунды	seconds	секунди	Sekunden	segundos
+Погода	Weather	Погода	Wetter	Tiempo
+Бесплатный сервис Open-Meteo, обновляется раз в 15 минут.	Free Open-Meteo service, updated every 15 minutes.	Безкоштовний сервіс Open-Meteo, оновлюється раз на 15 хвилин.	Kostenloser Dienst Open-Meteo, alle 15 Minuten aktualisiert.	Servicio gratuito Open-Meteo, se actualiza cada 15 minutos.
+прогноз на 3 дня	3-day forecast	прогноз на 3 дні	3-Tage-Vorhersage	previsión de 3 días
+Город, например Москва	City, e.g. London	Місто, наприклад Київ	Stadt, z. B. Berlin	Ciudad, p. ej. Madrid
+Город для погоды	City for weather	Місто для погоди	Stadt für das Wetter	Ciudad para el tiempo
+Компьютер	Computer	Комп'ютер	Computer	Ordenador
+Отметь, что показывать.	Choose what to show.	Познач, що показувати.	Wähle, was angezeigt wird.	Elige qué mostrar.
+Где и какого размера	Position and size	Де і якого розміру	Position und Größe	Posición y tamaño
+Размер виджетов	Widget size	Розмір віджетів	Widget-Größe	Tamaño de los widgets
+Маленькие	Small	Маленькі	Klein	Pequeños
+Средние	Medium	Середні	Mittel	Medianos
+Крупные	Large	Великі	Groß	Grandes
+Угол экрана	Screen corner	Кут екрана	Bildschirmecke	Esquina de la pantalla
+Стиль обоев	Wallpaper style	Стиль шпалер	Hintergrundstil	Estilo del fondo
+Сценарий на паузе	Scene paused	Сценарій на паузі	Szenario pausiert	Escenario en pausa
+Работает сценарий	Scene running	Працює сценарій	Szenario aktiv	Escenario activo
+Ты поменял подсветку вручную — сценарий вернётся, когда условие сменится.	You changed the lighting by hand — the scene comes back when its condition changes.	Ти змінив підсвітку вручну — сценарій повернеться, коли зміниться умова.	Du hast die Beleuchtung manuell geändert — das Szenario kehrt zurück, wenn sich die Bedingung ändert.	Cambiaste la iluminación a mano: el escenario volverá cuando cambie su condición.
+Вернуть сценарий	Resume scene	Повернути сценарій	Szenario fortsetzen	Reanudar escenario
+Выключить подсветку	Turn lighting off	Вимкнути підсвітку	Beleuchtung ausschalten	Apagar la iluminación
+включает тему	turns on theme	вмикає тему	schaltet Theme ein	activa el tema
+Тема для	Theme for	Тема для	Theme für	Tema para
+Удалить правило	Delete rule	Видалити правило	Regel löschen	Eliminar regla
+Начало	Start	Початок	Beginn	Inicio
+Конец	End	Кінець	Ende	Fin
+Что делать	Action	Що робити	Aktion	Acción
+Удалить время	Delete time	Видалити час	Zeit löschen	Eliminar horario
+Подсветка сама меняется, когда ты играешь, ложишься спать или отходишь от компьютера.	The lighting changes by itself when you play, go to bed or step away from the PC.	Підсвітка сама змінюється, коли ти граєш, лягаєш спати або відходиш від комп'ютера.	Die Beleuchtung ändert sich von selbst, wenn du spielst, schlafen gehst oder den PC verlässt.	La iluminación cambia sola cuando juegas, te vas a dormir o te alejas del PC.
+Игры и программы	Games and apps	Ігри та програми	Spiele und Programme	Juegos y programas
+Например: запустил CS2 — включилась тема «Геймер», закрыл — вернулась прежняя.	For example: start CS2 — the “Gamer” theme turns on; close it — the previous one comes back.	Наприклад: запустив CS2 — увімкнулася тема «Геймер», закрив — повернулася попередня.	Beispiel: CS2 starten — das Theme „Gamer“ geht an; schließen — das vorherige kommt zurück.	Por ejemplo: abres CS2 y se activa el tema «Gamer»; lo cierras y vuelve el anterior.
+Название программы, например cs2.exe	App name, e.g. cs2.exe	Назва програми, наприклад cs2.exe	Programmname, z. B. cs2.exe	Nombre del programa, p. ej. cs2.exe
+Программа	App	Програма	Programm	Programa
+Тема	Theme	Тема	Theme	Tema
+Добавить	Add	Додати	Hinzufügen	Añadir
+Открытые программы есть в подсказках поля	Open apps are listed in the field's suggestions	Відкриті програми є в підказках поля	Offene Programme stehen in den Vorschlägen des Feldes	Los programas abiertos aparecen en las sugerencias del campo
+Запусти игру и нажми «Найти открытые программы» — её можно будет выбрать из списка.	Start the game and press “Find open apps” — you can then pick it from the list.	Запусти гру й натисни «Знайти відкриті програми» — її можна буде обрати зі списку.	Starte das Spiel und drücke „Offene Programme finden“ — dann kannst du es aus der Liste wählen.	Abre el juego y pulsa «Buscar programas abiertos»: podrás elegirlo de la lista.
+Найти открытые программы	Find open apps	Знайти відкриті програми	Offene Programme finden	Buscar programas abiertos
+Расписание	Schedule	Розклад	Zeitplan	Horario
+Добавить время	Add time	Додати час	Zeit hinzufügen	Añadir horario
+Например: с 23:00 до 07:00 подсветка выключена, а вечером — тёплый «Ночник».	For example: lights off from 23:00 to 07:00, and the warm “Night light” in the evening.	Наприклад: з 23:00 до 07:00 підсвітку вимкнено, а ввечері — теплий «Нічник».	Beispiel: von 23:00 bis 07:00 aus, abends das warme „Nachtlicht“.	Por ejemplo: apagada de 23:00 a 07:00 y por la tarde la cálida «Luz nocturna».
+Гасить автоматически	Turn off automatically	Гасити автоматично	Automatisch ausschalten	Apagar automáticamente
+Когда компьютер заблокирован	When the PC is locked	Коли комп'ютер заблоковано	Wenn der PC gesperrt ist	Cuando el PC está bloqueado
+подсветка гаснет, вошёл обратно — загорается.	the lights go out; sign back in and they come on.	підсвітка гасне, увійшов знову — загоряється.	geht das Licht aus; nach dem Anmelden wieder an.	la luz se apaga; al volver a entrar, se enciende.
+Когда я отошёл от компьютера	When I step away from the PC	Коли я відійшов від комп'ютера	Wenn ich den PC verlasse	Cuando me alejo del PC
+Если долго нет движений мыши и нажатий клавиш.	If there's no mouse movement or key presses for a while.	Якщо довго немає рухів миші та натискань клавіш.	Wenn eine Weile keine Maus- oder Tastaturaktivität ist.	Si durante un rato no hay movimiento del ratón ni teclas.
+Через сколько гасить	Turn off after	Через скільки гасити	Ausschalten nach	Apagar después de
+через	after	через	nach	tras
+мин	min	хв	Min	min
+Никогда	Never	Ніколи	Nie	Nunca
+При сне и выключении компьютера	When the PC sleeps or shuts down	Під час сну та вимкнення комп'ютера	Bei Ruhezustand und Herunterfahren	Al suspender o apagar el PC
+Чтобы подсветка не горела всю ночь, когда компьютер выключен.	So the lights don't stay on all night while the PC is off.	Щоб підсвітка не горіла всю ніч, коли комп'ютер вимкнено.	Damit das Licht nicht die ganze Nacht brennt, wenn der PC aus ist.	Para que la luz no quede encendida toda la noche con el PC apagado.
+Цвета берутся с экрана: левая часть корпуса светится цветом левой части монитора, правая — правой.	Colors come from the screen: the left side of the case glows like the left of the monitor, the right like the right.	Кольори беруться з екрана: ліва частина корпусу світиться кольором лівої частини монітора, права — правої.	Die Farben kommen vom Bildschirm: links leuchtet das Gehäuse wie die linke Monitorseite, rechts wie die rechte.	Los colores salen de la pantalla: el lado izquierdo de la caja brilla como la izquierda del monitor y el derecho como la derecha.
+Радуга использует весь спектр, поэтому цвета выбирать не нужно.	Rainbow uses the whole spectrum, so there are no colors to pick.	Веселка використовує весь спектр, тому кольори обирати не потрібно.	Regenbogen nutzt das ganze Spektrum, Farben musst du nicht wählen.	El arcoíris usa todo el espectro, no hace falta elegir colores.
+Цвет	Color	Колір	Farbe	Color
+Убрать цвет	Remove color	Прибрати колір	Farbe entfernen	Quitar color
+Добавить цвет	Add color	Додати колір	Farbe hinzufügen	Añadir color
+Направление	Direction	Напрямок	Richtung	Dirección
+Звук не слушаю.	Not listening to sound.	Звук не слухаю.	Höre keinen Ton.	No estoy escuchando el sonido.
+Подключаюсь к звуку…	Connecting to sound…	Підключаюся до звуку…	Verbinde mit dem Ton…	Conectando con el sonido…
+Слушаю звук, который идёт в колонки или наушники.	Listening to the sound going to your speakers or headphones.	Слухаю звук, що йде в колонки чи навушники.	Ich höre den Ton, der an Lautsprecher oder Kopfhörer geht.	Escuchando el sonido que va a los altavoces o auriculares.
+Не удалось получить звук.	Couldn't get the sound.	Не вдалося отримати звук.	Ton konnte nicht abgerufen werden.	No se pudo obtener el sonido.
+Звук	Sound	Звук	Ton	Sonido
+Повторить	Retry	Повторити	Wiederholen	Reintentar
+Экран не захватываю.	Not capturing the screen.	Екран не захоплюю.	Bildschirm wird nicht erfasst.	No estoy capturando la pantalla.
+Подключаюсь к экрану…	Connecting to the screen…	Підключаюся до екрана…	Verbinde mit dem Bildschirm…	Conectando con la pantalla…
+Смотрю на основной монитор: подсветка повторяет картинку.	Watching the main monitor: the lighting follows the picture.	Дивлюся на основний монітор: підсвітка повторює картинку.	Ich beobachte den Hauptmonitor: die Beleuchtung folgt dem Bild.	Mirando el monitor principal: la iluminación sigue la imagen.
+Не удалось получить картинку экрана.	Couldn't get the screen image.	Не вдалося отримати картинку екрана.	Bildschirmbild konnte nicht abgerufen werden.	No se pudo obtener la imagen de la pantalla.
+Экран	Screen	Екран	Bildschirm	Pantalla
+Видеокарта	Graphics card	Відеокарта	Grafikkarte	Tarjeta gráfica
+загрузка	load	навантаження	Last	carga
+Первый цвет — холодная (35 °C), последний — горячая (80 °C). Под нагрузкой подсветка пульсирует быстрее.	First color is cool (35 °C), last is hot (80 °C). Under load the lighting pulses faster.	Перший колір — холодна (35 °C), останній — гаряча (80 °C). Під навантаженням підсвітка пульсує швидше.	Erste Farbe = kühl (35 °C), letzte = heiß (80 °C). Unter Last pulsiert das Licht schneller.	El primer color es frío (35 °C) y el último caliente (80 °C). Con carga, la luz late más rápido.
+Читаю температуру…	Reading temperature…	Читаю температуру…	Lese Temperatur…	Leyendo temperatura…
+Собери свою подсветку: выбери эффект и цвета.	Build your own lighting: pick an effect and colors.	Збери свою підсвітку: обери ефект і кольори.	Stell dir deine Beleuchtung zusammen: Effekt und Farben wählen.	Crea tu iluminación: elige un efecto y colores.
+Цвета	Colors	Кольори	Farben	Colores
+Сохранить как тему	Save as theme	Зберегти як тему	Als Theme speichern	Guardar como tema
+Искать снова	Search again	Шукати знову	Erneut suchen	Buscar de nuevo
+устройства подключены	devices connected	пристрої підключено	Geräte verbunden	dispositivos conectados
+Найдено	Found	Знайдено	Gefunden	Encontrados
+устройство	device	пристрій	Gerät	dispositivo
+устройства	devices	пристрої	Geräte	dispositivos
+устройств	devices	пристроїв	Geräte	dispositivos
+Сторонние программы не нужны.	No third-party apps needed.	Сторонні програми не потрібні.	Keine Fremdprogramme nötig.	No hacen falta programas de terceros.
+не видит устройств с «Динамической подсветкой»	doesn't see any “Dynamic Lighting” devices	не бачить пристроїв із «Динамічним підсвічуванням»	sieht keine Geräte mit „Dynamischer Beleuchtung“	no ve dispositivos con «Iluminación dinámica»
+Включи «Динамическую подсветку» в параметрах Windows и убедись, что твои устройства есть в списке.	Turn on “Dynamic Lighting” in Windows Settings and make sure your devices are listed.	Увімкни «Динамічне підсвічування» в параметрах Windows і переконайся, що твої пристрої є в списку.	Schalte „Dynamische Beleuchtung“ in den Windows-Einstellungen ein und prüfe, ob deine Geräte aufgelistet sind.	Activa «Iluminación dinámica» en Configuración de Windows y comprueba que tus dispositivos aparecen.
+Открыть параметры	Open Settings	Відкрити параметри	Einstellungen öffnen	Abrir Configuración
+Ищу устройства Windows…	Looking for Windows devices…	Шукаю пристрої Windows…	Suche Windows-Geräte…	Buscando dispositivos de Windows…
+Это занимает несколько секунд.	This takes a few seconds.	Це займає кілька секунд.	Das dauert ein paar Sekunden.	Tarda unos segundos.
+Встроенное управление не запустилось	Built-in control didn't start	Вбудоване керування не запустилося	Integrierte Steuerung startete nicht	El control integrado no se inició
+Неизвестная ошибка	Unknown error	Невідома помилка	Unbekannter Fehler	Error desconocido
+Встроенное управление недоступно	Built-in control unavailable	Вбудоване керування недоступне	Integrierte Steuerung nicht verfügbar	Control integrado no disponible
+Оно работает только в Windows 11.	It only works on Windows 11.	Воно працює лише у Windows 11.	Sie funktioniert nur unter Windows 11.	Solo funciona en Windows 11.
+Встроенное управление выключено	Built-in control is off	Вбудоване керування вимкнено	Integrierte Steuerung ist aus	El control integrado está desactivado
+Включи его, чтобы Lumen сам нашёл устройства.	Turn it on so Lumen can find devices by itself.	Увімкни його, щоб Lumen сам знайшов пристрої.	Schalte sie ein, damit Lumen Geräte selbst findet.	Actívalo para que Lumen encuentre los dispositivos solo.
+Включить	Turn on	Увімкнути	Einschalten	Activar
+Обычный (RGB)	Normal (RGB)	Звичайний (RGB)	Normal (RGB)	Normal (RGB)
+красный и зелёный наоборот	red and green swapped	червоний і зелений навпаки	Rot und Grün vertauscht	rojo y verde invertidos
+зелёный и синий наоборот	green and blue swapped	зелений і синій навпаки	Grün und Blau vertauscht	verde y azul invertidos
+красный и синий наоборот	red and blue swapped	червоний і синій навпаки	Rot und Blau vertauscht	rojo y azul invertidos
+Светодиодов в зоне	LEDs in zone	Світлодіодів у зоні	LEDs in der Zone	LED en la zona
+светод.	LEDs	світлод.	LEDs	LED
+светодиод	LED	світлодіод	LED	LED
+светодиода	LEDs	світлодіоди	LEDs	LED
+светодиодов	LEDs	світлодіодів	LEDs	LED
+Порядок цветов	Color order	Порядок кольорів	Farbreihenfolge	Orden de colores
+Проверить	Test	Перевірити	Testen	Probar
+Настроить зоны: количество светодиодов и порядок цветов	Set up zones: LED count and color order	Налаштувати зони: кількість світлодіодів і порядок кольорів	Zonen einrichten: LED-Anzahl und Farbreihenfolge	Configurar zonas: número de LED y orden de colores
+укажи, сколько светодиодов подключено	enter how many LEDs are connected	вкажи, скільки світлодіодів підключено	gib an, wie viele LEDs angeschlossen sind	indica cuántos LED hay conectados
+У разъёмов на материнской плате укажи, сколько светодиодов подключено (вентилятор обычно 8–24, лента — смотри по упаковке). Если цвета не совпадают, нажми «Проверить»: зона загорится красным, зелёным и синим по очереди. Если увидишь другие цвета, выбери другой порядок.	For motherboard headers, enter how many LEDs are connected (a fan usually has 8–24; for a strip, check the box). If colors don't match, press “Test”: the zone lights red, green and blue in turn. If you see other colors, pick a different order.	Для роз'ємів на материнській платі вкажи, скільки світлодіодів підключено (вентилятор зазвичай 8–24, стрічка — дивись на упаковці). Якщо кольори не збігаються, натисни «Перевірити»: зона загориться червоним, зеленим і синім по черзі. Якщо побачиш інші кольори, обери інший порядок.	Gib bei den Mainboard-Anschlüssen an, wie viele LEDs angeschlossen sind (Lüfter meist 8–24, Streifen siehe Verpackung). Stimmen die Farben nicht, drücke „Testen“: die Zone leuchtet nacheinander rot, grün und blau. Siehst du andere Farben, wähle eine andere Reihenfolge.	En los conectores de la placa base indica cuántos LED hay (un ventilador suele tener 8–24; una tira, mira la caja). Si los colores no coinciden, pulsa «Probar»: la zona se ilumina en rojo, verde y azul. Si ves otros colores, elige otro orden.
+Включаю подсветку памяти…	Turning on memory lighting…	Вмикаю підсвітку пам'яті…	Schalte RAM-Beleuchtung ein…	Activando la iluminación de la memoria…
+Не видно оперативной памяти?	Can't see your RAM?	Не видно оперативної пам'яті?	RAM wird nicht angezeigt?	¿No aparece la memoria RAM?
+Чтобы управлять подсветкой памяти, движку нужен системный драйвер PawnIO и права администратора. Нажми кнопку и согласись в окне Windows — это нужно сделать один раз.	To control RAM lighting, the engine needs the PawnIO system driver and administrator rights. Press the button and confirm in the Windows prompt — you only need to do this once.	Щоб керувати підсвіткою пам'яті, рушію потрібен системний драйвер PawnIO і права адміністратора. Натисни кнопку й погодься у вікні Windows — це потрібно зробити один раз.	Für die RAM-Beleuchtung braucht die Engine den Systemtreiber PawnIO und Administratorrechte. Drücke den Knopf und bestätige im Windows-Fenster — nur einmal nötig.	Para controlar la iluminación de la RAM, el motor necesita el controlador PawnIO y permisos de administrador. Pulsa el botón y acepta en la ventana de Windows: solo hace falta una vez.
+Включить подсветку памяти	Turn on RAM lighting	Увімкнути підсвітку пам'яті	RAM-Beleuchtung einschalten	Activar la iluminación de la RAM
+Движок подсветки работает	Lighting engine is running	Рушій підсвітки працює	Beleuchtungs-Engine läuft	El motor de iluminación funciona
+подключён	connected	підключено	verbunden	conectado
+Запускаю движок подсветки…	Starting the lighting engine…	Запускаю рушій підсвітки…	Starte die Beleuchtungs-Engine…	Iniciando el motor de iluminación…
+Подключаюсь к OpenRGB…	Connecting to OpenRGB…	Підключаюся до OpenRGB…	Verbinde mit OpenRGB…	Conectando con OpenRGB…
+Движок подсветки не запущен	Lighting engine isn't running	Рушій підсвітки не запущено	Beleuchtungs-Engine läuft nicht	El motor de iluminación no está en marcha
+для платы, видеокарты и вентиляторов	for the motherboard, graphics card and fans	для плати, відеокарти й вентиляторів	für Mainboard, Grafikkarte und Lüfter	para la placa, la gráfica y los ventiladores
+Плата, видеокарта, вентиляторы, водянка, клавиатуры и мыши большинства производителей.	Motherboard, graphics card, fans, liquid cooling, keyboards and mice from most brands.	Плата, відеокарта, вентилятори, водянка, клавіатури й миші більшості виробників.	Mainboard, Grafikkarte, Lüfter, Wasserkühlung, Tastaturen und Mäuse der meisten Hersteller.	Placa, gráfica, ventiladores, refrigeración líquida, teclados y ratones de la mayoría de marcas.
+не умеет подсвечивать их сама. Для них нужна бесплатная программа OpenRGB.	can't light them by itself. They need the free OpenRGB app.	не вміє підсвічувати їх сама. Для них потрібна безкоштовна програма OpenRGB.	kann sie nicht selbst beleuchten. Dafür brauchst du das kostenlose OpenRGB.	no puede iluminarlos por sí mismo. Necesitan el programa gratuito OpenRGB.
+Отключить	Disconnect	Відключити	Trennen	Desconectar
+Запустить	Start	Запустити	Starten	Iniciar
+Подключиться	Connect	Підключитися	Verbinden	Conectar
+Как подключить материнскую плату, видеокарту и вентиляторы	How to connect the motherboard, graphics card and fans	Як підключити материнську плату, відеокарту й вентилятори	So verbindest du Mainboard, Grafikkarte und Lüfter	Cómo conectar la placa base, la gráfica y los ventiladores
+Скачай OpenRGB	Download OpenRGB	Завантаж OpenRGB	Lade OpenRGB herunter	Descarga OpenRGB
+Бесплатная программа, которая умеет управлять подсветкой материнских плат, памяти, видеокарт и вентиляторов.	A free app that controls lighting on motherboards, memory, graphics cards and fans.	Безкоштовна програма, що вміє керувати підсвіткою материнських плат, пам'яті, відеокарт і вентиляторів.	Kostenloses Programm, das die Beleuchtung von Mainboards, RAM, Grafikkarten und Lüftern steuert.	Programa gratuito que controla la iluminación de placas base, memoria, gráficas y ventiladores.
+Открыть openrgb.org	Open openrgb.org	Відкрити openrgb.org	openrgb.org öffnen	Abrir openrgb.org
+Укажи, где она лежит	Tell Lumen where it is	Вкажи, де вона лежить	Gib an, wo es liegt	Indica dónde está
+Если указать путь к OpenRGB.exe в настройках, Lumen будет запускать её сам и включать режим сервера.	If you set the path to OpenRGB.exe in Settings, Lumen will start it and turn on server mode itself.	Якщо вказати шлях до OpenRGB.exe в налаштуваннях, Lumen запускатиме її сам і вмикатиме режим сервера.	Wenn du den Pfad zu OpenRGB.exe in den Einstellungen angibst, startet Lumen es selbst im Servermodus.	Si indicas la ruta de OpenRGB.exe en Ajustes, Lumen lo iniciará solo en modo servidor.
+Указать путь	Set path	Вказати шлях	Pfad angeben	Indicar ruta
+Нажми «Подключиться»	Press “Connect”	Натисни «Підключитися»	Drücke „Verbinden“	Pulsa «Conectar»
+Устройства появятся в списке, и подсветка начнёт слушаться Lumen.	Devices will appear in the list and the lighting will follow Lumen.	Пристрої з'являться у списку, і підсвітка почне слухатися Lumen.	Die Geräte erscheinen in der Liste und die Beleuchtung folgt Lumen.	Los dispositivos aparecerán en la lista y la iluminación obedecerá a Lumen.
+демо	demo	демо	Demo	demo
+сейчас управляет другая программа	another app is in control right now	зараз керує інша програма	gerade steuert ein anderes Programm	ahora lo controla otro programa
+Подсветка устройства	Device lighting	Підсвітка пристрою	Gerätebeleuchtung	Iluminación del dispositivo
+подключён, но устройств не нашёл. Проверь, что OpenRGB видит оборудование.	is connected but found no devices. Check that OpenRGB sees your hardware.	підключено, але пристроїв не знайдено. Перевір, що OpenRGB бачить обладнання.	ist verbunden, hat aber keine Geräte gefunden. Prüfe, ob OpenRGB deine Hardware sieht.	está conectado pero no encontró dispositivos. Comprueba que OpenRGB ve tu hardware.
+Устройств нет.	No devices.	Пристроїв немає.	Keine Geräte.	No hay dispositivos.
+Включай и выключай подсветку каждого устройства отдельно.	Turn lighting on and off for each device separately.	Вмикай і вимикай підсвітку кожного пристрою окремо.	Schalte die Beleuchtung jedes Geräts einzeln ein und aus.	Enciende y apaga la iluminación de cada dispositivo por separado.
+Оформление Windows	Windows appearance	Оформлення Windows	Windows-Darstellung	Apariencia de Windows
+Менять цвет Windows под тему подсветки	Match the Windows color to the lighting theme	Змінювати колір Windows під тему підсвітки	Windows-Farbe an das Theme anpassen	Ajustar el color de Windows al tema
+Акцентный цвет панели задач, меню «Пуск» и заголовков окон будет следовать за подсветкой. Прежний цвет можно вернуть в любой момент.	The accent color of the taskbar, Start menu and window titles follows the lighting. You can restore the old color at any time.	Акцентний колір панелі завдань, меню «Пуск» і заголовків вікон слідуватиме за підсвіткою. Попередній колір можна повернути будь-коли.	Die Akzentfarbe von Taskleiste, Startmenü und Fenstertiteln folgt der Beleuchtung. Die alte Farbe lässt sich jederzeit zurückholen.	El color de acento de la barra de tareas, Inicio y los títulos de ventana seguirá a la iluminación. Puedes recuperar el color anterior cuando quieras.
+Переключить Windows на тёмную тему	Switch Windows to dark mode	Перемкнути Windows на темну тему	Windows auf dunkles Design umstellen	Cambiar Windows al modo oscuro
+Нужна, чтобы цвет показывался на панели задач. При выключении вернётся прежняя тема.	Needed for the color to show on the taskbar. Turning it off restores your previous mode.	Потрібна, щоб колір показувався на панелі завдань. Після вимкнення повернеться попередня тема.	Nötig, damit die Farbe in der Taskleiste erscheint. Beim Ausschalten kommt das alte Design zurück.	Necesario para que el color se vea en la barra de tareas. Al desactivarlo vuelve tu modo anterior.
+Менять обои под тему	Change wallpaper to match the theme	Змінювати шпалери під тему	Hintergrund an das Theme anpassen	Cambiar el fondo según el tema
+рисует обои рабочего стола в цветах подсветки. Прежние обои сохраняются и возвращаются, когда выключишь.	paints the desktop wallpaper in the lighting colors. Your old wallpaper is saved and comes back when you turn this off.	малює шпалери робочого столу в кольорах підсвітки. Попередні шпалери зберігаються й повертаються, коли вимкнеш.	malt das Desktop-Hintergrundbild in den Lichtfarben. Dein altes Bild wird gesichert und kommt beim Ausschalten zurück.	pinta el fondo de escritorio con los colores de la iluminación. Tu fondo anterior se guarda y vuelve al desactivarlo.
+Возвращать прежнее оформление при выходе из Lumen	Restore the previous look when Lumen exits	Повертати попереднє оформлення під час виходу з Lumen	Beim Beenden von Lumen altes Aussehen wiederherstellen	Restaurar la apariencia anterior al salir de Lumen
+Цвет Windows и обои вернутся. Если выключить, останутся такими, какими были при закрытии.	The Windows color and wallpaper come back. If off, they stay as they were when Lumen closed.	Колір Windows і шпалери повернуться. Якщо вимкнути, залишаться такими, якими були під час закриття.	Windows-Farbe und Hintergrund kommen zurück. Wenn aus, bleiben sie wie beim Schließen.	El color de Windows y el fondo vuelven. Si está desactivado, se quedan como estaban al cerrar.
+Подсветка средствами Windows	Lighting through Windows	Підсвітка засобами Windows	Beleuchtung über Windows	Iluminación mediante Windows
+Находить устройства самому	Find devices automatically	Знаходити пристрої самостійно	Geräte selbst finden	Buscar dispositivos automáticamente
+Работает с устройствами, которые поддерживают «Динамическую подсветку» Windows 11. Сторонние программы не нужны.	Works with devices that support Windows 11 “Dynamic Lighting”. No third-party apps needed.	Працює з пристроями, що підтримують «Динамічне підсвічування» Windows 11. Сторонні програми не потрібні.	Funktioniert mit Geräten, die „Dynamische Beleuchtung“ von Windows 11 unterstützen. Keine Fremdprogramme nötig.	Funciona con dispositivos compatibles con la «Iluminación dinámica» de Windows 11. No hacen falta programas de terceros.
+Параметры «Динамической подсветки»	“Dynamic Lighting” settings	Параметри «Динамічного підсвічування»	Einstellungen „Dynamische Beleuchtung“	Configuración de «Iluminación dinámica»
+Если подсветка не меняется, проверь там, что подсветка включена и разрешено фоновое управление.	If the lighting doesn't change, check there that lighting is on and background control is allowed.	Якщо підсвітка не змінюється, перевір там, що підсвітку ввімкнено й дозволено фонове керування.	Wenn sich die Beleuchtung nicht ändert, prüfe dort, ob sie eingeschaltet und Hintergrundsteuerung erlaubt ist.	Si la iluminación no cambia, comprueba allí que está activada y que se permite el control en segundo plano.
+Открыть параметры Windows	Open Windows Settings	Відкрити параметри Windows	Windows-Einstellungen öffnen	Abrir Configuración de Windows
+Движок подсветки (плата, видеокарта, вентиляторы)	Lighting engine (motherboard, graphics card, fans)	Рушій підсвітки (плата, відеокарта, вентилятори)	Beleuchtungs-Engine (Mainboard, Grafikkarte, Lüfter)	Motor de iluminación (placa, gráfica, ventiladores)
+Встроен в Lumen	Built into Lumen	Вбудований у Lumen	In Lumen integriert	Integrado en Lumen
+сам запускает движок без окна и закрывает его при выходе. Ничего скачивать и настраивать не нужно.	starts the engine in the background and closes it on exit. Nothing to download or set up.	сам запускає рушій без вікна й закриває його під час виходу. Нічого завантажувати й налаштовувати не потрібно.	startet die Engine unsichtbar und beendet sie beim Schließen. Nichts herunterzuladen oder einzurichten.	inicia el motor en segundo plano y lo cierra al salir. No hay nada que descargar ni configurar.
+Подсветка оперативной памяти	RAM lighting	Підсвітка оперативної пам'яті	RAM-Beleuchtung	Iluminación de la RAM
+Включена: движок работает с правами администратора и драйвером PawnIO.	On: the engine runs with administrator rights and the PawnIO driver.	Увімкнено: рушій працює з правами адміністратора й драйвером PawnIO.	Ein: die Engine läuft mit Administratorrechten und dem PawnIO-Treiber.	Activada: el motor funciona con permisos de administrador y el controlador PawnIO.
+Память и часть плат видны движку только с драйвером PawnIO и правами администратора. Включается один раз, дальше без вопросов.	RAM and some motherboards are only visible to the engine with the PawnIO driver and administrator rights. Turn it on once — no more prompts after that.	Пам'ять і частина плат видимі рушію лише з драйвером PawnIO та правами адміністратора. Вмикається один раз, далі без питань.	RAM und manche Mainboards sieht die Engine nur mit PawnIO-Treiber und Administratorrechten. Einmal einschalten, danach keine Fragen mehr.	La RAM y algunas placas solo son visibles para el motor con el controlador PawnIO y permisos de administrador. Se activa una vez y ya no pregunta más.
+Выключить	Turn off	Вимкнути	Ausschalten	Desactivar
+для платы, видеокарты, вентиляторов	for the motherboard, graphics card, fans	для плати, відеокарти, вентиляторів	für Mainboard, Grafikkarte, Lüfter	para la placa, la gráfica y los ventiladores
+Подключаться к OpenRGB автоматически	Connect to OpenRGB automatically	Підключатися до OpenRGB автоматично	Automatisch mit OpenRGB verbinden	Conectar con OpenRGB automáticamente
+Пробовать снова, если связь пропала.	Try again if the connection drops.	Пробувати знову, якщо зв'язок зник.	Erneut versuchen, wenn die Verbindung abbricht.	Reintentar si se pierde la conexión.
+Запускать OpenRGB вместе с Lumen	Start OpenRGB with Lumen	Запускати OpenRGB разом із Lumen	OpenRGB mit Lumen starten	Iniciar OpenRGB con Lumen
+откроет OpenRGB в режиме сервера, если он не запущен.	will open OpenRGB in server mode if it isn't running.	відкриє OpenRGB у режимі сервера, якщо він не запущений.	öffnet OpenRGB im Servermodus, falls es nicht läuft.	abrirá OpenRGB en modo servidor si no está en marcha.
+Файл OpenRGB.exe	OpenRGB.exe file	Файл OpenRGB.exe	Datei OpenRGB.exe	Archivo OpenRGB.exe
+Обычно находится сам. Укажи вручную, если не нашёлся.	Usually found automatically. Set it manually if not.	Зазвичай знаходиться сам. Вкажи вручну, якщо не знайшовся.	Wird meist automatisch gefunden. Sonst manuell angeben.	Normalmente se encuentra solo. Indícalo a mano si no.
+Не выбран	Not selected	Не вибрано	Nicht gewählt	Sin seleccionar
+Путь к OpenRGB.exe	Path to OpenRGB.exe	Шлях до OpenRGB.exe	Pfad zu OpenRGB.exe	Ruta de OpenRGB.exe
+Выбрать…	Choose…	Обрати…	Auswählen…	Elegir…
+Адрес и порт	Address and port	Адреса і порт	Adresse und Port	Dirección y puerto
+Менять нужно, только если OpenRGB работает на другом компьютере.	Change only if OpenRGB runs on another computer.	Змінювати потрібно, лише якщо OpenRGB працює на іншому комп'ютері.	Nur ändern, wenn OpenRGB auf einem anderen Computer läuft.	Cámbialo solo si OpenRGB funciona en otro ordenador.
+Адрес	Address	Адреса	Adresse	Dirección
+Порт	Port	Порт	Port	Puerto
+Горячие клавиши	Hotkeys	Гарячі клавіші	Tastenkürzel	Atajos de teclado
+Управлять подсветкой с клавиатуры	Control lighting from the keyboard	Керувати підсвіткою з клавіатури	Beleuchtung per Tastatur steuern	Controlar la iluminación con el teclado
+Работает в любой программе, даже в игре.	Works in any app, even in games.	Працює в будь-якій програмі, навіть у грі.	Funktioniert in jedem Programm, auch im Spiel.	Funciona en cualquier programa, incluso en juegos.
+занято другой программой	taken by another app	зайнято іншою програмою	von einem anderen Programm belegt	ocupado por otro programa
+Если что-то не работает	If something doesn't work	Якщо щось не працює	Wenn etwas nicht funktioniert	Si algo no funciona
+Отчёт для разработчика	Report for the developer	Звіт для розробника	Bericht für den Entwickler	Informe para el desarrollador
+Копирует в буфер обмена, что Lumen видит: устройства, движок, оформление Windows и последние записи журнала. Его можно вставить в чат.	Copies to the clipboard what Lumen sees: devices, engine, Windows appearance and the latest log entries. You can paste it into a chat.	Копіює в буфер обміну, що бачить Lumen: пристрої, рушій, оформлення Windows і останні записи журналу. Його можна вставити в чат.	Kopiert in die Zwischenablage, was Lumen sieht: Geräte, Engine, Windows-Darstellung und letzte Protokolleinträge. Du kannst es in einen Chat einfügen.	Copia al portapapeles lo que ve Lumen: dispositivos, motor, apariencia de Windows y las últimas entradas del registro. Puedes pegarlo en un chat.
+Открыть журнал	Open log	Відкрити журнал	Protokoll öffnen	Abrir registro
+Скопировать отчёт	Copy report	Скопіювати звіт	Bericht kopieren	Copiar informe
+Приложение	App	Застосунок	App	Aplicación
+Запускать вместе с Windows	Start with Windows	Запускати разом із Windows	Mit Windows starten	Iniciar con Windows
+Подсветка включится сразу после входа в систему.	Lighting turns on right after you sign in.	Підсвітка ввімкнеться одразу після входу в систему.	Die Beleuchtung startet direkt nach der Anmeldung.	La iluminación se enciende nada más iniciar sesión.
+Запускаться свёрнутым в трей	Start minimized to the tray	Запускатися згорнутим у трей	Minimiert im Infobereich starten	Iniciar minimizado en la bandeja
+Работает вместе с автозапуском.	Works together with autostart.	Працює разом з автозапуском.	Funktioniert zusammen mit dem Autostart.	Funciona junto con el inicio automático.
+Закрытие окна сворачивает в трей	Closing the window minimizes to the tray	Закриття вікна згортає в трей	Schließen minimiert in den Infobereich	Cerrar la ventana la minimiza a la bandeja
+Подсветка продолжает работать. Выйти можно из меню значка в трее.	The lighting keeps running. You can quit from the tray icon menu.	Підсвітка продовжує працювати. Вийти можна з меню значка в треї.	Die Beleuchtung läuft weiter. Beenden über das Menü des Infobereich-Symbols.	La iluminación sigue funcionando. Puedes salir desde el menú del icono de la bandeja.
+Показывать демо-устройства	Show demo devices	Показувати демо-пристрої	Demo-Geräte anzeigen	Mostrar dispositivos demo
+Пока нет настоящих устройств, видно, как будет выглядеть подсветка.	While there are no real devices, you can see how the lighting will look.	Поки немає справжніх пристроїв, видно, як виглядатиме підсвітка.	Solange keine echten Geräte da sind, siehst du, wie die Beleuchtung aussehen wird.	Mientras no haya dispositivos reales, verás cómo quedará la iluminación.
+Движок подсветки: OpenRGB, лицензия GNU GPL v2.0	Lighting engine: OpenRGB, GNU GPL v2.0 license	Рушій підсвітки: OpenRGB, ліцензія GNU GPL v2.0	Beleuchtungs-Engine: OpenRGB, Lizenz GNU GPL v2.0	Motor de iluminación: OpenRGB, licencia GNU GPL v2.0
+исходный код	source code	вихідний код	Quellcode	código fuente
+Тема удалена	Theme deleted	Тему видалено	Theme gelöscht	Tema eliminado
+Переименовать тему	Rename theme	Перейменувати тему	Theme umbenennen	Renombrar tema
+Сохранить название	Save name	Зберегти назву	Namen speichern	Guardar nombre
+Название сохранено	Name saved	Назву збережено	Name gespeichert	Nombre guardado
+Тема обновлена текущими настройками	Theme updated with current settings	Тему оновлено поточними налаштуваннями	Theme mit aktuellen Einstellungen aktualisiert	Tema actualizado con los ajustes actuales
+понравилось? Сохрани в «Мои»	like it? Save it to “Mine”	сподобалося? Збережи в «Мої»	gefällt's? In „Meine“ speichern	¿te gusta? Guárdalo en «Míos»
+Код темы скопирован — отправь его другу	Theme code copied — send it to a friend	Код теми скопійовано — надішли його другу	Theme-Code kopiert — schick ihn einem Freund	Código del tema copiado: envíaselo a un amigo
+Добавить тему по коду	Add theme by code	Додати тему за кодом	Theme per Code hinzufügen	Añadir tema por código
+Добавить тему	Add theme	Додати тему	Theme hinzufügen	Añadir tema
+Вставь код, который начинается с LUMEN1	Paste a code that starts with LUMEN1	Встав код, що починається з LUMEN1	Füge einen Code ein, der mit LUMEN1 beginnt	Pega un código que empiece por LUMEN1
+добавлена в «Мои»	added to “Mine”	додано в «Мої»	zu „Meine“ hinzugefügt	añadido a «Míos»
+Отчёт скопирован — вставь его в чат (Ctrl+V)	Report copied — paste it into the chat (Ctrl+V)	Звіт скопійовано — встав його в чат (Ctrl+V)	Bericht kopiert — füge ihn in den Chat ein (Strg+V)	Informe copiado: pégalo en el chat (Ctrl+V)
+Напиши название программы, например cs2.exe	Type the app name, e.g. cs2.exe	Напиши назву програми, наприклад cs2.exe	Gib den Programmnamen ein, z. B. cs2.exe	Escribe el nombre del programa, p. ej. cs2.exe
+Правило добавлено	Rule added	Правило додано	Regel hinzugefügt	Regla añadida
+Ищу открытые программы…	Looking for open apps…	Шукаю відкриті програми…	Suche offene Programme…	Buscando programas abiertos…
+Нашёл программ	Apps found	Знайдено програм	Programme gefunden	Programas encontrados
+Не нашёл открытых программ	No open apps found	Не знайшов відкритих програм	Keine offenen Programme gefunden	No se encontraron programas abiertos
+Путь сохранён	Path saved	Шлях збережено	Pfad gespeichert	Ruta guardada
+Ставлю это фото на рабочий стол…	Setting this photo as the wallpaper…	Ставлю це фото на робочий стіл…	Setze dieses Foto als Hintergrund…	Poniendo esta foto en el escritorio…
+Подсветка памяти включена. Движок перезапускается, память появится через несколько секунд.	RAM lighting is on. The engine is restarting; your RAM will appear in a few seconds.	Підсвітку пам'яті ввімкнено. Рушій перезапускається, пам'ять з'явиться за кілька секунд.	RAM-Beleuchtung ist an. Die Engine startet neu, der RAM erscheint in ein paar Sekunden.	Iluminación de la RAM activada. El motor se reinicia y la memoria aparecerá en unos segundos.
+Движок снова работает без прав администратора	The engine runs without administrator rights again	Рушій знову працює без прав адміністратора	Die Engine läuft wieder ohne Administratorrechte	El motor vuelve a funcionar sin permisos de administrador
+Сейчас должно гореть	Should be lit now	Зараз має світитися	Sollte jetzt leuchten	Ahora debería verse
+Количество светодиодов сохранено	LED count saved	Кількість світлодіодів збережено	LED-Anzahl gespeichert	Número de LED guardado
+Сохранить тему	Save theme	Зберегти тему	Theme speichern	Guardar tema
+Тема сохранена в «Мои»	Theme saved to “Mine”	Тему збережено в «Мої»	Theme in „Meine“ gespeichert	Tema guardado en «Míos»
+Отмена	Cancel	Скасувати	Abbrechen	Cancelar
+Название, например «Вечер у камина»	Name, e.g. “Fireside evening”	Назва, наприклад «Вечір біля каміна»	Name, z. B. „Abend am Kamin“	Nombre, p. ej. «Tarde junto a la chimenea»
+Система не отдала звук	The system didn't provide sound	Система не віддала звук	Das System hat keinen Ton geliefert	El sistema no proporcionó sonido
+Не удалось получить звук. Проверь, что в Windows есть устройство вывода звука, и нажми «Повторить».	Couldn't get the sound. Check that Windows has an audio output device and press “Retry”.	Не вдалося отримати звук. Перевір, що у Windows є пристрій виведення звуку, і натисни «Повторити».	Ton konnte nicht abgerufen werden. Prüfe, ob Windows ein Audioausgabegerät hat, und drücke „Wiederholen“.	No se pudo obtener el sonido. Comprueba que Windows tiene un dispositivo de salida de audio y pulsa «Reintentar».
+Не удалось получить картинку экрана. Нажми «Повторить».	Couldn't get the screen image. Press “Retry”.	Не вдалося отримати картинку екрана. Натисни «Повторити».	Bildschirmbild konnte nicht abgerufen werden. Drücke „Wiederholen“.	No se pudo obtener la imagen de la pantalla. Pulsa «Reintentar».
+Разделы	Sections	Розділи	Bereiche	Secciones
+Запуск…	Starting…	Запуск…	Start…	Iniciando…
+МБ/с	MB/s	МБ/с	MB/s	MB/s
+КБ/с	KB/s	КБ/с	KB/s	KB/s
+Б/с	B/s	Б/с	B/s	B/s
+д	d	д	T	d
+ч	h	год	Std	h
+Погода загружается…	Loading weather…	Погода завантажується…	Wetter wird geladen…	Cargando el tiempo…
+влажность	humidity	вологість	Luftfeuchte	humedad
+дождь	rain	дощ	Regen	lluvia
+ветер	wind	вітер	Wind	viento
+м/с	m/s	м/с	m/s	m/s
+ощущается	feels like	відчувається як	gefühlt	sensación
+ГБ	GB	ГБ	GB	GB
+Сеть	Network	Мережа	Netzwerk	Red
+Диск C	Drive C	Диск C	Laufwerk C	Disco C
+свободно	free	вільно	frei	libre
+Включён	Uptime	Увімкнений	Läuft seit	Encendido
+Выбери, что показывать, в настройках Lumen	Choose what to show in Lumen settings	Обери, що показувати, у налаштуваннях Lumen	Wähle in den Lumen-Einstellungen, was angezeigt wird	Elige qué mostrar en los ajustes de Lumen
+Киберпанк	Cyberpunk	Кіберпанк	Cyberpunk	Cyberpunk
+Неон под дождём	Neon in the rain	Неон під дощем	Neon im Regen	Neón bajo la lluvia
+Закат	Sunset	Захід сонця	Sonnenuntergang	Atardecer
+Тёплый вечерний свет	Warm evening light	Тепле вечірнє світло	Warmes Abendlicht	Cálida luz de tarde
+Аврора	Aurora	Аврора	Aurora	Aurora
+Северное сияние	Northern lights	Північне сяйво	Polarlicht	Aurora boreal
+Океан	Ocean	Океан	Ozean	Océano
+Глубина и прибой	Depths and surf	Глибина і прибій	Tiefe und Brandung	Profundidad y oleaje
+Лава	Lava	Лава	Lava	Lava
+Пламя снизу вверх	Flames rising up	Полум'я знизу вгору	Flammen von unten nach oben	Llamas de abajo arriba
+Неон Токио	Neon Tokyo	Неон Токіо	Neon Tokio	Neón Tokio
+Вывески ночного города	Night city signs	Вивіски нічного міста	Leuchtreklamen der Nacht	Letreros de la ciudad nocturna
+Радуга	Rainbow	Веселка	Regenbogen	Arcoíris
+Классика RGB	Classic RGB	Класика RGB	RGB-Klassiker	RGB clásico
+Лёд	Ice	Лід	Eis	Hielo
+Холодный белый и лазурь	Cool white and azure	Холодний білий і блакить	Kaltweiß und Azur	Blanco frío y azul celeste
+Матрица	Matrix	Матриця	Matrix	Matrix
+Зелёный код в темноте	Green code in the dark	Зелений код у темряві	Grüner Code im Dunkeln	Código verde en la oscuridad
+Сакура	Sakura	Сакура	Sakura	Sakura
+Лепестки на ветру	Petals in the wind	Пелюстки на вітрі	Blüten im Wind	Pétalos al viento
+Золотой час	Golden hour	Золота година	Goldene Stunde	Hora dorada
+Спокойное тёплое сияние	Calm warm glow	Спокійне тепле сяйво	Ruhiges warmes Leuchten	Brillo cálido y sereno
+Вампир	Vampire	Вампір	Vampir	Vampiro
+Медленный алый пульс	Slow scarlet pulse	Повільний червоний пульс	Langsamer scharlachroter Puls	Pulso escarlata lento
+Космос	Cosmos	Космос	Kosmos	Cosmos
+Звёзды в пустоте	Stars in the void	Зорі в порожнечі	Sterne im Nichts	Estrellas en el vacío
+Геймер	Gamer	Геймер	Gamer	Gamer
+Красная комета	Red comet	Червона комета	Roter Komet	Cometa rojo
+Синтвейв	Synthwave	Синтвейв	Synthwave	Synthwave
+Круги по сетке заката	Ripples on a sunset grid	Кола по сітці заходу	Kreise auf dem Sonnenuntergangsgitter	Ondas sobre la rejilla del ocaso
+Ночник	Night light	Нічник	Nachtlicht	Luz nocturna
+Мягкий янтарный свет	Soft amber light	М'яке бурштинове світло	Sanftes Bernsteinlicht	Suave luz ámbar
+Кинотеатр	Cinema	Кінотеатр	Kino	Cine
+Цвета с экрана, как Ambilight	Colors from the screen, like Ambilight	Кольори з екрана, як Ambilight	Farben vom Bildschirm, wie Ambilight	Colores de la pantalla, como Ambilight
+Термометр	Thermometer	Термометр	Thermometer	Termómetro
+Цвет по нагреву видеокарты	Color by GPU temperature	Колір за нагрівом відеокарти	Farbe nach GPU-Temperatur	Color según la temperatura de la gráfica
+Вечеринка	Party	Вечірка	Party	Fiesta
+Свет бьётся в такт музыке	Light beats to the music	Світло б'ється в такт музиці	Licht pulsiert im Takt der Musik	La luz late al ritmo de la música
+Статичный	Static	Статичний	Statisch	Estático
+Один сплошной цвет	One solid color	Один суцільний колір	Eine durchgehende Farbe	Un color sólido
+Градиент	Gradient	Градієнт	Verlauf	Degradado
+Плавный переход между цветами	Smooth blend between colors	Плавний перехід між кольорами	Weicher Übergang zwischen Farben	Transición suave entre colores
+Волна	Wave	Хвиля	Welle	Ola
+Цвета бегут по устройству	Colors run across the device	Кольори біжать пристроєм	Farben laufen über das Gerät	Los colores recorren el dispositivo
+Все цвета спектра	All colors of the spectrum	Усі кольори спектра	Alle Farben des Spektrums	Todos los colores del espectro
+Дыхание	Breathing	Дихання	Atmen	Respiración
+Плавное угасание и вспышка	Smooth fade out and in	Плавне згасання і спалах	Sanftes Aus- und Einblenden	Atenuado y destello suaves
+Смена цвета	Color cycle	Зміна кольору	Farbwechsel	Cambio de color
+Устройство перетекает из цвета в цвет	The device flows from color to color	Пристрій перетікає з кольору в колір	Das Gerät fließt von Farbe zu Farbe	El dispositivo fluye de un color a otro
+Переливающиеся полотна света	Shimmering curtains of light	Переливчасті полотна світла	Schimmernde Lichtvorhänge	Cortinas de luz cambiantes
+Огонь	Fire	Вогонь	Feuer	Fuego
+Пламя поднимается снизу вверх	Flames rise from the bottom	Полум'я піднімається знизу вгору	Flammen steigen von unten auf	Las llamas suben desde abajo
+Мерцание	Twinkle	Мерехтіння	Funkeln	Centelleo
+Вспыхивающие огоньки на фоне	Sparkles flashing over a backdrop	Спалахи вогників на тлі	Aufblitzende Lichter auf dem Hintergrund	Destellos sobre un fondo
+Комета	Comet	Комета	Komet	Cometa
+Яркая голова с длинным хвостом	A bright head with a long tail	Яскрава голова з довгим хвостом	Heller Kopf mit langem Schweif	Cabeza brillante con larga cola
+Сканер	Scanner	Сканер	Scanner	Escáner
+Луч бегает туда-обратно	A beam sweeps back and forth	Промінь бігає туди-сюди	Ein Strahl läuft hin und her	Un haz va y viene
+Круги	Ripples	Кола	Kreise	Ondas
+Волны расходятся от центра	Waves spread from the center	Хвилі розходяться від центру	Wellen breiten sich von der Mitte aus	Las ondas se expanden desde el centro
+Музыка	Music	Музика	Musik	Música
+Подсветка реагирует на звук из колонок	Lighting reacts to the sound from your speakers	Підсвітка реагує на звук із колонок	Beleuchtung reagiert auf den Ton der Lautsprecher	La iluminación reacciona al sonido de los altavoces
+Цвет экрана	Screen color	Колір екрана	Bildschirmfarbe	Color de pantalla
+Подсветка повторяет картинку на мониторе	Lighting follows the picture on your monitor	Підсвітка повторює картинку на моніторі	Beleuchtung folgt dem Bild auf dem Monitor	La iluminación sigue la imagen del monitor
+Температура	Temperature	Температура	Temperatur	Temperatura
+Цвет показывает нагрев видеокарты	Color shows how hot the GPU is	Колір показує нагрів відеокарти	Farbe zeigt die GPU-Temperatur	El color muestra la temperatura de la gráfica
+Неоновый	Neon	Неоновий	Neon	Neón
+Тихий	Quiet	Тихий	Stiller	Tranquilo
+Звёздный	Starry	Зоряний	Sternen	Estelar
+Летний	Summer	Літній	Sommer	Verano
+Северный	Northern	Північний	Nord	Norte
+Ночной	Night	Нічний	Nacht	Noche
+Дикий	Wild	Дикий	Wilder	Salvaje
+Мятный	Mint	М'ятний	Minz	Menta
+Сонный	Sleepy	Сонний	Schläfriger	Sueño
+Космический	Cosmic	Космічний	Kosmischer	Cósmico
+Тёплый	Warm	Теплий	Warmer	Cálido
+Ледяной	Icy	Крижаний	Eisiger	Helado
+рассвет	dawn	світанок	Morgen	amanecer
+прибой	surf	прибій	Brandung	oleaje
+туман	fog	туман	Nebel	niebla
+вихрь	whirl	вихор	Wirbel	torbellino
+сон	dream	сон	Traum	sueño
+город	city	місто	Stadt	ciudad
+лес	forest	ліс	Wald	bosque
+берег	shore	берег	Ufer	orilla
+шторм	storm	шторм	Sturm	tormenta
+закат	sunset	захід	Abend	ocaso
+огонь	fire	вогонь	Feuer	fuego
+Это не код темы Lumen: он должен начинаться с LUMEN1	This isn't a Lumen theme code: it must start with LUMEN1	Це не код теми Lumen: він має починатися з LUMEN1	Das ist kein Lumen-Theme-Code: er muss mit LUMEN1 beginnen	Esto no es un código de tema de Lumen: debe empezar por LUMEN1
+Код повреждён: проверь, что он скопирован целиком	The code is damaged: make sure you copied all of it	Код пошкоджено: перевір, що його скопійовано повністю	Der Code ist beschädigt: prüfe, ob er vollständig kopiert wurde	El código está dañado: comprueba que lo copiaste entero
+Код повреждён	The code is damaged	Код пошкоджено	Der Code ist beschädigt	El código está dañado
+В коде неизвестный эффект — возможно, он из более новой версии Lumen	The code has an unknown effect — it may be from a newer version of Lumen	У коді невідомий ефект — можливо, він із новішої версії Lumen	Der Code enthält einen unbekannten Effekt — vielleicht aus einer neueren Lumen-Version	El código tiene un efecto desconocido; puede ser de una versión más nueva de Lumen
+В коде нет цветов	The code has no colors	У коді немає кольорів	Der Code enthält keine Farben	El código no tiene colores
+Тема по коду	Theme from code	Тема за кодом	Theme per Code	Tema por código
+Живые волны	Live waves	Живі хвилі	Lebende Wellen	Olas vivas
+Волны медленно плывут прямо за значками рабочего стола. В играх и при развёрнутых окнах анимация замирает и не тратит силы компьютера.	Waves drift slowly right behind your desktop icons. In games and with maximized windows the animation pauses and doesn't use your PC's power.	Хвилі повільно пливуть просто за значками робочого столу. В іграх і з розгорнутими вікнами анімація завмирає й не витрачає сили комп'ютера.	Wellen ziehen langsam direkt hinter den Desktop-Symbolen. In Spielen und bei maximierten Fenstern pausiert die Animation und spart Leistung.	Las olas se deslizan despacio justo detrás de los iconos del escritorio. En juegos y con ventanas maximizadas la animación se pausa y no gasta recursos.
+Фото под тему	Photos to match	Фото під тему	Passende Fotos	Fotos a juego
+Красивые фотографии и арт в цветах подсветки из открытого каталога Wallhaven, в разрешении твоего монитора. Для каждой темы можно выбрать свой вариант.	Beautiful photos and art in the lighting colors from the open Wallhaven catalog, at your monitor's resolution. You can pick one for each theme.	Гарні фотографії та арт у кольорах підсвітки з відкритого каталогу Wallhaven, у роздільності твого монітора. Для кожної теми можна обрати свій варіант.	Schöne Fotos und Kunst in den Lichtfarben aus dem offenen Wallhaven-Katalog, in der Auflösung deines Monitors. Für jedes Theme kannst du eins wählen.	Fotos y arte preciosos con los colores de la iluminación del catálogo abierto Wallhaven, a la resolución de tu monitor. Puedes elegir uno para cada tema.
+Волны	Waves	Хвилі	Wellen	Olas
+Слои плавных холмов с подсвеченными краями	Layers of soft hills with glowing edges	Шари плавних пагорбів з підсвіченими краями	Schichten sanfter Hügel mit leuchtenden Kanten	Capas de colinas suaves con bordes iluminados
+Ленты	Ribbons	Стрічки	Bänder	Cintas
+Светящиеся ленты, как северное сияние	Glowing ribbons, like the northern lights	Світні стрічки, як північне сяйво	Leuchtende Bänder wie Polarlicht	Cintas luminosas, como la aurora boreal
+Фигуры	Shapes	Фігури	Formen	Formas
+Крупные круги и кольца с объёмом	Large 3D circles and rings	Великі об'ємні кола й кільця	Große plastische Kreise und Ringe	Grandes círculos y anillos con volumen
+Сияние	Glow	Сяйво	Leuchten	Resplandor
+Мягкие цветные пятна на тёмном фоне	Soft color spots on a dark background	М'які кольорові плями на темному тлі	Weiche Farbflecken auf dunklem Grund	Manchas de color suaves sobre fondo oscuro
+Ошибка	Error	Помилка	Fehler	Error
+Следующая тема	Next theme	Наступна тема	Nächstes Theme	Tema siguiente
+Предыдущая тема	Previous theme	Попередня тема	Vorheriges Theme	Tema anterior
+Ярче	Brighter	Яскравіше	Heller	Más brillo
+Тусклее	Dimmer	Тьмяніше	Dunkler	Menos brillo
+Удиви меня (случайная тема)	Surprise me (random theme)	Здивуй мене (випадкова тема)	Überrasch mich (zufälliges Theme)	Sorpréndeme (tema al azar)
+Открыть Lumen	Open Lumen	Відкрити Lumen	Lumen öffnen	Abrir Lumen
+Включить подсветку	Turn lighting on	Увімкнути підсвітку	Beleuchtung einschalten	Encender la iluminación
+Выйти	Quit	Вийти	Beenden	Salir
+Отчёт скопирован	Report copied	Звіт скопійовано	Bericht kopiert	Informe copiado
+Где лежит OpenRGB.exe?	Where is OpenRGB.exe?	Де лежить OpenRGB.exe?	Wo liegt OpenRGB.exe?	¿Dónde está OpenRGB.exe?
+Все файлы	All files	Усі файли	Alle Dateien	Todos los archivos
+Недоступно	Unavailable	Недоступно	Nicht verfügbar	No disponible
+Моя тема	My theme	Моя тема	Mein Theme	Mi tema
+Не нашёл OpenRGB.exe — укажи путь в настройках	Couldn't find OpenRGB.exe — set the path in Settings	Не знайшов OpenRGB.exe — вкажи шлях у налаштуваннях	OpenRGB.exe nicht gefunden — gib den Pfad in den Einstellungen an	No se encontró OpenRGB.exe: indica la ruta en Ajustes
+Перезапускаю движок подсветки…	Restarting the lighting engine…	Перезапускаю рушій підсвітки…	Starte die Beleuchtungs-Engine neu…	Reiniciando el motor de iluminación…
+Движок подсветки не отвечает	Lighting engine isn't responding	Рушій підсвітки не відповідає	Beleuchtungs-Engine antwortet nicht	El motor de iluminación no responde
+не запущен или в нём выключен SDK-сервер	isn't running or its SDK server is off	не запущено або в ньому вимкнено SDK-сервер	läuft nicht oder sein SDK-Server ist aus	no está en marcha o tiene el servidor SDK desactivado
+Не удалось найти компьютер по этому адресу	Couldn't find a computer at this address	Не вдалося знайти комп'ютер за цією адресою	Kein Computer unter dieser Adresse gefunden	No se encontró ningún ordenador en esta dirección
+Не удалось подключиться	Couldn't connect	Не вдалося підключитися	Verbindung fehlgeschlagen	No se pudo conectar
+Подключаюсь к движку подсветки…	Connecting to the lighting engine…	Підключаюся до рушія підсвітки…	Verbinde mit der Beleuchtungs-Engine…	Conectando con el motor de iluminación…
+Запускаю движок подсветки, ищу устройства…	Starting the lighting engine, looking for devices…	Запускаю рушій підсвітки, шукаю пристрої…	Starte die Beleuchtungs-Engine, suche Geräte…	Iniciando el motor de iluminación, buscando dispositivos…
+Запускаю OpenRGB…	Starting OpenRGB…	Запускаю OpenRGB…	Starte OpenRGB…	Iniciando OpenRGB…
+Связь с OpenRGB потеряна	Lost connection to OpenRGB	Зв'язок з OpenRGB втрачено	Verbindung zu OpenRGB verloren	Se perdió la conexión con OpenRGB
+Ясно	Clear	Ясно	Klar	Despejado
+Почти ясно	Mostly clear	Майже ясно	Überwiegend klar	Casi despejado
+Переменная облачность	Partly cloudy	Мінлива хмарність	Teilweise bewölkt	Parcialmente nublado
+Пасмурно	Overcast	Хмарно	Bedeckt	Nublado
+Туман	Fog	Туман	Nebel	Niebla
+Изморозь	Rime fog	Паморозь	Raureif	Escarcha
+Морось	Drizzle	Мряка	Nieselregen	Llovizna
+Сильная морось	Heavy drizzle	Сильна мряка	Starker Nieselregen	Llovizna intensa
+Ледяная морось	Freezing drizzle	Крижана мряка	Gefrierender Niesel	Llovizna helada
+Небольшой дождь	Light rain	Невеликий дощ	Leichter Regen	Lluvia ligera
+Дождь	Rain	Дощ	Regen	Lluvia
+Ливень	Showers	Злива	Schauer	Chubascos
+Ледяной дождь	Freezing rain	Крижаний дощ	Gefrierender Regen	Lluvia helada
+Небольшой снег	Light snow	Невеликий сніг	Leichter Schnee	Nieve ligera
+Снег	Snow	Сніг	Schnee	Nieve
+Снегопад	Heavy snow	Снігопад	Schneefall	Nevada
+Снежная крупа	Snow grains	Снігова крупа	Graupel	Granizo menudo
+Сильный ливень	Heavy showers	Сильна злива	Starke Schauer	Chubascos fuertes
+Сильный снегопад	Heavy snowfall	Сильний снігопад	Starker Schneefall	Nevada intensa
+Гроза	Thunderstorm	Гроза	Gewitter	Tormenta
+Гроза с градом	Thunderstorm with hail	Гроза з градом	Gewitter mit Hagel	Tormenta con granizo
+Погода	Weather	Погода	Wetter	Tiempo
+сервис погоды ответил	weather service replied	сервіс погоди відповів	Wetterdienst antwortete	el servicio del tiempo respondió
+Укажи город в настройках виджетов	Enter a city in the widget settings	Вкажи місто в налаштуваннях віджетів	Gib in den Widget-Einstellungen eine Stadt an	Indica una ciudad en los ajustes de los widgets
+не нашёл город	couldn't find city	не знайшов місто	Stadt nicht gefunden	no se encontró la ciudad
+сервис погоды не ответил	weather service didn't respond	сервіс погоди не відповів	Wetterdienst antwortet nicht	el servicio del tiempo no respondió
+нет интернета	no internet	немає інтернету	kein Internet	sin internet
+каталог ответил	catalog replied	каталог відповів	Katalog antwortete	el catálogo respondió
+каталог не ответил	catalog didn't respond	каталог не відповів	Katalog antwortet nicht	el catálogo no respondió
+нет связи с каталогом обоев	can't reach the wallpaper catalog	немає зв'язку з каталогом шпалер	keine Verbindung zum Hintergrundkatalog	no se puede acceder al catálogo de fondos
+картинка грузилась слишком долго	the image took too long to load	картинка завантажувалася задовго	das Bild lud zu lange	la imagen tardó demasiado en cargar
+Запускаю живые обои…	Starting live wallpaper…	Запускаю живі шпалери…	Starte Live-Hintergrund…	Iniciando el fondo animado…
+Живые обои не запустились	Live wallpaper didn't start	Живі шпалери не запустилися	Live-Hintergrund startete nicht	El fondo animado no se inició
+Стоят обычные волны.	Regular waves are set instead.	Стоять звичайні хвилі.	Stattdessen sind normale Wellen gesetzt.	Se han puesto olas normales.
+не ответила вовремя	didn't respond in time	не відповіла вчасно	antwortete nicht rechtzeitig	no respondió a tiempo
+Подбираю фото под тему…	Finding a photo for the theme…	Добираю фото під тему…	Suche ein Foto zum Theme…	Buscando una foto para el tema…
+под этот цвет ничего не нашлось	nothing found for this color	під цей колір нічого не знайшлося	für diese Farbe nichts gefunden	no se encontró nada para este color
+Загружаю фото…	Downloading photo…	Завантажую фото…	Lade Foto…	Descargando foto…
+Фото не загрузилось	Photo didn't load	Фото не завантажилося	Foto wurde nicht geladen	La foto no se cargó
+поставил «Волны»	set “Waves” instead	поставив «Хвилі»	„Wellen“ gesetzt	se pusieron «Olas»
+Не удалось поменять обои	Couldn't change the wallpaper	Не вдалося змінити шпалери	Hintergrund konnte nicht geändert werden	No se pudo cambiar el fondo
+Не удалось вернуть прежние обои	Couldn't restore the previous wallpaper	Не вдалося повернути попередні шпалери	Alter Hintergrund konnte nicht wiederhergestellt werden	No se pudo restaurar el fondo anterior
+Не удалось изменить цвет Windows	Couldn't change the Windows color	Не вдалося змінити колір Windows	Windows-Farbe konnte nicht geändert werden	No se pudo cambiar el color de Windows
+Не удалось вернуть прежний цвет Windows	Couldn't restore the previous Windows color	Не вдалося повернути попередній колір Windows	Alte Windows-Farbe konnte nicht wiederhergestellt werden	No se pudo restaurar el color anterior de Windows
+Устройство Windows	Windows device	Пристрій Windows	Windows-Gerät	Dispositivo de Windows
+Встроенное управление работает только в Windows 11	Built-in control only works on Windows 11	Вбудоване керування працює лише у Windows 11	Integrierte Steuerung funktioniert nur unter Windows 11	El control integrado solo funciona en Windows 11
+Не удалось подготовить мост	Couldn't prepare the bridge	Не вдалося підготувати міст	Brücke konnte nicht vorbereitet werden	No se pudo preparar el puente
+Не удалось запустить PowerShell	Couldn't start PowerShell	Не вдалося запустити PowerShell	PowerShell konnte nicht gestartet werden	No se pudo iniciar PowerShell
+Мост подсветки остановился код	Lighting bridge stopped, code	Міст підсвітки зупинився, код	Beleuchtungsbrücke gestoppt, Code	El puente de iluminación se detuvo, código
+Перезапускаю…	Restarting…	Перезапускаю…	Starte neu…	Reiniciando…
+Ошибка моста подсветки	Lighting bridge error	Помилка мосту підсвітки	Fehler der Beleuchtungsbrücke	Error del puente de iluminación
+Недоступно на этом компьютере	Not available on this computer	Недоступно на цьому комп'ютері	Auf diesem Computer nicht verfügbar	No disponible en este ordenador
+Подтверди в окне Windows «Разрешить этому приложению вносить изменения»…	Confirm “Allow this app to make changes” in the Windows prompt…	Підтверди у вікні Windows «Дозволити цій програмі вносити зміни»…	Bestätige „Dieser App erlauben, Änderungen vorzunehmen“ im Windows-Fenster…	Confirma «Permitir que esta aplicación haga cambios» en la ventana de Windows…
+Ты отменил разрешение в окне Windows	You cancelled the Windows prompt	Ти скасував дозвіл у вікні Windows	Du hast das Windows-Fenster abgebrochen	Cancelaste la ventana de Windows
+Не получилось получить права администратора	Couldn't get administrator rights	Не вдалося отримати права адміністратора	Administratorrechte konnten nicht erlangt werden	No se pudieron obtener permisos de administrador
+Драйвер PawnIO установлен	PawnIO driver installed	Драйвер PawnIO встановлено	PawnIO-Treiber installiert	Controlador PawnIO instalado
+Не удалось прочитать температуру видеокарты	Couldn't read the GPU temperature	Не вдалося прочитати температуру відеокарти	GPU-Temperatur konnte nicht gelesen werden	No se pudo leer la temperatura de la gráfica
+Не нашёл nvidia-smi: температура доступна только для видеокарт NVIDIA	nvidia-smi not found: temperature is only available for NVIDIA cards	Не знайшов nvidia-smi: температура доступна лише для відеокарт NVIDIA	nvidia-smi nicht gefunden: Temperatur nur für NVIDIA-Karten verfügbar	No se encontró nvidia-smi: la temperatura solo está disponible en gráficas NVIDIA
+Видеокарта не ответила вовремя	The graphics card didn't respond in time	Відеокарта не відповіла вчасно	Grafikkarte antwortete nicht rechtzeitig	La tarjeta gráfica no respondió a tiempo
+Компьютер заблокирован — подсветка погашена	PC locked — lighting off	Комп'ютер заблоковано — підсвітку погашено	PC gesperrt — Beleuchtung aus	PC bloqueado: iluminación apagada
+Нет действий больше	No activity for over	Немає дій понад	Keine Aktivität seit über	Sin actividad durante más de
+мин — подсветка погашена	min — lighting off	хв — підсвітку погашено	Min — Beleuchtung aus	min: iluminación apagada
+Запущена	Running	Запущено	Läuft	En marcha
+тема	theme	тема	Theme	tema
+По расписанию	On schedule	За розкладом	Nach Zeitplan	Según horario
+подсветка выключена	lighting off	підсвітку вимкнено	Beleuchtung aus	iluminación apagada
+Нет ответа от OpenRGB (таймаут)	No response from OpenRGB (timeout)	Немає відповіді від OpenRGB (тайм-аут)	Keine Antwort von OpenRGB (Zeitüberschreitung)	Sin respuesta de OpenRGB (tiempo agotado)
+Соединение закрыто	Connection closed	З'єднання закрито	Verbindung geschlossen	Conexión cerrada
+Отключено	Disconnected	Відключено	Getrennt	Desconectado
+Нет ответа от OpenRGB	No response from OpenRGB	Немає відповіді від OpenRGB	Keine Antwort von OpenRGB	Sin respuesta de OpenRGB
+Клавиатура	Keyboard	Клавіатура	Tastatur	Teclado
+Демо	Demo	Демо	Demo	Demo
+лента	strip	стрічка	Streifen	tira
+Вентиляторы 3	Fans 3	Вентилятори 3	Lüfter 3	Ventiladores 3
+Мышь	Mouse	Миша	Maus	Ratón
+Оперативная память	RAM	Оперативна пам'ять	Arbeitsspeicher	Memoria RAM
+Не удалось загрузить компоненты Windows	Couldn't load Windows components	Не вдалося завантажити компоненти Windows	Windows-Komponenten konnten nicht geladen werden	No se pudieron cargar los componentes de Windows
+Нет доступа к API подсветки Windows	No access to the Windows lighting API	Немає доступу до API підсвітки Windows	Kein Zugriff auf die Windows-Beleuchtungs-API	Sin acceso a la API de iluminación de Windows
+Управление сейчас у другой программы (SignalRGB, G HUB и т.п.) или у приложения с приоритетом в параметрах Windows.	Another app is in control right now (SignalRGB, G HUB, etc.) or an app with priority in Windows Settings.	Керування зараз в іншої програми (SignalRGB, G HUB тощо) або в застосунку з пріоритетом у параметрах Windows.	Gerade steuert ein anderes Programm (SignalRGB, G HUB usw.) oder eine App mit Vorrang in den Windows-Einstellungen.	Ahora lo controla otro programa (SignalRGB, G HUB, etc.) o una aplicación con prioridad en Configuración de Windows.
+Не найден установщик PawnIO	PawnIO installer not found	Не знайдено інсталятор PawnIO	PawnIO-Installer nicht gefunden	No se encontró el instalador de PawnIO
+Драйвер PawnIO не установился код	PawnIO driver didn't install, code	Драйвер PawnIO не встановився, код	PawnIO-Treiber wurde nicht installiert, Code	El controlador PawnIO no se instaló, código
+Не удалось скопировать движок код	Couldn't copy the engine, code	Не вдалося скопіювати рушій, код	Engine konnte nicht kopiert werden, Code	No se pudo copiar el motor, código
+Окно в трее закрыто для экономии памяти	Tray window closed to save memory	Вікно в треї закрито для економії пам'яті	Fenster im Infobereich geschlossen, um Speicher zu sparen	Ventana de la bandeja cerrada para ahorrar memoria
+Язык	Language	Мова	Sprache	Idioma
+Язык интерфейса	Interface language	Мова інтерфейсу	Sprache der Oberfläche	Idioma de la interfaz
+Как в Windows	Same as Windows	Як у Windows	Wie Windows	Como Windows
+Вт	W	Вт	W	W
+Другие приложения	Other apps	Інші програми	Andere Apps	Otras aplicaciones
+Цвет для других приложений	Color for other apps	Колір для інших програм	Farbe für andere Apps	Color para otras aplicaciones
+Подсветка от уведомлений	Notification lighting	Підсвітка від сповіщень	Licht bei Benachrichtigungen	Iluminación por notificaciones
+Мигать при новом сообщении	Flash on new messages	Блимати при новому повідомленні	Bei neuer Nachricht aufblinken	Parpadear con mensajes nuevos
+Пришло уведомление в Discord, Telegram и других — подсветка дважды мягко вспыхивает цветом приложения. Текст сообщений Lumen не читает, только от кого пришло уведомление.	When a notification arrives in Discord, Telegram and others, the lighting softly flashes twice in that app's color. Lumen doesn't read message text, only which app it came from.	Прийшло сповіщення в Discord, Telegram та інших — підсвітка двічі м'яко спалахує кольором програми. Текст повідомлень Lumen не читає, лише від кого прийшло сповіщення.	Kommt eine Benachrichtigung von Discord, Telegram und anderen, blinkt die Beleuchtung zweimal sanft in der Farbe der App. Lumen liest keine Nachrichtentexte, nur von welcher App sie kommt.	Cuando llega una notificación de Discord, Telegram y otras, la iluminación destella dos veces con el color de la aplicación. Lumen no lee el texto de los mensajes, solo de qué aplicación viene.
+Работает для уведомлений, которые Windows показывает в углу экрана. Если в Windows включён режим «Не беспокоить», Lumen тоже не мигает.	Works for notifications Windows shows in the corner of the screen. If “Do not disturb” is on in Windows, Lumen won't flash either.	Працює для сповіщень, які Windows показує в куті екрана. Якщо у Windows увімкнено режим «Не турбувати», Lumen теж не блимає.	Funktioniert für Benachrichtigungen, die Windows in der Bildschirmecke zeigt. Ist „Nicht stören“ aktiv, blinkt Lumen auch nicht.	Funciona con las notificaciones que Windows muestra en la esquina de la pantalla. Si «No molestar» está activado, Lumen tampoco parpadea.
+Сейчас играет	Now playing	Зараз грає	Gerade läuft	Reproduciendo
+Включи музыку — подсветка возьмёт цвета обложки.	Play some music — the lighting will take the cover colors.	Увімкни музику — підсвітка візьме кольори обкладинки.	Spiel Musik ab — die Beleuchtung übernimmt die Cover-Farben.	Pon música: la iluminación tomará los colores de la portada.
+Цвета под музыку	Colors from music	Кольори під музику	Farben aus der Musik	Colores de la música
+Подсветка берёт цвета с обложки трека, который сейчас играет: Spotify, Яндекс Музыка, YouTube в браузере и другие.	Lighting takes colors from the cover of the current track: Spotify, Yandex Music, YouTube in the browser and more.	Підсвітка бере кольори з обкладинки треку, що зараз грає: Spotify, Яндекс Музика, YouTube у браузері та інші.	Die Beleuchtung übernimmt die Farben des aktuellen Covers: Spotify, Yandex Music, YouTube im Browser und mehr.	La iluminación toma los colores de la portada de la canción actual: Spotify, Yandex Music, YouTube en el navegador y más.
+Яндекс Музыка	Yandex Music	Яндекс Музика	Yandex Music	Yandex Music
+музыка	music	музика	Musik	música
+Наведи камеру телефона на код	Point your phone camera at the code	Наведи камеру телефона на код	Richte die Handykamera auf den Code	Apunta la cámara del móvil al código
+Телефон должен быть в той же сети Wi-Fi, что и компьютер. Откроется страница, где можно включать подсветку, менять яркость и темы.	Your phone must be on the same Wi-Fi as the PC. A page opens where you can turn the lighting on, change brightness and themes.	Телефон має бути в тій самій мережі Wi-Fi, що й комп'ютер. Відкриється сторінка, де можна вмикати підсвітку, змінювати яскравість і теми.	Das Handy muss im selben WLAN sein wie der PC. Es öffnet sich eine Seite, auf der du Licht, Helligkeit und Themes steuern kannst.	El móvil debe estar en la misma red Wi-Fi que el PC. Se abrirá una página para encender la luz y cambiar el brillo y los temas.
+Если Windows спросит про доступ к сети — разреши для частных сетей.	If Windows asks about network access, allow it for private networks.	Якщо Windows запитає про доступ до мережі — дозволь для приватних мереж.	Fragt Windows nach Netzwerkzugriff, erlaube ihn für private Netzwerke.	Si Windows pregunta por el acceso a la red, permítelo para redes privadas.
+Старая ссылка перестанет работать	The old link will stop working	Старе посилання перестане працювати	Der alte Link funktioniert dann nicht mehr	El enlace anterior dejará de funcionar
+Новая ссылка	New link	Нове посилання	Neuer Link	Nuevo enlace
+Управление с телефона	Phone control	Керування з телефона	Steuerung per Handy	Control desde el móvil
+Пульт на телефоне	Phone remote	Пульт на телефоні	Fernbedienung am Handy	Mando en el móvil
+Включай подсветку, меняй яркость и темы с телефона — без приложений, прямо в браузере.	Turn lighting on, change brightness and themes from your phone — no app needed, right in the browser.	Вмикай підсвітку, змінюй яскравість і теми з телефона — без застосунків, просто в браузері.	Licht an, Helligkeit und Themes vom Handy aus — ohne App, direkt im Browser.	Enciende la luz y cambia brillo y temas desde el móvil, sin apps, en el navegador.
+с	from	з	von	de
+до	to	до	bis	a
+Подсветкой сейчас управляет другая программа	Another app is controlling the lighting right now	Підсвіткою зараз керує інша програма	Gerade steuert ein anderes Programm die Beleuchtung	Ahora otro programa controla la iluminación
+Пока она запущена, Lumen не может подсвечивать часть устройств. Закрой её и выключи её запуск вместе с Windows в её настройках.	While it's running, Lumen can't light some devices. Close it and turn off its startup with Windows in its settings.	Поки вона запущена, Lumen не може підсвічувати частину пристроїв. Закрий її і вимкни її запуск разом із Windows у її налаштуваннях.	Solange es läuft, kann Lumen einige Geräte nicht beleuchten. Schließe es und deaktiviere seinen Autostart in dessen Einstellungen.	Mientras esté abierto, Lumen no puede iluminar algunos dispositivos. Ciérralo y desactiva su inicio con Windows en sus ajustes.
+Закрыть программу	Close the app	Закрити програму	Programm schließen	Cerrar programa
+Движок нашёл не все устройства	The engine didn't find all devices	Рушій знайшов не всі пристрої	Die Engine hat nicht alle Geräte gefunden	El motor no encontró todos los dispositivos
+Не найдено	Not found	Не знайдено	Nicht gefunden	No encontrado
+Обычно помогает перезапуск движка.	Restarting the engine usually helps.	Зазвичай допомагає перезапуск рушія.	Meist hilft ein Neustart der Engine.	Normalmente ayuda reiniciar el motor.
+Я убрал это устройство — больше не напоминать	I removed this device — stop reminding me	Я прибрав цей пристрій — більше не нагадувати	Ich habe das Gerät entfernt — nicht mehr erinnern	Quité este dispositivo: no recordar más
+Больше не напоминать	Don't remind me	Більше не нагадувати	Nicht mehr erinnern	No recordar más
+Перезапустить движок	Restart engine	Перезапустити рушій	Engine neu starten	Reiniciar el motor
+Сообщить о проблеме	Report a problem	Повідомити про проблему	Problem melden	Informar de un problema
+Опиши, что не работает, — Lumen соберёт архив на рабочий стол: журналы, найденные устройства и список оборудования. Личное (имя пользователя, ключ пульта, город) в архив не попадает. Этот архив можно отправить разработчику.	Describe what's wrong — Lumen will put an archive on your desktop: logs, found devices and a hardware list. Personal data (user name, remote key, city) isn't included. You can send this archive to the developer.	Опиши, що не працює, — Lumen збере архів на робочий стіл: журнали, знайдені пристрої та список обладнання. Особисте (ім'я користувача, ключ пульта, місто) в архів не потрапляє. Цей архів можна надіслати розробнику.	Beschreibe das Problem — Lumen legt ein Archiv auf den Desktop: Protokolle, gefundene Geräte und Hardwareliste. Persönliches (Benutzername, Fernbedienungsschlüssel, Stadt) ist nicht enthalten. Das Archiv kannst du dem Entwickler schicken.	Describe qué falla: Lumen dejará un archivo en el escritorio con registros, dispositivos encontrados y lista de hardware. Los datos personales (usuario, clave del mando, ciudad) no se incluyen. Puedes enviar el archivo al desarrollador.
+Собрать отчёт	Create report	Зібрати звіт	Bericht erstellen	Crear informe
+Программа закрыта, перезапускаю движок…	App closed, restarting the engine…	Програму закрито, перезапускаю рушій…	Programm geschlossen, Engine startet neu…	Programa cerrado, reiniciando el motor…
+Не получилось закрыть — закрой её вручную через значок в трее	Couldn't close it — close it yourself from its tray icon	Не вдалося закрити — закрий її вручну через значок у треї	Schließen fehlgeschlagen — beende es selbst über sein Symbol im Infobereich	No se pudo cerrar: ciérralo tú desde su icono en la bandeja
+Новая ссылка готова — старая больше не работает	New link ready — the old one no longer works	Нове посилання готове — старе більше не працює	Neuer Link bereit — der alte funktioniert nicht mehr	Nuevo enlace listo: el anterior ya no funciona
+Напиши своими словами: что делал, что ожидал и что получилось. Например: «Не светится оперативная память, в списке устройств её нет».	Describe in your own words what you did, what you expected and what happened. For example: “The RAM doesn't light up and isn't in the device list.”	Напиши своїми словами: що робив, що очікував і що вийшло. Наприклад: «Не світиться оперативна пам'ять, у списку пристроїв її немає».	Beschreibe mit eigenen Worten, was du getan hast, was du erwartet hast und was passiert ist. Z. B.: „Der RAM leuchtet nicht und fehlt in der Geräteliste.“	Cuenta con tus palabras qué hiciste, qué esperabas y qué pasó. Por ejemplo: «La RAM no se ilumina y no aparece en la lista».
+Что не работает?	What's not working?	Що не працює?	Was funktioniert nicht?	¿Qué no funciona?
+Приложить список оборудования (модели платы, памяти, USB-устройств)	Attach hardware list (motherboard, RAM, USB device models)	Додати список обладнання (моделі плати, пам'яті, USB-пристроїв)	Hardwareliste anhängen (Mainboard, RAM, USB-Geräte)	Adjuntar lista de hardware (placa, memoria, dispositivos USB)
+Собрать архив	Create archive	Зібрати архів	Archiv erstellen	Crear archivo
+Собираю отчёт… это займёт до 30 секунд	Creating the report… this takes up to 30 seconds	Збираю звіт… це займе до 30 секунд	Erstelle Bericht… dauert bis zu 30 Sekunden	Creando el informe… tarda hasta 30 segundos
+Готово: архив лежит на рабочем столе и открыт в Проводнике	Done: the archive is on your desktop and open in Explorer	Готово: архів лежить на робочому столі й відкритий у Провіднику	Fertig: das Archiv liegt auf dem Desktop und ist im Explorer geöffnet	Listo: el archivo está en el escritorio y abierto en el Explorador
+Не получилось собрать отчёт	Couldn't create the report	Не вдалося зібрати звіт	Bericht konnte nicht erstellt werden	No se pudo crear el informe
+Привет! Это Lumen	Hi! This is Lumen	Привіт! Це Lumen	Hallo! Das ist Lumen	¡Hola! Esto es Lumen
+Одна программа для всей подсветки компьютера: плата, видеокарта, память, вентиляторы, клавиатура и мышь. Покажу главное за минуту.	One app for all your PC lighting: motherboard, graphics card, RAM, fans, keyboard and mouse. Let me show you the basics in a minute.	Одна програма для всієї підсвітки комп'ютера: плата, відеокарта, пам'ять, вентилятори, клавіатура й миша. Покажу головне за хвилину.	Eine App für die gesamte PC-Beleuchtung: Mainboard, Grafikkarte, RAM, Lüfter, Tastatur und Maus. Ich zeige dir das Wichtigste in einer Minute.	Una sola aplicación para toda la iluminación del PC: placa, gráfica, RAM, ventiladores, teclado y ratón. Te enseño lo básico en un minuto.
+Включить и выключить	On and off	Увімкнути й вимкнути	Ein und aus	Encender y apagar
+Главная кнопка: гасит и зажигает всю подсветку разом. С клавиатуры — Ctrl+Alt+L, работает даже в игре.	The main button turns all lighting on and off at once. From the keyboard: Ctrl+Alt+L, even in games.	Головна кнопка: гасить і запалює всю підсвітку разом. З клавіатури — Ctrl+Alt+L, працює навіть у грі.	Der Hauptknopf schaltet die gesamte Beleuchtung ein und aus. Per Tastatur: Strg+Alt+L, auch im Spiel.	El botón principal enciende y apaga toda la iluminación. Con el teclado: Ctrl+Alt+L, incluso en juegos.
+Нажми на любую тему — сменятся подсветка, цвет Windows и обои. Свои темы появятся во вкладке «Мои».	Click any theme — the lighting, Windows color and wallpaper change together. Your own themes appear under “Mine”.	Натисни будь-яку тему — зміняться підсвітка, колір Windows і шпалери. Власні теми з'являться у вкладці «Мої».	Klick auf ein Theme — Beleuchtung, Windows-Farbe und Hintergrund wechseln zusammen. Eigene Themes erscheinen unter „Meine“.	Pulsa cualquier tema: cambian la iluminación, el color de Windows y el fondo. Tus temas aparecerán en «Míos».
+Яркость и скорость	Brightness and speed	Яскравість і швидкість	Helligkeit und Tempo	Brillo y velocidad
+Двигай ползунки — подсветка меняется сразу. Здесь же включаются обои и цвет Windows под тему.	Move the sliders — the lighting changes right away. Wallpaper and Windows color matching are switched on here too.	Рухай повзунки — підсвітка змінюється одразу. Тут же вмикаються шпалери й колір Windows під тему.	Bewege die Regler — die Beleuchtung ändert sich sofort. Hier schaltest du auch Hintergrund und Windows-Farbe zum Theme ein.	Mueve los controles: la iluminación cambia al instante. Aquí también se activan el fondo y el color de Windows a juego.
+Не знаешь, что выбрать? Lumen придумает случайную красивую тему. Понравится — сохрани её.	Not sure what to pick? Lumen will come up with a random beautiful theme. Like it? Save it.	Не знаєш, що обрати? Lumen вигадає випадкову красиву тему. Сподобається — збережи її.	Unentschlossen? Lumen erfindet ein zufälliges schönes Theme. Gefällt es dir? Speichere es.	¿No sabes qué elegir? Lumen inventará un tema bonito al azar. Si te gusta, guárdalo.
+Собери свою подсветку: волна, дыхание, огонь, реакция на музыку, цвет экрана. Выбери цвета и направление.	Build your own lighting: wave, breathing, fire, music reaction, screen color. Pick colors and direction.	Збери свою підсвітку: хвиля, дихання, вогонь, реакція на музику, колір екрана. Обери кольори й напрямок.	Bau deine eigene Beleuchtung: Welle, Atmen, Feuer, Musikreaktion, Bildschirmfarbe. Wähle Farben und Richtung.	Crea tu iluminación: ola, respiración, fuego, reacción a la música, color de pantalla. Elige colores y dirección.
+Что нашёл Lumen. Здесь включается подсветка оперативной памяти и настраиваются вентиляторы на разъёмах платы.	What Lumen found. This is where you turn on RAM lighting and set up fans on motherboard headers.	Що знайшов Lumen. Тут вмикається підсвітка оперативної пам'яті й налаштовуються вентилятори на роз'ємах плати.	Was Lumen gefunden hat. Hier schaltest du die RAM-Beleuchtung ein und richtest Lüfter an den Mainboard-Anschlüssen ein.	Lo que encontró Lumen. Aquí se activa la iluminación de la RAM y se configuran los ventiladores de la placa.
+Подсветка меняется сама: запустил игру — включилась игровая тема, ночью — выключилась, отошёл — погасла.	Lighting changes by itself: start a game and a gaming theme turns on, at night it switches off, step away and it goes dark.	Підсвітка змінюється сама: запустив гру — увімкнулася ігрова тема, вночі — вимкнулася, відійшов — згасла.	Die Beleuchtung ändert sich von selbst: Spiel starten — Gaming-Theme, nachts aus, weggehen — dunkel.	La iluminación cambia sola: abres un juego y se pone el tema gamer, de noche se apaga, te alejas y se oscurece.
+Обои, виджеты на рабочем столе, пульт на телефоне, подсветка от уведомлений, язык. И кнопка «Собрать отчёт», если что-то не работает.	Wallpaper, desktop widgets, phone remote, notification lighting, language. And a “Create report” button if something doesn't work.	Шпалери, віджети на робочому столі, пульт на телефоні, підсвітка від сповіщень, мова. І кнопка «Зібрати звіт», якщо щось не працює.	Hintergrund, Desktop-Widgets, Handy-Fernbedienung, Licht bei Benachrichtigungen, Sprache. Und „Bericht erstellen“, falls etwas nicht funktioniert.	Fondo, widgets, mando en el móvil, iluminación por notificaciones, idioma. Y el botón «Crear informe» si algo no funciona.
+Готово!	All set!	Готово!	Fertig!	¡Listo!
+живёт в трее возле часов: закрытие окна его не выключает. Этот гайд всегда можно открыть снова здесь.	lives in the tray next to the clock: closing the window doesn't turn it off. You can always open this guide again here.	живе в треї біля годинника: закриття вікна його не вимикає. Цей гайд завжди можна відкрити знову тут.	wohnt im Infobereich neben der Uhr: Schließen des Fensters beendet es nicht. Diese Anleitung kannst du hier jederzeit wieder öffnen.	vive en la bandeja junto al reloj: cerrar la ventana no lo apaga. Puedes volver a abrir esta guía aquí.
+Пропустить	Skip	Пропустити	Überspringen	Omitir
+Назад	Back	Назад	Zurück	Atrás
+Понятно	Got it	Зрозуміло	Verstanden	Entendido
+Далее	Next	Далі	Weiter	Siguiente
+Как пользоваться Lumen	How to use Lumen	Як користуватися Lumen	So benutzt du Lumen	Cómo usar Lumen
+Как пользоваться	How to use	Як користуватися	Anleitung	Cómo usar
+Нет связи с Lumen. Проверь, что компьютер включён и телефон в той же сети Wi-Fi.	No connection to Lumen. Check that the PC is on and your phone is on the same Wi-Fi.	Немає зв'язку з Lumen. Перевір, що комп'ютер увімкнено, а телефон у тій самій мережі Wi-Fi.	Keine Verbindung zu Lumen. Prüfe, ob der PC an ist und das Handy im selben WLAN.	Sin conexión con Lumen. Comprueba que el PC está encendido y el móvil en la misma Wi-Fi.
+Почта и Teams	Mail and Teams	Пошта і Teams	Mail und Teams	Correo y Teams
+Эта функция недоступна в этой версии Windows	This feature isn't available in this version of Windows	Ця функція недоступна в цій версії Windows	Diese Funktion ist in dieser Windows-Version nicht verfügbar	Esta función no está disponible en esta versión de Windows
+Не нашёл базу уведомлений Windows	Couldn't find the Windows notification database	Не знайшов базу сповіщень Windows	Windows-Benachrichtigungsdatenbank nicht gefunden	No se encontró la base de notificaciones de Windows
+Не получилось прочитать уведомления Windows	Couldn't read Windows notifications	Не вдалося прочитати сповіщення Windows	Windows-Benachrichtigungen konnten nicht gelesen werden	No se pudieron leer las notificaciones de Windows
+нет ответа	no response	немає відповіді	keine Antwort	sin respuesta
+Не получилось узнать, что играет	Couldn't tell what's playing	Не вдалося дізнатися, що грає	Konnte nicht erkennen, was gerade läuft	No se pudo saber qué se reproduce
+занят другой программой	is used by another app	зайнятий іншою програмою	wird von einem anderen Programm verwendet	está ocupado por otro programa

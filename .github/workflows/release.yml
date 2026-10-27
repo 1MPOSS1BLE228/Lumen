@@ -1,0 +1,108 @@
+# Сборка и выпуск Lumen.
+# Метка vX.Y.Z (git tag v2.8.0 && git push --tags) -> установщик собирается на Windows,
+# считается SHA-256, создаётся выпуск на GitHub. Lumen у пользователей сам находит выпуск и обновляется.
+# Если в репозитории заданы секрет SIGNPATH_API_TOKEN и переменная SIGNPATH_ORGANIZATION_ID,
+# Lumen.exe и установщик подписываются бесплатным сертификатом SignPath Foundation.
+name: Выпуск Lumen
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    env:
+      SIGNING: ${{ secrets.SIGNPATH_API_TOKEN != '' && vars.SIGNPATH_ORGANIZATION_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+
+      - name: Инструменты сборки
+        run: npm install --no-save electron@45.0.0 electron-builder@26
+
+      - name: Тесты
+        run: npm test
+
+      - name: Версия из метки совпадает с package.json
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $v = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          if ("v$v" -ne "${{ github.ref_name }}") { throw "Метка ${{ github.ref_name }}, а в package.json версия $v" }
+
+      - name: Сборка программы (без установщика)
+        run: npx electron-builder --win --x64 --dir -c.win.signAndEditExecutable=true
+
+      # --- Подпись Lumen.exe (SignPath) ---
+      - name: Отдать программу на подпись
+        if: env.SIGNING == 'true'
+        id: up-app
+        uses: actions/upload-artifact@v4
+        with: { name: lumen-unsigned-app, path: dist/win-unpacked }
+      - name: Подписать Lumen.exe
+        if: env.SIGNING == 'true'
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG || 'Lumen' }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG || 'release-signing' }}
+          artifact-configuration-slug: app
+          github-artifact-id: ${{ steps.up-app.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: dist/win-unpacked
+
+      - name: Сборка установщика
+        run: npx electron-builder --win --x64 --prepackaged dist/win-unpacked
+
+      # --- Подпись установщика (SignPath) ---
+      - name: Отдать установщик на подпись
+        if: env.SIGNING == 'true'
+        id: up-setup
+        uses: actions/upload-artifact@v4
+        with: { name: lumen-unsigned-setup, path: 'dist/Lumen-Setup-*.exe' }
+      - name: Подписать установщик
+        if: env.SIGNING == 'true'
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG || 'Lumen' }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG || 'release-signing' }}
+          artifact-configuration-slug: setup
+          github-artifact-id: ${{ steps.up-setup.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: dist
+
+      - name: Контрольная сумма и описание выпуска
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem dist -Filter 'Lumen-Setup-*.exe' | Select-Object -First 1
+          $h = (Get-FileHash $exe.FullName -Algorithm SHA256).Hash.ToLower()
+          Set-Content -Path ($exe.FullName + '.sha256') -Value ($h + '  ' + $exe.Name) -NoNewline -Encoding ascii
+          node scripts/release-notes.js > dist/release-notes.md
+
+      - name: Сохранить установщик (для ручных запусков)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lumen-Setup
+          path: |
+            dist/Lumen-Setup-*.exe
+            dist/Lumen-Setup-*.exe.sha256
+
+      - name: Опубликовать выпуск
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Lumen ${{ github.ref_name }}
+          body_path: dist/release-notes.md
+          files: |
+            dist/Lumen-Setup-*.exe
+            dist/Lumen-Setup-*.exe.sha256

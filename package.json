@@ -1,0 +1,87 @@
+{
+  "name": "lumen-rgb",
+  "productName": "Lumen",
+  "version": "2.8.0",
+  "description": "Lumen — управление RGB-подсветкой компьютера: темы, эффекты, музыка",
+  "main": "src/main/main.js",
+  "author": "1MPOSS1BLE228",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "start": "electron .",
+    "icon": "node scripts/make-icon.js",
+    "test": "node test/run-tests.js",
+    "dist": "electron-builder --win --x64",
+    "dist:safe": "electron-builder --win --x64 -c.win.signAndEditExecutable=false"
+  },
+  "build": {
+    "appId": "app.lumen.rgb",
+    "productName": "Lumen",
+    "copyright": "Lumen",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Lumen",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "artifactName": "Lumen-Setup-${version}.exe",
+      "multiLanguageInstaller": true,
+      "installerLanguages": [
+        "ru_RU",
+        "en_US",
+        "uk_UA",
+        "de_DE",
+        "es_ES"
+      ],
+      "displayLanguageSelector": true,
+      "runAfterFinish": true
+    },
+    "extraResources": [
+      {
+        "from": "vendor/OpenRGB",
+        "to": "OpenRGB",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "vendor/PawnIO",
+        "to": "PawnIO",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "lumen": {
+    "updateRepo": "1MPOSS1BLE228/Lumen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1MPOSS1BLE228/Lumen.git"
+  },
+  "homepage": "https://github.com/1MPOSS1BLE228/Lumen"
+}

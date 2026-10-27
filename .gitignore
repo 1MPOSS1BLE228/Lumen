@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+Lumen-Setup.exe
+test-shots/
+*.tmp
+.DS_Store
