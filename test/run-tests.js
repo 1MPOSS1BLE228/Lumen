@@ -728,7 +728,8 @@ async function test(name, fn) {
     assert.deepStrictEqual(findUnsupported(ids, ['lianli-tl']), [], 'после «Понятно» не показываем');
     const dir = tmp();
     fs.writeFileSync(path.join(dir, 'lumen-settings.json'), JSON.stringify({ zoneSizes: { 'orgb:B|x|Header 1': 1, 'orgb:B|x|Header 2': 30 } }));
-    const core = new Core({ dataDir: dir, hooks: { listUsb: async () => ids, listProcesses: async () => new Set() } });
+    // мост Lian Li не запускаем (это проверяет отдельный тест) — здесь только подсказка
+    const core = new Core({ dataDir: dir, platform: 'linux', lianli: new (require('../src/main/tlfan').LianLiTL)({ dataDir: dir, platform: 'linux' }), hooks: { listUsb: async () => ids, listProcesses: async () => new Set() } });
     assert.deepStrictEqual(core.state.zoneSizes, { 'orgb:B|x|Header 2': 30 }, 'случайную единицу сбросили, настоящий размер оставили');
     const calls = [];
     const client = { resizeZone: (...a) => calls.push(a) };
