@@ -14,6 +14,8 @@ English, Ukrainian, German, Spanish and Russian.*
 Если Windows пишет «Интеллектуальное управление приложениями заблокировало приложение» — открой
 **[гайд по установке (PDF, 1 страница)](docs/install-guide.pdf)**. Уже установленный Lumen обновляется сам.
 
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org) — подробнее в [docs/CODE_SIGNING.md](docs/CODE_SIGNING.md).
+
 ## Что умеет
 
 - **Темы и эффекты.** 19 готовых тем и свои, 15 эффектов: волна, дыхание, огонь, комета, реакция на музыку,
